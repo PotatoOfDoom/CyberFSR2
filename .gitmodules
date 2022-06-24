@@ -1,0 +1,6 @@
+[submodule "external/nvngx_dlss_sdk"]
+	path = external/nvngx_dlss_sdk
+	url = https://github.com/PotatoOfDoom/DLSS.git
+[submodule "external/FidelityFX-FSR2"]
+	path = external/FidelityFX-FSR2
+	url = https://github.com/GPUOpen-Effects/FidelityFX-FSR2.git

@@ -1,0 +1,13 @@
+#pragma once
+#include "pch.h"
+#include <wrl/wrappers/corewrappers.h>
+
+typedef void(__fastcall* SETCOMPUTEROOTSIGNATURE)(ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* pRootSignature);
+
+extern ID3D12CommandList* myCommandList;
+
+extern std::unordered_map<ID3D12GraphicsCommandList*, ID3D12RootSignature*> commandListVector;
+
+extern std::mutex rootSigMutex;
+
+void HookSetComputeRootSignature(ID3D12GraphicsCommandList* InCmdList);
