@@ -226,50 +226,28 @@ void Dx12ParameterImpl::Reset()
 
 void Dx12ParameterImpl::EvaluateRenderScale()
 {
+	FfxFsr2QualityMode fsrQualityMode;
+
 	switch (PerfQualityValue)
 	{
 	case NVSDK_NGX_PerfQuality_Value_MaxPerf:
-		OutHeight = static_cast<unsigned>(static_cast<double>(Height) / 1.7);
-		OutWidth = static_cast<unsigned>(static_cast<double>(Width) / 1.7);
-		return;
+		fsrQualityMode = FFX_FSR2_QUALITY_MODE_PERFORMANCE;
+		break;
 	case NVSDK_NGX_PerfQuality_Value_Balanced:
-		OutHeight = static_cast<unsigned>(static_cast<double>(Height) / 1.5);
-		OutWidth = static_cast<unsigned>(static_cast<double>(Width) / 1.5);
-		return;
+		fsrQualityMode = FFX_FSR2_QUALITY_MODE_BALANCED;
+		break;
 	case NVSDK_NGX_PerfQuality_Value_MaxQuality:
-		OutHeight = static_cast<unsigned>(static_cast<double>(Height) / 1.3);
-		OutWidth = static_cast<unsigned>(static_cast<double>(Width) / 1.3);
+		fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
 		return;
 	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
-		OutHeight = static_cast<unsigned>(static_cast<double>(Height) / 2.0);
-		OutWidth = static_cast<unsigned>(static_cast<double>(Width) / 2.0);
+		fsrQualityMode = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
 		return;
 	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
+		//Not defined by AMD
 		OutHeight = Height;
 		OutWidth = Width;
 		return;
 	}
 
-	/*
-	nvidia scaling factors seem to work a bit better.
-	switch (PerfQualityValue)
-	{
-	case NVSDK_NGX_PerfQuality_Value_MaxPerf:
-		ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, FFX_FSR2_QUALITY_MODE_PERFORMANCE);
-		return;
-	case NVSDK_NGX_PerfQuality_Value_Balanced:
-		ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, FFX_FSR2_QUALITY_MODE_BALANCED);
-		return;
-	case NVSDK_NGX_PerfQuality_Value_MaxQuality:
-		ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, FFX_FSR2_QUALITY_MODE_QUALITY);
-		return;
-	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
-		ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE);
-		return;
-	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
-		OutHeight = Height;
-		OutWidth = Width;
-		return;
-	}
-	*/
+	ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode);
 }
