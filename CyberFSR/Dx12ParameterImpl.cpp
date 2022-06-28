@@ -243,10 +243,10 @@ void Dx12ParameterImpl::EvaluateRenderScale()
 		break;
 	case NVSDK_NGX_PerfQuality_Value_MaxQuality:
 		fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
-		return;
+		break;
 	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
 		fsrQualityMode = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
-		return;
+		break;
 	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
 		//Not defined by AMD
 		OutHeight = Height;
