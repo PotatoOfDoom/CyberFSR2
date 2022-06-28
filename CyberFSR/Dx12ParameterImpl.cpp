@@ -108,9 +108,11 @@ void Dx12ParameterImpl::Set(const char* InName, ID3D12Resource* InValue)
 		break;
 	case Util::NvParameter::TransparencyMask:
 		TransparencyMask = InValue;
+		TransparencyMask->SetName(L"TransparencyMask");
 		break;
 	case Util::NvParameter::ExposureTexture:
 		ExposureTexture = InValue;
+		ExposureTexture->SetName(L"ExposureTexture");
 		break;
 	}
 }
