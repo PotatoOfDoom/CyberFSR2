@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CyberFsr.h"
 #include "DirectXHooks.h"
-#include <DirectXMath.h>
 #include "Util.h"
 
 NVSDK_NGX_Result NVSDK_NGX_D3D12_Init_Ext(unsigned long long InApplicationId, const wchar_t* InApplicationDataPath,

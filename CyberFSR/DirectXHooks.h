@@ -1,6 +1,5 @@
 #pragma once
 #include "pch.h"
-#include <wrl/wrappers/corewrappers.h>
 
 typedef void(__fastcall* SETCOMPUTEROOTSIGNATURE)(ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* pRootSignature);
 
