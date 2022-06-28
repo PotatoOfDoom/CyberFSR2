@@ -90,29 +90,34 @@ void Dx12ParameterImpl::Set(const char* InName, ID3D12Resource* InValue)
 			InputBiasCurrentColorMask->SetName(L"InputBiasColorMask");
 		break;
 	case Util::NvParameter::Color:
-		auto desc = InValue->GetDesc();
 		Color = InValue;
-		Color->SetName(L"Color");
+		if (InValue)
+			Color->SetName(L"Color");
 		break;
 	case Util::NvParameter::Depth:
 		Depth = InValue;
-		Depth->SetName(L"Depth");
+		if (InValue)
+			Depth->SetName(L"Depth");
 		break;
 	case Util::NvParameter::MotionVectors:
 		MotionVectors = InValue;
-		MotionVectors->SetName(L"MotionVectors");
+		if (InValue)
+			MotionVectors->SetName(L"MotionVectors");
 		break;
 	case Util::NvParameter::Output:
 		Output = InValue;
-		Output->SetName(L"Output");
+		if (InValue)
+			Output->SetName(L"Output");
 		break;
 	case Util::NvParameter::TransparencyMask:
 		TransparencyMask = InValue;
-		TransparencyMask->SetName(L"TransparencyMask");
+		if (InValue)
+			TransparencyMask->SetName(L"TransparencyMask");
 		break;
 	case Util::NvParameter::ExposureTexture:
 		ExposureTexture = InValue;
-		ExposureTexture->SetName(L"ExposureTexture");
+		if (InValue)
+			ExposureTexture->SetName(L"ExposureTexture");
 		break;
 	}
 }
