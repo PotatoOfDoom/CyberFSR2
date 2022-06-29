@@ -43,6 +43,7 @@ Util::NvParameter Util::NvParameterToEnum(const char* name)
 	{"DLSS.Get.Dynamic.Max.Render.Height", NvParameter::DLSS_Get_Dynamic_Max_Render_Height},
 	{"DLSS.Get.Dynamic.Min.Render.Width", NvParameter::DLSS_Get_Dynamic_Min_Render_Width},
 	{"DLSS.Get.Dynamic.Min.Render.Height", NvParameter::DLSS_Get_Dynamic_Min_Render_Height},
+	{"Sharpness", NvParameter::Sharpness},
 
 	{"DLSSOptimalSettingsCallback", NvParameter::DLSSOptimalSettingsCallback},
 	{"DLSSGetStatsCallback", NvParameter::DLSSGetStatsCallback},
