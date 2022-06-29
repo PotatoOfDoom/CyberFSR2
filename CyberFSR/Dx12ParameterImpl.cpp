@@ -49,6 +49,12 @@ void Dx12ParameterImpl::Set(const char* InName, int InValue)
 	case Util::NvParameter::Height:
 		Height = InValue;
 		break;
+	case Util::NvParameter::DLSS_Render_Subrect_Dimensions_Width:
+		Width = InValue;
+		break;
+	case Util::NvParameter::DLSS_Render_Subrect_Dimensions_Height:
+		Height = InValue;
+		break;
 	case Util::NvParameter::PerfQualityValue:
 		PerfQualityValue = static_cast<NVSDK_NGX_PerfQuality_Value>(InValue);
 		break;
@@ -164,12 +170,21 @@ NVSDK_NGX_Result Dx12ParameterImpl::Get(const char* InName, int* OutValue) const
 	case Util::NvParameter::SuperSampling_Available:
 		*OutValue = 1;
 		break;
+	case Util::NvParameter::SuperSampling_FeatureInitResult:
+		*OutValue = 1;
+		break;
 	case Util::NvParameter::SuperSampling_NeedsUpdatedDriver:
 		*OutValue = FALSE;
 		break;
 	case Util::NvParameter::SuperSampling_MinDriverVersionMinor:
 	case Util::NvParameter::SuperSampling_MinDriverVersionMajor:
 		*OutValue = 0;
+		break;
+	case Util::NvParameter::DLSS_Render_Subrect_Dimensions_Width:
+		*OutValue = Width;
+		break;
+	case Util::NvParameter::DLSS_Render_Subrect_Dimensions_Height:
+		*OutValue = Height;
 		break;
 	case Util::NvParameter::OutWidth:
 		*OutValue = OutWidth;
