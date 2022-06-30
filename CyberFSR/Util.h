@@ -24,6 +24,8 @@ public:
 		OutWidth,
 		OutHeight,
 
+		DLSS_Render_Subrect_Dimensions_Width,
+		DLSS_Render_Subrect_Dimensions_Height,
 		DLSS_Get_Dynamic_Max_Render_Width,
 		DLSS_Get_Dynamic_Max_Render_Height,
 		DLSS_Get_Dynamic_Min_Render_Width,
