@@ -9,19 +9,23 @@ enum class SharpnessRangeModifier {
 class Config
 {
 public: 
-	// Init
+	// Depth
 	std::optional<bool> DepthInverted;
-	std::optional<bool> AutoExposure;
-	std::optional<bool> Hdr;
-	std::optional<bool> JitterMotion;
-	std::optional<bool> LowRes;
 
-	// Dispatch
+	// Color
+	std::optional<bool> AutoExposure;
+	std::optional<bool> HDR;
+
+	// Motion
+	std::optional<bool> JitterCancellation;
+	std::optional<bool> DisplayResolution;
+
+	// Sharpening
 	std::optional<bool> EnableSharpening;
 	std::optional<float> Sharpness;
 	std::optional<SharpnessRangeModifier> SharpnessRange;
 
-	// Dispatch.View
+	// View
 	std::optional<float> VerticalFOV;
 	std::optional<float> NearPlane;
 	std::optional<float> FarPlane;

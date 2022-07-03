@@ -98,15 +98,15 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_AUTO_EXPOSURE;
 	}
-	if (Config::instance().Hdr.value_or(inParams->Hdr))
+	if (Config::instance().HDR.value_or(inParams->Hdr))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE;
 	}
-	if (Config::instance().JitterMotion.value_or(inParams->JitterMotion))
+	if (Config::instance().JitterCancellation.value_or(inParams->JitterMotion))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION;
 	}
-	if (!Config::instance().LowRes.value_or(inParams->LowRes))
+	if (Config::instance().DisplayResolution.value_or(!inParams->LowRes))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
 	}

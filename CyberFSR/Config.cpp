@@ -12,22 +12,26 @@ Config::Config(std::wstring fileName)
 	absoluteFileName = std::wstring(dllPath);
 	absoluteFileName.replace(absoluteFileName.find(dllName), dllName.size(), fileName);
 
-	// Init
-	DepthInverted = readBool(L"Init", L"DepthInverted");
-	AutoExposure = readBool(L"Init", L"AutoExposure");
-	Hdr = readBool(L"Init", L"Hdr");
-	JitterMotion = readBool(L"Init", L"JitterMotion");
-	LowRes = readBool(L"Init", L"LowRes");
+	// Depth
+	DepthInverted = readBool(L"Depth", L"DepthInverted");
 
-	// Dispatch
-	EnableSharpening = readBool(L"Dispatch", L"EnableSharpening");
-	Sharpness = readFloat(L"Dispatch", L"Sharpness");
-	SharpnessRange = readSharpnessRange(L"Dispatch", L"SharpnessRange");
+	// Color
+	AutoExposure = readBool(L"Color", L"AutoExposure");
+	HDR = readBool(L"Color", L"HDR");
 
-	// Dispatch.View
-	VerticalFOV = readFloat(L"Dispatch.View", L"VerticalFOV");
-	NearPlane = readFloat(L"Dispatch.View", L"NearPlane");
-	FarPlane = readFloat(L"Dispatch.View", L"FarPlane");
+	// MotionVectors
+	JitterCancellation = readBool(L"MotionVectors", L"JitterCancellation");
+	DisplayResolution = readBool(L"MotionVectors", L"DisplayResolution");
+
+	// Sharpening
+	EnableSharpening = readBool(L"Sharpening", L"EnableSharpening");
+	Sharpness = readFloat(L"Sharpening", L"Sharpness");
+	SharpnessRange = readSharpnessRange(L"Sharpening", L"SharpnessRange");
+
+	// View
+	VerticalFOV = readFloat(L"View", L"VerticalFOV");
+	NearPlane = readFloat(L"View", L"NearPlane");
+	FarPlane = readFloat(L"View", L"FarPlane");
 }
 
 std::wstring Config::readValue(std::wstring section, std::wstring key)
