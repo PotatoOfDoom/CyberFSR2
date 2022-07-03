@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="CyberFsr.h" />
     <ClInclude Include="DirectXHooks.h" />
     <ClInclude Include="Dx12ParameterImpl.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="ViewMatrixHook.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="CyberFsr.cpp" />
     <ClCompile Include="DirectXHooks.cpp" />
     <ClCompile Include="dllmain.cpp" />

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ViewMatrixHook.h"
+#include "Config.h"
 
 ViewMatrixHook::ViewMatrixHook()
 {
@@ -10,21 +11,25 @@ ViewMatrixHook::ViewMatrixHook()
 	*/
 
 	auto mod = (uint64_t)GetModuleHandleW(L"Cyberpunk2077.exe");
-	auto ptr1 = *((uintptr_t*)(mod + 0x4B6F888));
-	camParams = ((CameraParams*)(ptr1 + 0x60));
+	if (mod != 0)
+	{
+		auto ptr1 = *((uintptr_t*)(mod + 0x4B6F888));
+		camParams = ((CameraParams*)(ptr1 + 0x60));
+	}
 }
 
 float ViewMatrixHook::GetFov()
 {
-	return camParams->FoV;
+	return Config::instance().VerticalFOV.value_or(camParams ? camParams->FoV : 60.0f);
 }
 
 float ViewMatrixHook::GetFarPlane()
 {
-	return camParams->FarPlane;
+	float infinity = std::numeric_limits<float>::infinity();
+	return Config::instance().FarPlane.value_or(camParams ? camParams->FarPlane : infinity);
 }
 
 float ViewMatrixHook::GetNearPlane()
 {
-	return camParams->NearPlane;
+	return Config::instance().NearPlane.value_or(camParams ? camParams->NearPlane : 0.0f);
 }

@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Config.h"
 #include "CyberFsr.h"
 #include "DirectXHooks.h"
 #include "Util.h"
@@ -87,11 +88,28 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	initParams.maxRenderSize.height = inParams->Height;
 	initParams.displaySize.width = inParams->OutWidth;
 	initParams.displaySize.height = inParams->OutHeight;
-	initParams.flags = (inParams->DepthInverted) ? FFX_FSR2_ENABLE_DEPTH_INVERTED : 0
-		| (inParams->AutoExposure) ? FFX_FSR2_ENABLE_AUTO_EXPOSURE : 0
-		| (inParams->Hdr) ? FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE : 0
-		| (inParams->JitterMotion) ? FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION : 0
-		| (!inParams->LowRes) ? FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS : 0;
+
+	initParams.flags = 0;
+	if (Config::instance().DepthInverted.value_or(inParams->DepthInverted))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_DEPTH_INVERTED;
+	}
+	if (Config::instance().AutoExposure.value_or(inParams->AutoExposure))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_AUTO_EXPOSURE;
+	}
+	if (Config::instance().Hdr.value_or(inParams->Hdr))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE;
+	}
+	if (Config::instance().JitterMotion.value_or(inParams->JitterMotion))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION;
+	}
+	if (!Config::instance().LowRes.value_or(inParams->LowRes))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
+	}
 
 	deviceContext->FsrContext = std::make_unique<FfxFsr2Context>();
 
@@ -156,8 +174,8 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 		dispatchParameters.motionVectorScale.y = (float)inParams->MVScaleY;
 
 		dispatchParameters.reset = inParams->ResetRender;
-		dispatchParameters.enableSharpening = inParams->EnableSharpening;
-		dispatchParameters.sharpness = inParams->Sharpness;
+		dispatchParameters.enableSharpening = Config::instance().EnableSharpening.value_or(inParams->EnableSharpening);
+		dispatchParameters.sharpness = Config::instance().Sharpness.value_or(inParams->Sharpness);
 
 		//deltatime hax
 		static double lastFrameTime;
