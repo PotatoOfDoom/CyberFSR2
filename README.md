@@ -21,13 +21,11 @@
 ## special instructions to install the mod on Linux
 
 * download the mod from the [Nexusmods page](https://www.nexusmods.com/cyberpunk2077/mods/3001?tab=files)
-* extract the files and install them normally as stated in the nexusmod page
-* with the appropriate file paths run the following command 
+* extract the .rar file of the mod in the same directory where the Cyberpunk2077.exe file is stored 
+* run the linuxinstall.sh script, at the moment only steam is tested because I only have the game on steam, if you encounter issues with the gog/heroic version please open an issue 
   
-  
+   ~~WINEPREFIX=/path/where/the/steam/library/is/steamapps/compatdata/1091500/pfx /bin/wine64 regedit ../../common/Cyberpunk\ 2077/bin/x64/FidelityFx\ Super\ Resolution\ 2.0-3001-0-3-1656426926/EnableSignatureOverride.reg~~
 
-```
-WINEPREFIX=/path/where/the/steam/library/is/steamapps/compatdata/1091500/pfx /bin/wine64 regedit ../../common/Cyberpunk\ 2077/bin/x64/FidelityFx\ Super\ Resolution\ 2.0-3001-0-3-1656426926/EnableSignatureOverride.reg
-```
+
 
 After this command the mod should work fine
