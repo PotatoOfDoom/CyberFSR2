@@ -13,6 +13,7 @@
 #include <limits>
 #include <string>
 #include <cwctype>
+#include <filesystem>
 
 #include <ffx-fsr2-api/ffx_fsr2.h>
 #include <ffx-fsr2-api/dx12/ffx_fsr2_dx12.h>

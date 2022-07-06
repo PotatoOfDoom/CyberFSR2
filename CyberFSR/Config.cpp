@@ -1,17 +1,10 @@
 #include "pch.h"
 #include "Config.h"
-
-extern HMODULE hMod;
+#include "Util.h"
 
 Config::Config(std::wstring fileName)
+	: absoluteFileName(Util::DllPath().parent_path() / fileName)
 {
-	std::wstring dllName = L"nvngx.dll";
-	wchar_t dllPath[MAX_PATH];
-	GetModuleFileNameW(hMod, dllPath, MAX_PATH);
-
-	absoluteFileName = std::wstring(dllPath);
-	absoluteFileName.replace(absoluteFileName.find(dllName), dllName.size(), fileName);
-
 	// Depth
 	DepthInverted = readBool(L"Depth", L"DepthInverted");
 
@@ -34,18 +27,14 @@ Config::Config(std::wstring fileName)
 	NearPlane = readFloat(L"View", L"NearPlane");
 	FarPlane = readFloat(L"View", L"FarPlane");
 
-	wchar_t exePath[MAX_PATH];
-	if (GetModuleFileNameW(nullptr, exePath, MAX_PATH)) {
-		std::wstring exeName = std::wstring(exePath);
-		exeName = exeName.substr(exeName.find_last_of(L"/\\") + 1);
-		if (exeName == L"Cyberpunk2077.exe")
-		{
-			Method = Method.value_or(ViewMethod::Cyberpunk2077);
-		}
-		else if (exeName == L"DyingLightGame_x64_rwdi.exe")
-		{
-			SharpnessRange = SharpnessRange.value_or(SharpnessRangeModifier::Extended);
-		}
+	auto exeName = Util::ExePath().filename();
+	if (exeName == "Cyberpunk2077.exe")
+	{
+		Method = Method.value_or(ViewMethod::Cyberpunk2077);
+	}
+	else if (exeName == "DyingLightGame_x64_rwdi.exe")
+	{
+		SharpnessRange = SharpnessRange.value_or(SharpnessRangeModifier::Extended);
 	}
 }
 
