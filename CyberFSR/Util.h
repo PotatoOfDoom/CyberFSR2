@@ -1,8 +1,12 @@
 #pragma once
+#include "Config.h"
+
 class Util
 {
 public:
 	static double MillisecondsNow();
+
+	static float ConvertSharpness(float sharpness, std::optional<SharpnessRangeModifier> range);
 
 	enum class NvParameter
 	{

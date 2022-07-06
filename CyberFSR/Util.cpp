@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Config.h"
 #include "Util.h"
 
 double Util::MillisecondsNow()
@@ -19,6 +20,31 @@ double Util::MillisecondsNow()
 	}
 
 	return milliseconds;
+}
+
+float Util::ConvertSharpness(float sharpness, std::optional<SharpnessRangeModifier> range)
+{
+	if (range == SharpnessRangeModifier::Extended)
+	{
+		// normalize sharpness value to [0, 1] range
+		// originally in range [-0.99, 1]
+		if (sharpness >= 1.0f)
+		{
+			return 1.0f;
+		}
+		else if (sharpness <= -1.0f)
+		{
+			return 0;
+		}
+		else
+		{
+			return (sharpness + 0.99f) / 2.0f;
+		}
+	}
+	else
+	{
+		return sharpness;
+	}
 }
 
 Util::NvParameter Util::NvParameterToEnum(const char* name)

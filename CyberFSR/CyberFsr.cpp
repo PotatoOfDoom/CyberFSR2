@@ -174,8 +174,10 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 		dispatchParameters.motionVectorScale.y = (float)inParams->MVScaleY;
 
 		dispatchParameters.reset = inParams->ResetRender;
+
+		float sharpness = Util::ConvertSharpness(inParams->Sharpness, Config::instance().SharpnessRange);
 		dispatchParameters.enableSharpening = Config::instance().EnableSharpening.value_or(inParams->EnableSharpening);
-		dispatchParameters.sharpness = Config::instance().Sharpness.value_or(inParams->Sharpness);
+		dispatchParameters.sharpness = Config::instance().Sharpness.value_or(sharpness);
 
 		//deltatime hax
 		static double lastFrameTime;
