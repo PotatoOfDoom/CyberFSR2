@@ -9,6 +9,8 @@ enum class SharpnessRangeModifier {
 class Config
 {
 public: 
+	Config(std::wstring fileName);
+
 	// Depth
 	std::optional<bool> DepthInverted;
 
@@ -30,15 +32,7 @@ public:
 	std::optional<float> NearPlane;
 	std::optional<float> FarPlane;
 
-	static const Config& instance()
-	{
-		static Config INSTANCE(L"nvngx.ini");
-		return INSTANCE;
-	}
-
 private:
-	Config(std::wstring fileName);
-
 	std::wstring absoluteFileName;
 
 	std::wstring readValue(std::wstring section, std::wstring key);

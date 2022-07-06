@@ -1,4 +1,5 @@
 #pragma once
+#include "Config.h"
 
 struct CameraParams
 {
@@ -11,10 +12,11 @@ struct CameraParams
 
 class ViewMatrixHook
 {
+	const Config& config;
 	CameraParams* camParams = nullptr;
 
 public:
-	ViewMatrixHook();
+	ViewMatrixHook(const Config& config);
 
 	float GetFov();
 	float GetFarPlane();

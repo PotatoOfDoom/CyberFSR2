@@ -2,7 +2,8 @@
 #include "ViewMatrixHook.h"
 #include "Config.h"
 
-ViewMatrixHook::ViewMatrixHook()
+ViewMatrixHook::ViewMatrixHook(const Config& config)
+	: config(config)
 {
 	//TODO check for different executable versions
 
@@ -20,16 +21,16 @@ ViewMatrixHook::ViewMatrixHook()
 
 float ViewMatrixHook::GetFov()
 {
-	return Config::instance().VerticalFOV.value_or(camParams ? camParams->FoV : 60.0f);
+	return config.VerticalFOV.value_or(camParams ? camParams->FoV : 60.0f);
 }
 
 float ViewMatrixHook::GetFarPlane()
 {
 	float infinity = std::numeric_limits<float>::infinity();
-	return Config::instance().FarPlane.value_or(camParams ? camParams->FarPlane : infinity);
+	return config.FarPlane.value_or(camParams ? camParams->FarPlane : infinity);
 }
 
 float ViewMatrixHook::GetNearPlane()
 {
-	return Config::instance().NearPlane.value_or(camParams ? camParams->NearPlane : 0.0f);
+	return config.NearPlane.value_or(camParams ? camParams->NearPlane : 0.0f);
 }

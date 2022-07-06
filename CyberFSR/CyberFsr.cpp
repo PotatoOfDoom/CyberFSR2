@@ -73,7 +73,8 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	ID3D12Device* device;
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
 	auto deviceContext = CyberFsrContext::instance().CreateContext();
-	deviceContext->ViewMatrix = std::make_unique<ViewMatrixHook>();
+	deviceContext->Config = std::make_unique<Config>(L"nvngx.ini");
+	deviceContext->ViewMatrix = std::make_unique<ViewMatrixHook>(*deviceContext->Config);
 
 	*OutHandle = &deviceContext->Handle;
 
@@ -90,23 +91,23 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	initParams.displaySize.height = inParams->OutHeight;
 
 	initParams.flags = 0;
-	if (Config::instance().DepthInverted.value_or(inParams->DepthInverted))
+	if (deviceContext->Config->DepthInverted.value_or(inParams->DepthInverted))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_DEPTH_INVERTED;
 	}
-	if (Config::instance().AutoExposure.value_or(inParams->AutoExposure))
+	if (deviceContext->Config->AutoExposure.value_or(inParams->AutoExposure))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_AUTO_EXPOSURE;
 	}
-	if (Config::instance().HDR.value_or(inParams->Hdr))
+	if (deviceContext->Config->HDR.value_or(inParams->Hdr))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE;
 	}
-	if (Config::instance().JitterCancellation.value_or(inParams->JitterMotion))
+	if (deviceContext->Config->JitterCancellation.value_or(inParams->JitterMotion))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION;
 	}
-	if (Config::instance().DisplayResolution.value_or(!inParams->LowRes))
+	if (deviceContext->Config->DisplayResolution.value_or(!inParams->LowRes))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
 	}
@@ -175,9 +176,9 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 
 		dispatchParameters.reset = inParams->ResetRender;
 
-		float sharpness = Util::ConvertSharpness(inParams->Sharpness, Config::instance().SharpnessRange);
-		dispatchParameters.enableSharpening = Config::instance().EnableSharpening.value_or(inParams->EnableSharpening);
-		dispatchParameters.sharpness = Config::instance().Sharpness.value_or(sharpness);
+		float sharpness = Util::ConvertSharpness(inParams->Sharpness, deviceContext->Config->SharpnessRange);
+		dispatchParameters.enableSharpening = deviceContext->Config->EnableSharpening.value_or(inParams->EnableSharpening);
+		dispatchParameters.sharpness = deviceContext->Config->Sharpness.value_or(sharpness);
 
 		//deltatime hax
 		static double lastFrameTime;
