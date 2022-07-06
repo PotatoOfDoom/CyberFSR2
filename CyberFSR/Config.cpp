@@ -116,9 +116,9 @@ std::optional<SharpnessRangeModifier> Config::readSharpnessRange(std::wstring se
 	{
 		return SharpnessRangeModifier::Normal;
 	}
-	else if (value == L"negative")
+	else if (value == L"extended")
 	{
-		return SharpnessRangeModifier::Negative;
+		return SharpnessRangeModifier::Extended;
 	}
 	else
 	{

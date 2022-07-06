@@ -3,7 +3,7 @@
 
 enum class SharpnessRangeModifier {
 	Normal,
-	Negative
+	Extended
 };
 
 class Config
