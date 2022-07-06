@@ -1,9 +1,46 @@
 #include "pch.h"
 #include "ViewMatrixHook.h"
-#include "Config.h"
 
-ViewMatrixHook::ViewMatrixHook(const Config& config)
-	: config(config)
+std::unique_ptr<ViewMatrixHook> ViewMatrixHook::Create(const Config& config)
+{
+	switch (config.Method.value_or(ViewMethod::Config))
+	{
+		case ViewMethod::Cyberpunk2077:
+			return std::make_unique<ViewMatrixHook::Cyberpunk2077>();
+
+		case ViewMethod::Config:
+		default:
+			return std::make_unique<ViewMatrixHook::Configured>(
+				config.VerticalFOV.value_or(60.0f),
+				config.FarPlane.value_or(std::numeric_limits<float>::infinity()),
+				config.NearPlane.value_or(0.0f)
+			);
+	}
+}
+
+ViewMatrixHook::Configured::Configured(float fov, float nearPlane, float farPlane)
+	: Fov(fov)
+	, NearPlane(nearPlane)
+	, FarPlane(farPlane)
+{
+}
+
+float ViewMatrixHook::Configured::GetFov()
+{
+	return Fov;
+}
+
+float ViewMatrixHook::Configured::GetFarPlane()
+{
+	return FarPlane;
+}
+
+float ViewMatrixHook::Configured::GetNearPlane()
+{
+	return NearPlane;
+}
+
+ViewMatrixHook::Cyberpunk2077::Cyberpunk2077()
 {
 	//TODO check for different executable versions
 
@@ -12,25 +49,21 @@ ViewMatrixHook::ViewMatrixHook(const Config& config)
 	*/
 
 	auto mod = (uint64_t)GetModuleHandleW(L"Cyberpunk2077.exe");
-	if (mod != 0)
-	{
-		auto ptr1 = *((uintptr_t*)(mod + 0x4B6F888));
-		camParams = ((CameraParams*)(ptr1 + 0x60));
-	}
+	auto ptr1 = *((uintptr_t*)(mod + 0x4B6F888));
+	camParams = ((CameraParams*)(ptr1 + 0x60));
 }
 
-float ViewMatrixHook::GetFov()
+float ViewMatrixHook::Cyberpunk2077::GetFov()
 {
-	return config.VerticalFOV.value_or(camParams ? camParams->FoV : 60.0f);
+	return camParams->Fov;
 }
 
-float ViewMatrixHook::GetFarPlane()
+float ViewMatrixHook::Cyberpunk2077::GetFarPlane()
 {
-	float infinity = std::numeric_limits<float>::infinity();
-	return config.FarPlane.value_or(camParams ? camParams->FarPlane : infinity);
+	return camParams->FarPlane;
 }
 
-float ViewMatrixHook::GetNearPlane()
+float ViewMatrixHook::Cyberpunk2077::GetNearPlane()
 {
-	return config.NearPlane.value_or(camParams ? camParams->NearPlane : 0.0f);
+	return camParams->NearPlane;
 }

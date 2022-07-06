@@ -3,7 +3,12 @@
 
 enum class SharpnessRangeModifier {
 	Normal,
-	Extended
+	Extended,
+};
+
+enum class ViewMethod {
+	Config,
+	Cyberpunk2077,
 };
 
 class Config
@@ -28,6 +33,7 @@ public:
 	std::optional<SharpnessRangeModifier> SharpnessRange;
 
 	// View
+	std::optional<ViewMethod> Method;
 	std::optional<float> VerticalFOV;
 	std::optional<float> NearPlane;
 	std::optional<float> FarPlane;
@@ -41,4 +47,5 @@ private:
 	std::optional<bool> readBool(std::wstring section, std::wstring key);
 	std::optional<float> readFloat(std::wstring section, std::wstring key);
 	std::optional<SharpnessRangeModifier> readSharpnessRange(std::wstring section, std::wstring key);
+	std::optional<ViewMethod> readViewMethod(std::wstring section, std::wstring key);
 };

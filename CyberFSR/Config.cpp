@@ -29,9 +29,24 @@ Config::Config(std::wstring fileName)
 	SharpnessRange = readSharpnessRange(L"Sharpening", L"SharpnessRange");
 
 	// View
+	Method = readViewMethod(L"View", L"Method");
 	VerticalFOV = readFloat(L"View", L"VerticalFOV");
 	NearPlane = readFloat(L"View", L"NearPlane");
 	FarPlane = readFloat(L"View", L"FarPlane");
+
+	wchar_t exePath[MAX_PATH];
+	if (GetModuleFileNameW(nullptr, exePath, MAX_PATH)) {
+		std::wstring exeName = std::wstring(exePath);
+		exeName = exeName.substr(exeName.find_last_of(L"/\\") + 1);
+		if (exeName == L"Cyberpunk2077.exe")
+		{
+			Method = Method.value_or(ViewMethod::Cyberpunk2077);
+		}
+		else if (exeName == L"DyingLightGame_x64_rwdi.exe")
+		{
+			SharpnessRange = SharpnessRange.value_or(SharpnessRangeModifier::Extended);
+		}
+	}
 }
 
 std::wstring Config::readValue(std::wstring section, std::wstring key)
@@ -119,6 +134,29 @@ std::optional<SharpnessRangeModifier> Config::readSharpnessRange(std::wstring se
 	else if (value == L"extended")
 	{
 		return SharpnessRangeModifier::Extended;
+	}
+	else
+	{
+		return std::nullopt;
+	}
+}
+
+std::optional<ViewMethod> Config::readViewMethod(std::wstring section, std::wstring key)
+{
+	auto value = readValue(section, key);
+	std::transform(
+		value.begin(), value.end(),
+		value.begin(),
+		std::towlower
+	);
+
+	if (value == L"config")
+	{
+		return ViewMethod::Config;
+	}
+	else if (value == L"cyberpunk2077")
+	{
+		return ViewMethod::Cyberpunk2077;
 	}
 	else
 	{
