@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Config.h"
 #include "Util.h"
 #include "Dx12ParameterImpl.h"
 

@@ -1,8 +1,15 @@
 #pragma once
-class Util
+#include "Config.h"
+
+namespace Util
 {
-public:
-	static double MillisecondsNow();
+	std::filesystem::path ExePath();
+
+	std::filesystem::path DllPath();
+
+	double MillisecondsNow();
+
+	float ConvertSharpness(float sharpness, std::optional<SharpnessRangeModifier> range);
 
 	enum class NvParameter
 	{
@@ -59,7 +66,7 @@ public:
 		Jitter_Offset_Y,
 	};
 
-	static NvParameter NvParameterToEnum(const char* name);
+	NvParameter NvParameterToEnum(const char* name);
 };
 
 inline void ThrowIfFailed(HRESULT hr)

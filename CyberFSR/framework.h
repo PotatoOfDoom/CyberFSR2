@@ -9,6 +9,11 @@
 #include <unordered_map>
 #include <vector>
 #include <mutex>
+#include <limits>
+#include <string>
+#include <cctype>
+#include <algorithm>
+#include <filesystem>
 
 #include <ffx-fsr2-api/ffx_fsr2.h>
 #include <ffx-fsr2-api/dx12/ffx_fsr2_dx12.h>
@@ -17,3 +22,5 @@
 #define NVSDK_NGX
 #define NGX_ENABLE_DEPRECATED_GET_PARAMETERS
 #include <nvsdk_ngx.h>
+
+#include "SimpleIni.h"
