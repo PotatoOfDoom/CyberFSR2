@@ -1,20 +1,22 @@
 #pragma once
 #include "pch.h"
 
-enum class SharpnessRangeModifier {
+enum class SharpnessRangeModifier
+{
 	Normal,
 	Extended,
 };
 
-enum class ViewMethod {
+enum class ViewMethod
+{
 	Config,
 	Cyberpunk2077,
 };
 
 class Config
 {
-public: 
-	Config(std::wstring fileName);
+public:
+	Config(std::string fileName);
 
 	// Depth
 	std::optional<bool> DepthInverted;
@@ -39,13 +41,11 @@ public:
 	std::optional<float> FarPlane;
 
 private:
-	std::wstring absoluteFileName;
+	CSimpleIniA ini;
 
-	std::wstring readValue(std::wstring section, std::wstring key);
-
-	std::optional<std::wstring> readString(std::wstring section, std::wstring key);
-	std::optional<bool> readBool(std::wstring section, std::wstring key);
-	std::optional<float> readFloat(std::wstring section, std::wstring key);
-	std::optional<SharpnessRangeModifier> readSharpnessRange(std::wstring section, std::wstring key);
-	std::optional<ViewMethod> readViewMethod(std::wstring section, std::wstring key);
+	std::optional<std::string> readString(std::string section, std::string key, bool lowercase = false);
+	std::optional<float> readFloat(std::string section, std::string key);
+	std::optional<bool> readBool(std::string section, std::string key);
+	std::optional<SharpnessRangeModifier> readSharpnessRange(std::string section, std::string key);
+	std::optional<ViewMethod> readViewMethod(std::string section, std::string key);
 };

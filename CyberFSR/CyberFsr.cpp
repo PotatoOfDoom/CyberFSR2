@@ -73,7 +73,7 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	ID3D12Device* device;
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
 	auto deviceContext = CyberFsrContext::instance().CreateContext();
-	deviceContext->Config = std::make_unique<Config>(L"nvngx.ini");
+	deviceContext->Config = std::make_unique<Config>("nvngx.ini");
 	deviceContext->ViewMatrix = ViewMatrixHook::Create(*deviceContext->Config);
 
 	*OutHandle = &deviceContext->Handle;

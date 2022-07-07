@@ -2,30 +2,34 @@
 #include "Config.h"
 #include "Util.h"
 
-Config::Config(std::wstring fileName)
-	: absoluteFileName(Util::DllPath().parent_path() / fileName)
+Config::Config(std::string fileName)
 {
-	// Depth
-	DepthInverted = readBool(L"Depth", L"DepthInverted");
+	auto absoluteFileName = Util::DllPath().parent_path() / fileName;
 
-	// Color
-	AutoExposure = readBool(L"Color", L"AutoExposure");
-	HDR = readBool(L"Color", L"HDR");
+	if (ini.LoadFile(absoluteFileName.c_str()) == SI_OK)
+	{
+		// Depth
+		DepthInverted = readBool("Depth", "DepthInverted");
 
-	// MotionVectors
-	JitterCancellation = readBool(L"MotionVectors", L"JitterCancellation");
-	DisplayResolution = readBool(L"MotionVectors", L"DisplayResolution");
+		// Color
+		AutoExposure = readBool("Color", "AutoExposure");
+		HDR = readBool("Color", "HDR");
 
-	// Sharpening
-	EnableSharpening = readBool(L"Sharpening", L"EnableSharpening");
-	Sharpness = readFloat(L"Sharpening", L"Sharpness");
-	SharpnessRange = readSharpnessRange(L"Sharpening", L"SharpnessRange");
+		// MotionVectors
+		JitterCancellation = readBool("MotionVectors", "JitterCancellation");
+		DisplayResolution = readBool("MotionVectors", "DisplayResolution");
 
-	// View
-	Method = readViewMethod(L"View", L"Method");
-	VerticalFOV = readFloat(L"View", L"VerticalFOV");
-	NearPlane = readFloat(L"View", L"NearPlane");
-	FarPlane = readFloat(L"View", L"FarPlane");
+		// Sharpening
+		EnableSharpening = readBool("Sharpening", "EnableSharpening");
+		Sharpness = readFloat("Sharpening", "Sharpness");
+		SharpnessRange = readSharpnessRange("Sharpening", "SharpnessRange");
+
+		// View
+		Method = readViewMethod("View", "Method");
+		VerticalFOV = readFloat("View", "VerticalFOV");
+		NearPlane = readFloat("View", "NearPlane");
+		FarPlane = readFloat("View", "FarPlane");
+	}
 
 	auto exeName = Util::ExePath().filename();
 	if (exeName == "Cyberpunk2077.exe")
@@ -38,64 +42,37 @@ Config::Config(std::wstring fileName)
 	}
 }
 
-std::wstring Config::readValue(std::wstring section, std::wstring key)
+std::optional<std::string> Config::readString(std::string section, std::string key, bool lowercase)
 {
-	wchar_t value[100];
-	GetPrivateProfileStringW(
-		section.c_str(), // lpAppName
-		key.c_str(), // lpKeyName
-		L"auto", // lpDefault
-		value, // lpReturnedString
-		100, // nSize
-		absoluteFileName.c_str() // lpFileName
-	);
-	return std::wstring(value);
-}
-
-std::optional<std::wstring> Config::readString(std::wstring section, std::wstring key)
-{
-	auto value = readValue(section, key);
-	if (value == L"auto")
-	{
-		return std::nullopt;
-	}
-	return value;
-}
-
-std::optional<bool> Config::readBool(std::wstring section, std::wstring key)
-{
-	auto value = readValue(section, key);
+	std::string value = ini.GetValue(section.c_str(), key.c_str(), "auto");
+	
+	std::string lower = value;
 	std::transform(
-		value.begin(), value.end(),
-		value.begin(),
-		std::towlower
+		lower.begin(), lower.end(),
+		lower.begin(),
+		[](unsigned char c)
+		{
+			return std::tolower(c);
+		}
 	);
 
-	if (value == L"true")
-	{
-		return true;
-	}
-	else if (value == L"false")
-	{
-		return false;
-	}
-	else
+	if (lower == "auto")
 	{
 		return std::nullopt;
 	}
+	return lowercase ? lower : value;
 }
 
-std::optional<float> Config::readFloat(std::wstring section, std::wstring key)
+std::optional<float> Config::readFloat(std::string section, std::string key)
 {
-	auto value = readValue(section, key);
-	if (value == L"auto")
-	{
-		return std::nullopt;
-	}
-
+	auto value = readString(section, key);
 	try
 	{
-		return std::stof(value);
+		return std::stof(value.value());
+	}
+	catch (const std::bad_optional_access&) // missing or auto value
+	{
+		return std::nullopt;
 	}
 	catch (const std::invalid_argument&) // invalid float string for std::stof
 	{
@@ -107,48 +84,47 @@ std::optional<float> Config::readFloat(std::wstring section, std::wstring key)
 	}
 }
 
-std::optional<SharpnessRangeModifier> Config::readSharpnessRange(std::wstring section, std::wstring key)
+std::optional<bool> Config::readBool(std::string section, std::string key)
 {
-	auto value = readValue(section, key);
-	std::transform(
-		value.begin(), value.end(),
-		value.begin(),
-		std::towlower
-	);
+	auto value = readString(section, key, true);
+	if (value == "true")
+	{
+		return true;
+	}
+	else if (value == "false")
+	{
+		return false;
+	}
 
-	if (value == L"normal")
+	return std::nullopt;
+}
+
+std::optional<SharpnessRangeModifier> Config::readSharpnessRange(std::string section, std::string key)
+{
+	auto value = readString(section, key, true);
+	if (value == "normal")
 	{
 		return SharpnessRangeModifier::Normal;
 	}
-	else if (value == L"extended")
+	else if (value == "extended")
 	{
 		return SharpnessRangeModifier::Extended;
 	}
-	else
-	{
-		return std::nullopt;
-	}
+
+	return std::nullopt;
 }
 
-std::optional<ViewMethod> Config::readViewMethod(std::wstring section, std::wstring key)
+std::optional<ViewMethod> Config::readViewMethod(std::string section, std::string key)
 {
-	auto value = readValue(section, key);
-	std::transform(
-		value.begin(), value.end(),
-		value.begin(),
-		std::towlower
-	);
-
-	if (value == L"config")
+	auto value = readString(section, key, true);
+	if (value == "config")
 	{
 		return ViewMethod::Config;
 	}
-	else if (value == L"cyberpunk2077")
+	else if (value == "cyberpunk2077")
 	{
 		return ViewMethod::Cyberpunk2077;
 	}
-	else
-	{
-		return std::nullopt;
-	}
+
+	return std::nullopt;
 }
