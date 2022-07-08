@@ -28,3 +28,8 @@ void CyberFsrContext::DeleteContext(NVSDK_NGX_Handle* handle)
 		[&handleId](const auto& p) { return p.first == handleId; });
 	Contexts.erase(it);
 }
+
+CyberFsrContext::CyberFsrContext()
+{
+	MyConfig = std::make_unique<Config>("nvngx.ini");
+}

@@ -8,7 +8,10 @@ class FeatureContext;
 //Global Context
 class CyberFsrContext
 {
+	CyberFsrContext();
 public:
+	std::shared_ptr<Config> MyConfig;
+
 	VkDevice VulkanDevice;
 	VkInstance VulkanInstance;
 	VkPhysicalDevice VulkanPhysicalDevice;
@@ -21,14 +24,11 @@ public:
 	FeatureContext* CreateContext();
 	void DeleteContext(NVSDK_NGX_Handle* handle);
 
-	static CyberFsrContext& instance()
+	static std::shared_ptr<CyberFsrContext> instance()
 	{
-		static CyberFsrContext INSTANCE;
+		static std::shared_ptr<CyberFsrContext> INSTANCE{new CyberFsrContext()};
 		return INSTANCE;
 	}
-
-private:
-	CyberFsrContext() {}
 };
 
 class FeatureContext
@@ -38,7 +38,6 @@ public:
 	NVSDK_NGX_Handle Handle;
 	ID3D12Device* DxDevice;
 	std::unique_ptr<FfxFsr2Context> FsrContext;
-	std::unique_ptr<const Config> Config;
 
 	unsigned int Width{}, Height{}, RenderWidth{}, RenderHeight{};
 	NVSDK_NGX_PerfQuality_Value PerfQualityValue = NVSDK_NGX_PerfQuality_Value_Balanced;

@@ -18,22 +18,22 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_Init(unsigned long long InApplicationId, const 
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_D3D12_Shutdown(void)
 {
-	CyberFsrContext::instance().Parameters.clear();
-	CyberFsrContext::instance().Contexts.clear();
+	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_D3D12_Shutdown1(ID3D12Device* InDevice)
 {
-	CyberFsrContext::instance().Parameters.clear();
-	CyberFsrContext::instance().Contexts.clear();
+	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
 
 //Deprecated Parameter Function - Internal Memory Tracking
 NVSDK_NGX_Result NVSDK_NGX_D3D12_GetParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = CyberFsrContext::instance().AllocateParameter<NvParameter>();
+	*OutParameters = CyberFsrContext::instance()->AllocateParameter<NvParameter>();
 	return NVSDK_NGX_Result_Success;
 }
 
@@ -72,9 +72,11 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 
 	ID3D12Device* device;
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
-	auto deviceContext = CyberFsrContext::instance().CreateContext();
-	deviceContext->Config = std::make_unique<Config>("nvngx.ini");
-	deviceContext->ViewMatrix = ViewMatrixHook::Create(*deviceContext->Config);
+
+	auto instance = CyberFsrContext::instance();
+	auto config = instance->MyConfig;
+	auto deviceContext = CyberFsrContext::instance()->CreateContext();
+	deviceContext->ViewMatrix = ViewMatrixHook::Create(*config);
 
 	*OutHandle = &deviceContext->Handle;
 
@@ -91,23 +93,23 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	initParams.displaySize.height = inParams->OutHeight;
 
 	initParams.flags = 0;
-	if (deviceContext->Config->DepthInverted.value_or(inParams->DepthInverted))
+	if (config->DepthInverted.value_or(inParams->DepthInverted))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_DEPTH_INVERTED;
 	}
-	if (deviceContext->Config->AutoExposure.value_or(inParams->AutoExposure))
+	if (config->AutoExposure.value_or(inParams->AutoExposure))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_AUTO_EXPOSURE;
 	}
-	if (deviceContext->Config->HDR.value_or(inParams->Hdr))
+	if (config->HDR.value_or(inParams->Hdr))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE;
 	}
-	if (deviceContext->Config->JitterCancellation.value_or(inParams->JitterMotion))
+	if (config->JitterCancellation.value_or(inParams->JitterMotion))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION;
 	}
-	if (deviceContext->Config->DisplayResolution.value_or(!inParams->LowRes))
+	if (config->DisplayResolution.value_or(!inParams->LowRes))
 	{
 		initParams.flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
 	}
@@ -123,10 +125,10 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 
 NVSDK_NGX_Result NVSDK_NGX_D3D12_ReleaseFeature(NVSDK_NGX_Handle* InHandle)
 {
-	auto deviceContext = CyberFsrContext::instance().Contexts[InHandle->Id];
+	auto deviceContext = CyberFsrContext::instance()->Contexts[InHandle->Id];
 	FfxErrorCode errorCode = ffxFsr2ContextDestroy(deviceContext->FsrContext.get());
 	FFX_ASSERT(errorCode == FFX_OK);
-	CyberFsrContext::instance().DeleteContext(InHandle);
+	CyberFsrContext::instance()->DeleteContext(InHandle);
 	return NVSDK_NGX_Result_Success;
 }
 
@@ -147,7 +149,9 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 
 	ID3D12Device* device;
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
-	auto deviceContext = CyberFsrContext::instance().Contexts[InFeatureHandle->Id];
+	auto instance = CyberFsrContext::instance();
+	auto config = instance->MyConfig;
+	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id];
 
 	if (orgRootSig)
 	{
@@ -176,9 +180,9 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 
 		dispatchParameters.reset = inParams->ResetRender;
 
-		float sharpness = Util::ConvertSharpness(inParams->Sharpness, deviceContext->Config->SharpnessRange);
-		dispatchParameters.enableSharpening = deviceContext->Config->EnableSharpening.value_or(inParams->EnableSharpening);
-		dispatchParameters.sharpness = deviceContext->Config->Sharpness.value_or(sharpness);
+		float sharpness = Util::ConvertSharpness(inParams->Sharpness, config->SharpnessRange);
+		dispatchParameters.enableSharpening = config->EnableSharpening.value_or(inParams->EnableSharpening);
+		dispatchParameters.sharpness = config->Sharpness.value_or(sharpness);
 
 		//deltatime hax
 		static double lastFrameTime;

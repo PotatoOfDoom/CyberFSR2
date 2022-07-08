@@ -6,29 +6,29 @@
 
 NVSDK_NGX_API NVSDK_NGX_Result  NVSDK_CONV NVSDK_NGX_VULKAN_Init(unsigned long long InApplicationId, const wchar_t* InApplicationDataPath, VkInstance InInstance, VkPhysicalDevice InPD, VkDevice InDevice, const NVSDK_NGX_FeatureCommonInfo* InFeatureInfo, NVSDK_NGX_Version InSDKVersion)
 {
-	CyberFsrContext::instance().VulkanDevice = InDevice;
-	CyberFsrContext::instance().VulkanInstance = InInstance;
-	CyberFsrContext::instance().VulkanPhysicalDevice = InPD;
+	CyberFsrContext::instance()->VulkanDevice = InDevice;
+	CyberFsrContext::instance()->VulkanInstance = InInstance;
+	CyberFsrContext::instance()->VulkanPhysicalDevice = InPD;
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_Shutdown(void)
 {
-	CyberFsrContext::instance().VulkanDevice = nullptr;
-	CyberFsrContext::instance().VulkanInstance = nullptr;
-	CyberFsrContext::instance().VulkanPhysicalDevice = nullptr;
-	CyberFsrContext::instance().Parameters.clear();
-	CyberFsrContext::instance().Contexts.clear();
+	CyberFsrContext::instance()->VulkanDevice = nullptr;
+	CyberFsrContext::instance()->VulkanInstance = nullptr;
+	CyberFsrContext::instance()->VulkanPhysicalDevice = nullptr;
+	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_Shutdown1(VkDevice InDevice)
 {
-	CyberFsrContext::instance().VulkanDevice = nullptr;
-	CyberFsrContext::instance().VulkanInstance = nullptr;
-	CyberFsrContext::instance().VulkanPhysicalDevice = nullptr;
-	CyberFsrContext::instance().Parameters.clear();
-	CyberFsrContext::instance().Contexts.clear();
+	CyberFsrContext::instance()->VulkanDevice = nullptr;
+	CyberFsrContext::instance()->VulkanInstance = nullptr;
+	CyberFsrContext::instance()->VulkanPhysicalDevice = nullptr;
+	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
 
@@ -57,7 +57,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_GetScratchBufferSize(
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature(VkCommandBuffer InCmdBuffer, NVSDK_NGX_Feature InFeatureID, const NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
 {
-	return NVSDK_NGX_VULKAN_CreateFeature1(CyberFsrContext::instance().VulkanDevice, InCmdBuffer, InFeatureID, InParameters, OutHandle);
+	return NVSDK_NGX_VULKAN_CreateFeature1(CyberFsrContext::instance()->VulkanDevice, InCmdBuffer, InFeatureID, InParameters, OutHandle);
 }
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevice InDevice, VkCommandBuffer InCmdList, NVSDK_NGX_Feature InFeatureID, const NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
@@ -65,17 +65,17 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevi
 	const auto inParams = dynamic_cast<const NvParameter*>(InParameters);
 
 	auto instance = CyberFsrContext::instance();
-	auto deviceContext = instance.CreateContext();
-	deviceContext->Config = std::make_unique<Config>("nvngx.ini");
-	deviceContext->ViewMatrix = ViewMatrixHook::Create(*deviceContext->Config);
+	auto config = instance->MyConfig;
+	auto deviceContext = instance->CreateContext();
+	deviceContext->ViewMatrix = ViewMatrixHook::Create(*config);
 
 	*OutHandle = &deviceContext->Handle;
 
 	FfxFsr2ContextDescription initParams = {};
-	const size_t scratchBufferSize = ffxFsr2GetScratchMemorySizeVK(instance.VulkanPhysicalDevice);
+	const size_t scratchBufferSize = ffxFsr2GetScratchMemorySizeVK(instance->VulkanPhysicalDevice);
 	void* scratchBuffer = malloc(scratchBufferSize);
 
-	FfxErrorCode errorCode = ffxFsr2GetInterfaceVK(&initParams.callbacks, scratchBuffer, scratchBufferSize, instance.VulkanPhysicalDevice, vkGetDeviceProcAddr);
+	FfxErrorCode errorCode = ffxFsr2GetInterfaceVK(&initParams.callbacks, scratchBuffer, scratchBufferSize, instance->VulkanPhysicalDevice, vkGetDeviceProcAddr);
 	FFX_ASSERT(errorCode == FFX_OK);
 
 	initParams.device = ffxGetDeviceVK(InDevice);
@@ -89,6 +89,28 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevi
 		| (inParams->JitterMotion) ? FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION : 0
 		| (!inParams->LowRes) ? FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS : 0;
 
+	initParams.flags = 0;
+	if (config->DepthInverted.value_or(inParams->DepthInverted))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_DEPTH_INVERTED;
+	}
+	if (config->AutoExposure.value_or(inParams->AutoExposure))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_AUTO_EXPOSURE;
+	}
+	if (config->HDR.value_or(inParams->Hdr))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE;
+	}
+	if (config->JitterCancellation.value_or(inParams->JitterMotion))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION;
+	}
+	if (config->DisplayResolution.value_or(!inParams->LowRes))
+	{
+		initParams.flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
+	}
+
 	deviceContext->FsrContext = std::make_unique<FfxFsr2Context>();
 
 	ffxFsr2ContextCreate(deviceContext->FsrContext.get(), &initParams);
@@ -97,16 +119,18 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevi
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_ReleaseFeature(NVSDK_NGX_Handle* InHandle)
 {
-	auto deviceContext = CyberFsrContext::instance().Contexts[InHandle->Id];
+	auto deviceContext = CyberFsrContext::instance()->Contexts[InHandle->Id];
 	FfxErrorCode errorCode = ffxFsr2ContextDestroy(deviceContext->FsrContext.get());
 	FFX_ASSERT(errorCode == FFX_OK);
-	CyberFsrContext::instance().DeleteContext(InHandle);
+	CyberFsrContext::instance()->DeleteContext(InHandle);
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCommandBuffer InCmdList, const NVSDK_NGX_Handle* InFeatureHandle, const NVSDK_NGX_Parameter* InParameters, PFN_NVSDK_NGX_ProgressCallback InCallback)
 {
-	auto deviceContext = CyberFsrContext::instance().Contexts[InFeatureHandle->Id];
+	auto instance = CyberFsrContext::instance();
+	auto config = instance->MyConfig;
+	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id];
 	const auto inParams = dynamic_cast<const NvParameter*>(InParameters);
 
 	auto color = (NVSDK_NGX_Resource_VK*)inParams->Color;
@@ -136,8 +160,10 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCom
 	dispatchParameters.motionVectorScale.y = (float)inParams->MVScaleY;
 
 	dispatchParameters.reset = inParams->ResetRender;
-	dispatchParameters.enableSharpening = inParams->EnableSharpening;
-	dispatchParameters.sharpness = inParams->Sharpness;
+
+	float sharpness = Util::ConvertSharpness(inParams->Sharpness, config->SharpnessRange);
+	dispatchParameters.enableSharpening = config->EnableSharpening.value_or(inParams->EnableSharpening);
+	dispatchParameters.sharpness = config->Sharpness.value_or(sharpness);
 
 	static double lastFrameTime;
 	double currentTime = Util::MillisecondsNow();

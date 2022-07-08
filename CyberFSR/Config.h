@@ -40,8 +40,12 @@ public:
 	std::optional<float> NearPlane;
 	std::optional<float> FarPlane;
 
+	void Reload();
+
 private:
 	CSimpleIniA ini;
+
+	std::filesystem::path absoluteFileName;
 
 	std::optional<std::string> readString(std::string section, std::string key, bool lowercase = false);
 	std::optional<float> readFloat(std::string section, std::string key);

@@ -4,8 +4,13 @@
 
 Config::Config(std::string fileName)
 {
-	auto absoluteFileName = Util::DllPath().parent_path() / fileName;
+	absoluteFileName = Util::DllPath().parent_path() / fileName;
 
+	Reload();
+}
+
+void Config::Reload()
+{
 	if (ini.LoadFile(absoluteFileName.c_str()) == SI_OK)
 	{
 		// Depth
