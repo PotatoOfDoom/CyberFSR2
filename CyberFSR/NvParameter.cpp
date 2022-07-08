@@ -2,6 +2,7 @@
 #include "Config.h"
 #include "Util.h"
 #include "NvParameter.h"
+#include "CyberFsr.h"
 
 void NvParameter::Set(const char* InName, unsigned long long InValue)
 {
@@ -259,6 +260,17 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 void NvParameter::EvaluateRenderScale()
 {
 	FfxFsr2QualityMode fsrQualityMode;
+
+	auto config = CyberFsrContext::instance()->MyConfig;
+
+	if (config->UpscaleRatioOverrideEnabled.has_value() && config->UpscaleRatioOverrideEnabled && config->UpscaleRatioOverrideValue.has_value())
+	{
+		auto ratio = config->UpscaleRatioOverrideValue.value();
+		OutHeight = (uint32_t)((float)Height / ratio);
+		OutWidth = (uint32_t)((float)Width / ratio);
+
+		return;
+	}
 
 	switch (PerfQualityValue)
 	{

@@ -34,6 +34,10 @@ public:
 	std::optional<float> Sharpness;
 	std::optional<SharpnessRangeModifier> SharpnessRange;
 
+	// Upscale Ratio Override
+	std::optional<bool> UpscaleRatioOverrideEnabled;
+	std::optional<float> UpscaleRatioOverrideValue;
+
 	// View
 	std::optional<ViewMethod> Method;
 	std::optional<float> VerticalFOV;

@@ -29,6 +29,10 @@ void Config::Reload()
 		Sharpness = readFloat("Sharpening", "Sharpness");
 		SharpnessRange = readSharpnessRange("Sharpening", "SharpnessRange");
 
+		//Upscale Ratio Override
+		UpscaleRatioOverrideEnabled = readBool("UpscaleRatio", "UpscaleRatioOverrideEnabled");
+		UpscaleRatioOverrideValue = readFloat("UpscaleRatio", "UpscaleRatioOverrideValue");
+
 		// View
 		Method = readViewMethod("View", "Method");
 		VerticalFOV = readFloat("View", "VerticalFOV");
