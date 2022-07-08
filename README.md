@@ -2,6 +2,10 @@
 
  This mod is a library for Cyberpunk which replaces Nvidia DLSS with AMD FidelityFX Super Resolution 2.0
 
+## Requirements
+* Visual Studio 2022
+* latest Vulkan SDK (1.3.216.0)
+
 ## Compilation
 
 * Clone this repo including all submodules

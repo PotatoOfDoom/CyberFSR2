@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "ViewMatrixHook.h"
-#include "Dx12ParameterImpl.h"
+#include "NvParameter.h"
 
 class FeatureContext;
 
@@ -9,6 +9,10 @@ class FeatureContext;
 class CyberFsrContext
 {
 public:
+	VkDevice VulkanDevice;
+	VkInstance VulkanInstance;
+	VkPhysicalDevice VulkanPhysicalDevice;
+
 	std::vector<NVSDK_NGX_Parameter*> Parameters;
 	template<class T> NVSDK_NGX_Parameter* AllocateParameter();
 	void DeleteParameter(NVSDK_NGX_Parameter* parameter);

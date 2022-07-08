@@ -1,5 +1,16 @@
 #pragma once
-struct Dx12ParameterImpl : NVSDK_NGX_Parameter
+enum NvParameterType {
+	NvInt,
+	NvFloat,
+	NvDouble,
+	NvUInt,
+	NvULL,
+	NvD3D11Resource,
+	NvD3D12Resource,
+	NvVoidPtr
+};
+
+struct NvParameter : NVSDK_NGX_Parameter
 {
 	unsigned int Width{}, Height{}, OutWidth{}, OutHeight{};
 	NVSDK_NGX_PerfQuality_Value PerfQualityValue = NVSDK_NGX_PerfQuality_Value_Balanced;
@@ -11,14 +22,14 @@ struct Dx12ParameterImpl : NVSDK_NGX_Parameter
 
 	bool DepthInverted, AutoExposure, Hdr, EnableSharpening, JitterMotion, LowRes;
 
-	//external DirectX12 Resources
-	ID3D12Resource* InputBiasCurrentColorMask = nullptr;
-	ID3D12Resource* Color = nullptr;
-	ID3D12Resource* Depth = nullptr;
-	ID3D12Resource* MotionVectors = nullptr;
-	ID3D12Resource* Output = nullptr;
-	ID3D12Resource* TransparencyMask = nullptr;
-	ID3D12Resource* ExposureTexture = nullptr;
+	//external Resources
+	void* InputBiasCurrentColorMask;
+	void* Color;
+	void* Depth;
+	void* MotionVectors;
+	void* Output;
+	void* TransparencyMask;
+	void* ExposureTexture;
 
 	virtual void Set(const char* InName, unsigned long long InValue) override;
 	virtual void Set(const char* InName, float InValue) override;
@@ -38,5 +49,9 @@ struct Dx12ParameterImpl : NVSDK_NGX_Parameter
 	virtual NVSDK_NGX_Result Get(const char* InName, void** OutValue) const override;
 	virtual void Reset() override;
 
+	void Set_Internal(const char* InName, unsigned long long InValue, NvParameterType ParameterType);
+	NVSDK_NGX_Result Get_Internal(const char* InName, unsigned long long* OutValue, NvParameterType ParameterType) const;
+
 	void EvaluateRenderScale();
 };
+
