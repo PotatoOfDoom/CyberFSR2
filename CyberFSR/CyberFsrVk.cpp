@@ -4,7 +4,7 @@
 #include "DirectXHooks.h"
 #include "Util.h"
 
-NVSDK_NGX_API NVSDK_NGX_Result  NVSDK_CONV NVSDK_NGX_VULKAN_Init(unsigned long long InApplicationId, const wchar_t* InApplicationDataPath, VkInstance InInstance, VkPhysicalDevice InPD, VkDevice InDevice, const NVSDK_NGX_FeatureCommonInfo* InFeatureInfo, NVSDK_NGX_Version InSDKVersion)
+NVSDK_NGX_API NVSDK_NGX_Result NVSDK_NGX_VULKAN_Init(unsigned long long InApplicationId, const wchar_t* InApplicationDataPath, VkInstance InInstance, VkPhysicalDevice InPD, VkDevice InDevice, const NVSDK_NGX_FeatureCommonInfo* InFeatureInfo, NVSDK_NGX_Version InSDKVersion)
 {
 	CyberFsrContext::instance()->VulkanDevice = InDevice;
 	CyberFsrContext::instance()->VulkanInstance = InInstance;
@@ -29,6 +29,12 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_Shutdown1(VkDevice In
 	CyberFsrContext::instance()->VulkanPhysicalDevice = nullptr;
 	CyberFsrContext::instance()->Parameters.clear();
 	CyberFsrContext::instance()->Contexts.clear();
+	return NVSDK_NGX_Result_Success;
+}
+
+NVSDK_NGX_Result NVSDK_NGX_VULKAN_GetParameters(NVSDK_NGX_Parameter** OutParameters)
+{
+	*OutParameters = CyberFsrContext::instance()->AllocateParameter<NvParameter>();
 	return NVSDK_NGX_Result_Success;
 }
 
@@ -141,7 +147,6 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCom
 	auto transparencyMask = (NVSDK_NGX_Resource_VK*)inParams->TransparencyMask;
 	auto output = (NVSDK_NGX_Resource_VK*)inParams->Output;
 
-
 	auto* fsrContext = deviceContext->FsrContext.get();
 	FfxFsr2DispatchDescription dispatchParameters = {};
 	dispatchParameters.commandList = ffxGetCommandListVK(InCmdList);
@@ -150,8 +155,12 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCom
 	dispatchParameters.motionVectors = ffxGetTextureResourceVK(fsrContext, motionVectors->Resource.ImageViewInfo.Image, motionVectors->Resource.ImageViewInfo.ImageView, motionVectors->Resource.ImageViewInfo.Width, motionVectors->Resource.ImageViewInfo.Height, motionVectors->Resource.ImageViewInfo.Format, (wchar_t*)L"FSR2_InputMotionVectors");
 	dispatchParameters.exposure = ffxGetTextureResourceVK(fsrContext, exposureTexture->Resource.ImageViewInfo.Image, exposureTexture->Resource.ImageViewInfo.ImageView, exposureTexture->Resource.ImageViewInfo.Width, exposureTexture->Resource.ImageViewInfo.Height, exposureTexture->Resource.ImageViewInfo.Format, (wchar_t*)L"FSR2_InputExposure");
 	dispatchParameters.reactive = ffxGetTextureResourceVK(fsrContext, inputBiasColorMask->Resource.ImageViewInfo.Image, inputBiasColorMask->Resource.ImageViewInfo.ImageView, inputBiasColorMask->Resource.ImageViewInfo.Width, inputBiasColorMask->Resource.ImageViewInfo.Height, inputBiasColorMask->Resource.ImageViewInfo.Format, (wchar_t*)L"FSR2_InputReactiveMap");
-	//TODO find game that uses this and solve this with a simple null check
-	dispatchParameters.transparencyAndComposition = ffxGetTextureResourceVK(fsrContext, nullptr, nullptr, 1, 1, VK_FORMAT_UNDEFINED, (wchar_t*)L"FSR2_TransparencyAndCompositionMap");
+	
+	if (transparencyMask == nullptr)
+		dispatchParameters.transparencyAndComposition = ffxGetTextureResourceVK(fsrContext, nullptr, nullptr, 1, 1, VK_FORMAT_UNDEFINED, (wchar_t*)L"FSR2_TransparencyAndCompositionMap");
+	else
+		dispatchParameters.transparencyAndComposition = ffxGetTextureResourceVK(fsrContext, transparencyMask->Resource.ImageViewInfo.Image, transparencyMask->Resource.ImageViewInfo.ImageView, transparencyMask->Resource.ImageViewInfo.Width, transparencyMask->Resource.ImageViewInfo.Height, inputBiasColorMask->Resource.ImageViewInfo.Format, (wchar_t*)L"FSR2_TransparencyAndCompositionMap");
+	
 	dispatchParameters.output = ffxGetTextureResourceVK(fsrContext, output->Resource.ImageViewInfo.Image, output->Resource.ImageViewInfo.ImageView, output->Resource.ImageViewInfo.Width, output->Resource.ImageViewInfo.Height, output->Resource.ImageViewInfo.Format, (wchar_t*)L"FSR2_OutputUpscaledColor", FFX_RESOURCE_STATE_UNORDERED_ACCESS);
 
 	dispatchParameters.jitterOffset.x = inParams->JitterOffsetX;
@@ -174,7 +183,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCom
 	dispatchParameters.preExposure = 1.0f;
 	dispatchParameters.renderSize.width = inParams->Width;
 	dispatchParameters.renderSize.height = inParams->Height;
-
+	
 	dispatchParameters.cameraFar = deviceContext->ViewMatrix->GetFarPlane();
 	dispatchParameters.cameraNear = deviceContext->ViewMatrix->GetNearPlane();
 	dispatchParameters.cameraFovAngleVertical = DirectX::XMConvertToRadians(deviceContext->ViewMatrix->GetFov());
