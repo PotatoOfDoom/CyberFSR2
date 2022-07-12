@@ -7,6 +7,9 @@ std::unique_ptr<ViewMatrixHook> ViewMatrixHook::Create(const Config& config)
 	{
 		case ViewMethod::Cyberpunk2077:
 			return std::make_unique<ViewMatrixHook::Cyberpunk2077>();
+			
+		case ViewMethod::RDR2:
+			return std::make_unique<ViewMatrixHook::RDR2>();
 
 		case ViewMethod::Config:
 		default:
@@ -17,6 +20,8 @@ std::unique_ptr<ViewMatrixHook> ViewMatrixHook::Create(const Config& config)
 			);
 	}
 }
+
+#pragma region Configured
 
 ViewMatrixHook::Configured::Configured(float fov, float nearPlane, float farPlane)
 	: Fov(fov)
@@ -39,6 +44,10 @@ float ViewMatrixHook::Configured::GetNearPlane()
 {
 	return NearPlane;
 }
+
+#pragma endregion
+
+#pragma region Cyberpunk2077
 
 ViewMatrixHook::Cyberpunk2077::Cyberpunk2077()
 {
@@ -67,3 +76,30 @@ float ViewMatrixHook::Cyberpunk2077::GetNearPlane()
 {
 	return camParams->NearPlane;
 }
+
+#pragma endregion
+
+#pragma region RDR2
+
+ViewMatrixHook::RDR2::RDR2()
+{
+	auto mod = (uint64_t)GetModuleHandleW(L"RDR2.exe");
+	camParams = (CameraParams*)(mod + 0x3E806E0);
+}
+
+float ViewMatrixHook::RDR2::GetFov()
+{
+	return camParams->Fov;
+}
+
+float ViewMatrixHook::RDR2::GetFarPlane()
+{
+	return camParams->FarPlane;
+}
+
+float ViewMatrixHook::RDR2::GetNearPlane()
+{
+	return camParams->NearPlane;
+}
+
+#pragma endregion
