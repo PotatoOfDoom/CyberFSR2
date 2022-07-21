@@ -58,10 +58,10 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_DestroyParameters(NVSDK_NGX_Parameter* InParame
 	return NVSDK_NGX_Result_Success;
 }
 
-//TODO
 NVSDK_NGX_Result NVSDK_NGX_D3D12_GetScratchBufferSize(NVSDK_NGX_Feature InFeatureId,
 	const NVSDK_NGX_Parameter* InParameters, size_t* OutSizeInBytes)
 {
+	*OutSizeInBytes = ffxFsr2GetScratchMemorySizeDX12();
 	return NVSDK_NGX_Result_Success;
 }
 
