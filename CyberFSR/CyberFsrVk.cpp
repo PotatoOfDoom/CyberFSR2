@@ -79,49 +79,50 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevi
 
 	*OutHandle = &deviceContext->Handle;
 
-	FfxFsr2ContextDescription initParams = {};
+	deviceContext->FsrContextDescription = std::make_unique<FfxFsr2ContextDescription>();
+	auto initParams = deviceContext->FsrContextDescription.get();
 	const size_t scratchBufferSize = ffxFsr2GetScratchMemorySizeVK(instance->VulkanPhysicalDevice);
 	void* scratchBuffer = malloc(scratchBufferSize);
 
-	FfxErrorCode errorCode = ffxFsr2GetInterfaceVK(&initParams.callbacks, scratchBuffer, scratchBufferSize, instance->VulkanPhysicalDevice, vkGetDeviceProcAddr);
+	FfxErrorCode errorCode = ffxFsr2GetInterfaceVK(&initParams->callbacks, scratchBuffer, scratchBufferSize, instance->VulkanPhysicalDevice, vkGetDeviceProcAddr);
 	FFX_ASSERT(errorCode == FFX_OK);
 
-	initParams.device = ffxGetDeviceVK(InDevice);
-	initParams.maxRenderSize.width = inParams->Width;
-	initParams.maxRenderSize.height = inParams->Height;
-	initParams.displaySize.width = inParams->OutWidth;
-	initParams.displaySize.height = inParams->OutHeight;
-	initParams.flags = (inParams->DepthInverted) ? FFX_FSR2_ENABLE_DEPTH_INVERTED : 0
+	initParams->device = ffxGetDeviceVK(InDevice);
+	initParams->maxRenderSize.width = inParams->Width;
+	initParams->maxRenderSize.height = inParams->Height;
+	initParams->displaySize.width = inParams->OutWidth;
+	initParams->displaySize.height = inParams->OutHeight;
+	initParams->flags = (inParams->DepthInverted) ? FFX_FSR2_ENABLE_DEPTH_INVERTED : 0
 		| (inParams->AutoExposure) ? FFX_FSR2_ENABLE_AUTO_EXPOSURE : 0
 		| (inParams->Hdr) ? FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE : 0
 		| (inParams->JitterMotion) ? FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION : 0
 		| (!inParams->LowRes) ? FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS : 0;
 
-	initParams.flags = 0;
+	initParams->flags = 0;
 	if (config->DepthInverted.value_or(inParams->DepthInverted))
 	{
-		initParams.flags |= FFX_FSR2_ENABLE_DEPTH_INVERTED;
+		initParams->flags |= FFX_FSR2_ENABLE_DEPTH_INVERTED;
 	}
 	if (config->AutoExposure.value_or(inParams->AutoExposure))
 	{
-		initParams.flags |= FFX_FSR2_ENABLE_AUTO_EXPOSURE;
+		initParams->flags |= FFX_FSR2_ENABLE_AUTO_EXPOSURE;
 	}
 	if (config->HDR.value_or(inParams->Hdr))
 	{
-		initParams.flags |= FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE;
+		initParams->flags |= FFX_FSR2_ENABLE_HIGH_DYNAMIC_RANGE;
 	}
 	if (config->JitterCancellation.value_or(inParams->JitterMotion))
 	{
-		initParams.flags |= FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION;
+		initParams->flags |= FFX_FSR2_ENABLE_MOTION_VECTORS_JITTER_CANCELLATION;
 	}
 	if (config->DisplayResolution.value_or(!inParams->LowRes))
 	{
-		initParams.flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
+		initParams->flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
 	}
 
 	deviceContext->FsrContext = std::make_unique<FfxFsr2Context>();
 
-	ffxFsr2ContextCreate(deviceContext->FsrContext.get(), &initParams);
+	ffxFsr2ContextCreate(deviceContext->FsrContext.get(), initParams);
 	return NVSDK_NGX_Result_Success;
 }
 

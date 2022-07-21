@@ -38,6 +38,7 @@ public:
 	NVSDK_NGX_Handle Handle;
 	ID3D12Device* DxDevice;
 	std::unique_ptr<FfxFsr2Context> FsrContext;
+	std::unique_ptr<FfxFsr2ContextDescription> FsrContextDescription;
 
 	unsigned int Width{}, Height{}, RenderWidth{}, RenderHeight{};
 	NVSDK_NGX_PerfQuality_Value PerfQualityValue = NVSDK_NGX_PerfQuality_Value_Balanced;
