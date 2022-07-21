@@ -81,8 +81,10 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevi
 
 	deviceContext->FsrContextDescription = std::make_unique<FfxFsr2ContextDescription>();
 	auto initParams = deviceContext->FsrContextDescription.get();
+
 	const size_t scratchBufferSize = ffxFsr2GetScratchMemorySizeVK(instance->VulkanPhysicalDevice);
-	void* scratchBuffer = malloc(scratchBufferSize);
+	deviceContext->ScratchBuffer = std::vector<unsigned char>(scratchBufferSize);
+	auto scratchBuffer = deviceContext->ScratchBuffer.data();
 
 	FfxErrorCode errorCode = ffxFsr2GetInterfaceVK(&initParams->callbacks, scratchBuffer, scratchBufferSize, instance->VulkanPhysicalDevice, vkGetDeviceProcAddr);
 	FFX_ASSERT(errorCode == FFX_OK);

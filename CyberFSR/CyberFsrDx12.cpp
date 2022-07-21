@@ -82,8 +82,11 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 
 	deviceContext->FsrContextDescription = std::make_unique<FfxFsr2ContextDescription>();
 	auto initParams = deviceContext->FsrContextDescription.get();
+
 	const size_t scratchBufferSize = ffxFsr2GetScratchMemorySizeDX12();
-	void* scratchBuffer = malloc(scratchBufferSize);
+	deviceContext->ScratchBuffer = std::vector<unsigned char>(scratchBufferSize);
+	auto scratchBuffer = deviceContext->ScratchBuffer.data();
+
 	FfxErrorCode errorCode = ffxFsr2GetInterfaceDX12(&initParams->callbacks, device, scratchBuffer, scratchBufferSize);
 	FFX_ASSERT(errorCode == FFX_OK);
 
