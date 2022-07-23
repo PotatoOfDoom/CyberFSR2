@@ -129,7 +129,7 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 
 NVSDK_NGX_Result NVSDK_NGX_D3D12_ReleaseFeature(NVSDK_NGX_Handle* InHandle)
 {
-	auto deviceContext = CyberFsrContext::instance()->Contexts[InHandle->Id];
+	auto deviceContext = CyberFsrContext::instance()->Contexts[InHandle->Id].get();
 	FfxErrorCode errorCode = ffxFsr2ContextDestroy(deviceContext->FsrContext.get());
 	FFX_ASSERT(errorCode == FFX_OK);
 	CyberFsrContext::instance()->DeleteContext(InHandle);
@@ -155,7 +155,7 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
 	auto instance = CyberFsrContext::instance();
 	auto config = instance->MyConfig;
-	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id];
+	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id].get();
 
 	if (orgRootSig)
 	{

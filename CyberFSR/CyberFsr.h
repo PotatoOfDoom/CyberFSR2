@@ -20,7 +20,7 @@ public:
 	template<class T> NVSDK_NGX_Parameter* AllocateParameter();
 	void DeleteParameter(NVSDK_NGX_Parameter* parameter);
 
-	std::unordered_map <unsigned int, FeatureContext*> Contexts;
+	std::unordered_map <unsigned int, std::unique_ptr<FeatureContext>> Contexts;
 	FeatureContext* CreateContext();
 	void DeleteContext(NVSDK_NGX_Handle* handle);
 

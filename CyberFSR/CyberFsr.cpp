@@ -9,15 +9,15 @@ void CyberFsrContext::DeleteParameter(NVSDK_NGX_Parameter* parameter)
 {
 	auto it = std::find(Parameters.begin(), Parameters.end(), parameter);
 	Parameters.erase(it);
+	delete parameter;
 }
 
 FeatureContext* CyberFsrContext::CreateContext()
 {
-	auto dCtx = new FeatureContext();
-	dCtx->Handle.Id = rand();
-	Contexts[dCtx->Handle.Id] = dCtx;
-
-	return dCtx;
+	auto handleId = rand();
+	Contexts[handleId] = std::make_unique<FeatureContext>();
+	Contexts[handleId]->Handle.Id = handleId;
+	return Contexts[handleId].get();
 }
 
 void CyberFsrContext::DeleteContext(NVSDK_NGX_Handle* handle)
