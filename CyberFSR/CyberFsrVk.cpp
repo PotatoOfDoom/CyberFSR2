@@ -34,7 +34,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_Shutdown1(VkDevice In
 
 NVSDK_NGX_Result NVSDK_NGX_VULKAN_GetParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = CyberFsrContext::instance()->AllocateParameter<NvParameter>();
+	*OutParameters = CyberFsrContext::instance()->AllocateParameter();
 	return NVSDK_NGX_Result_Success;
 }
 

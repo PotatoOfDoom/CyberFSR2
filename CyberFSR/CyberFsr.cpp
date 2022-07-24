@@ -4,12 +4,17 @@
 #include "DirectXHooks.h"
 #include "Util.h"
 
-
-void CyberFsrContext::DeleteParameter(NVSDK_NGX_Parameter* parameter)
+NvParameter* CyberFsrContext::AllocateParameter()
 {
-	auto it = std::find(Parameters.begin(), Parameters.end(), parameter);
+	Parameters.push_back(std::make_unique<NvParameter>());
+	return Parameters.back().get();
+}
+
+void CyberFsrContext::DeleteParameter(NvParameter* parameter)
+{
+	auto it = std::find_if(Parameters.begin(), Parameters.end(),
+		[parameter](const auto& p) { return p.get() == parameter; });
 	Parameters.erase(it);
-	delete parameter;
 }
 
 FeatureContext* CyberFsrContext::CreateContext()

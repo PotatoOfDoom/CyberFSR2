@@ -33,7 +33,7 @@ NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_D3D12_Shutdown1(ID3D12Device* InDevice)
 //Deprecated Parameter Function - Internal Memory Tracking
 NVSDK_NGX_Result NVSDK_NGX_D3D12_GetParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = CyberFsrContext::instance()->AllocateParameter<NvParameter>();
+	*OutParameters = CyberFsrContext::instance()->AllocateParameter();
 	return NVSDK_NGX_Result_Success;
 }
 

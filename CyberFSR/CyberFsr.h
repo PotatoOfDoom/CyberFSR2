@@ -16,9 +16,9 @@ public:
 	VkInstance VulkanInstance;
 	VkPhysicalDevice VulkanPhysicalDevice;
 
-	std::vector<NVSDK_NGX_Parameter*> Parameters;
-	template<class T> NVSDK_NGX_Parameter* AllocateParameter();
-	void DeleteParameter(NVSDK_NGX_Parameter* parameter);
+	std::vector<std::unique_ptr<NvParameter>> Parameters;
+	NvParameter* AllocateParameter();
+	void DeleteParameter(NvParameter* parameter);
 
 	std::unordered_map <unsigned int, std::unique_ptr<FeatureContext>> Contexts;
 	FeatureContext* CreateContext();
@@ -47,11 +47,3 @@ public:
 	float MVScaleX{}, MVScaleY{};
 	float JitterOffsetX{}, JitterOffsetY{};
 };
-
-template<class T>
-inline NVSDK_NGX_Parameter* CyberFsrContext::AllocateParameter()
-{
-	auto* instance = new T();
-	Parameters.push_back((NVSDK_NGX_Parameter*)instance);
-	return instance;
-}
