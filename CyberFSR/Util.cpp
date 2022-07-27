@@ -84,6 +84,7 @@ Util::NvParameter Util::NvParameterToEnum(const char* name)
 	{"SuperSampling.MinDriverVersionMinor", NvParameter::SuperSampling_MinDriverVersionMinor},
 	{"SuperSampling.FeatureInitResult", NvParameter::SuperSampling_FeatureInitResult},
 	{"SuperSampling.NeedsUpdatedDriver", NvParameter::SuperSampling_NeedsUpdatedDriver},
+	{"#\x01", NvParameter::SuperSampling_Available},
 
 	{"Width", NvParameter::Width},
 	{"Height", NvParameter::Height},

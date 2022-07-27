@@ -211,13 +211,13 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 		*outValueFloat = Sharpness;
 		break;
 	case Util::NvParameter::SuperSampling_Available:
-		*outValueInt = 1;
+		*outValueInt = true;
 		break;
 	case Util::NvParameter::SuperSampling_FeatureInitResult:
-		*outValueInt = 1;
+		*outValueInt = NVSDK_NGX_Result_Success;
 		break;
 	case Util::NvParameter::SuperSampling_NeedsUpdatedDriver:
-		*outValueInt = FALSE;
+		*outValueInt = 0;
 		break;
 	case Util::NvParameter::SuperSampling_MinDriverVersionMinor:
 	case Util::NvParameter::SuperSampling_MinDriverVersionMajor:
