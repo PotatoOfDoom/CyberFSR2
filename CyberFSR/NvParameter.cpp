@@ -236,10 +236,10 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 		*outValueInt = OutHeight;
 		break;
 	case Util::NvParameter::DLSS_Get_Dynamic_Max_Render_Width:
-		*outValueInt = OutWidth;
+		*outValueInt = Width;
 		break;
 	case Util::NvParameter::DLSS_Get_Dynamic_Max_Render_Height:
-		*outValueInt = OutHeight;
+		*outValueInt = Height;
 		break;
 	case Util::NvParameter::DLSS_Get_Dynamic_Min_Render_Width:
 		*outValueInt = OutWidth;
