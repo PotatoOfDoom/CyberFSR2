@@ -44,6 +44,7 @@ public:
 	std::optional<float> VerticalFOV;
 	std::optional<float> NearPlane;
 	std::optional<float> FarPlane;
+	std::optional<bool> InfiniteFarPlane;
 
 	void Reload();
 

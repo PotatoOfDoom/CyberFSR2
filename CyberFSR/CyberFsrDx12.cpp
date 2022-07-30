@@ -127,6 +127,10 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	{
 		initParams->flags |= FFX_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS;
 	}
+	if (config->InfiniteFarPlane.value_or(false))
+	{
+		initParams->flags |= FFX_FSR2_ENABLE_DEPTH_INFINITE;
+	}
 
 	deviceContext->FsrContext = std::make_unique<FfxFsr2Context>();
 
