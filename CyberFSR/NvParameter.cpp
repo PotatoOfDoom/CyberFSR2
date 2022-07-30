@@ -204,6 +204,7 @@ void NvParameter::Set_Internal(const char* InName, unsigned long long InValue, N
 }
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_DLSS_GetOptimalSettingsCallback(NVSDK_NGX_Parameter* InParams);
+NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_DLSS_GetStatsCallback(NVSDK_NGX_Parameter* InParams);
 
 NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long long* OutValue, NvParameterType ParameterType) const
 {
@@ -211,6 +212,7 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 	auto outValueInt = (int*)OutValue;
 	auto outValueDouble = (double*)OutValue;
 	auto outValueUInt = (unsigned int*)OutValue;
+	auto outValueULL = (unsigned long long*)OutValue;
 	//Includes DirectX Resources
 	auto outValuePtr = (void**)OutValue;
 
@@ -258,6 +260,18 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 		break;
 	case Util::NvParameter::DLSSOptimalSettingsCallback:
 		*outValuePtr = NVSDK_NGX_DLSS_GetOptimalSettingsCallback;
+		break;
+	case Util::NvParameter::DLSSGetStatsCallback:
+		*outValuePtr = NVSDK_NGX_DLSS_GetStatsCallback;
+		break;
+	case Util::NvParameter::SizeInBytes:
+		*outValueULL = 0x1337; //Dummy value
+		break;
+	case Util::NvParameter::OptLevel:
+		*outValueInt = 0; //Dummy value
+		break;
+	case Util::NvParameter::IsDevSnippetBranch:
+		*outValueInt = 0; //Dummy value
 		break;
 	default:
 		return NVSDK_NGX_Result_Fail;
@@ -309,5 +323,12 @@ NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_DLSS_GetOptimalSettingsCallback(NVSDK_NGX_
 {
 	auto* params = (NvParameter*)InParams;
 	params->EvaluateRenderScale();
+	return NVSDK_NGX_Result_Success;
+}
+
+NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_DLSS_GetStatsCallback(NVSDK_NGX_Parameter* InParams)
+{
+	//Somehow check for allocated memory
+	//Then set values: SizeInBytes, OptLevel, IsDevSnippetBranch
 	return NVSDK_NGX_Result_Success;
 }

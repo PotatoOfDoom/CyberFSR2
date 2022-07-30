@@ -15,11 +15,13 @@ struct NvParameter : NVSDK_NGX_Parameter
 	unsigned int Width{}, Height{}, OutWidth{}, OutHeight{};
 	NVSDK_NGX_PerfQuality_Value PerfQualityValue = NVSDK_NGX_PerfQuality_Value_Balanced;
 	bool RTXValue, FreeMemOnReleaseFeature;
-	int CreationNodeMask, VisibilityNodeMask;
+	int CreationNodeMask, VisibilityNodeMask, OptLevel, IsDevSnippetBranch;
 	float Sharpness = 1.0f;
 	bool ResetRender{};
 	float MVScaleX = 1.0, MVScaleY = 1.0;
 	float JitterOffsetX{}, JitterOffsetY{};
+
+	long long SizeInBytes;
 
 	bool DepthInverted, AutoExposure, Hdr, EnableSharpening, JitterMotion, LowRes;
 

@@ -65,6 +65,11 @@ namespace Util
 		MV_Scale_Y,
 		Jitter_Offset_X,
 		Jitter_Offset_Y,
+
+		//Dev Stuff
+		SizeInBytes,
+		OptLevel,
+		IsDevSnippetBranch
 	};
 
 	NvParameter NvParameterToEnum(const char* name);
