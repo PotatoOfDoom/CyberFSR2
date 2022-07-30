@@ -14,7 +14,8 @@ struct NvParameter : NVSDK_NGX_Parameter
 {
 	unsigned int Width{}, Height{}, OutWidth{}, OutHeight{};
 	NVSDK_NGX_PerfQuality_Value PerfQualityValue = NVSDK_NGX_PerfQuality_Value_Balanced;
-	bool RTXValue{};
+	bool RTXValue, FreeMemOnReleaseFeature;
+	int CreationNodeMask, VisibilityNodeMask;
 	float Sharpness = 1.0f;
 	bool ResetRender{};
 	float MVScaleX = 1.0, MVScaleY = 1.0;

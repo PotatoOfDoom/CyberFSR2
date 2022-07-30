@@ -90,6 +90,7 @@ Util::NvParameter Util::NvParameterToEnum(const char* name)
 	{"Height", NvParameter::Height},
 	{"PerfQualityValue", NvParameter::PerfQualityValue},
 	{"RTXValue", NvParameter::RTXValue},
+	{"NVSDK_NGX_Parameter_FreeMemOnReleaseFeature", NvParameter::FreeMemOnReleaseFeature},
 
 	{"OutWidth", NvParameter::OutWidth},
 	{"OutHeight", NvParameter::OutHeight},

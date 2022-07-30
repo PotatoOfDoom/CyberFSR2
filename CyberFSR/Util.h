@@ -27,6 +27,7 @@ namespace Util
 		Height,
 		PerfQualityValue,
 		RTXValue,
+		FreeMemOnReleaseFeature,
 		//Resolution stuff
 		OutWidth,
 		OutHeight,

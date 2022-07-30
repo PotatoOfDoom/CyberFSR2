@@ -140,6 +140,15 @@ void NvParameter::Set_Internal(const char* InName, unsigned long long InValue, N
 	case Util::NvParameter::RTXValue:
 		RTXValue = *inValueInt;
 		break;
+	case Util::NvParameter::FreeMemOnReleaseFeature:
+		FreeMemOnReleaseFeature = *inValueInt;
+		break;
+	case Util::NvParameter::CreationNodeMask:
+		CreationNodeMask = *inValueInt;
+		break;
+	case Util::NvParameter::VisibilityNodeMask:
+		VisibilityNodeMask = *inValueInt;
+		break;
 	case Util::NvParameter::Reset:
 		ResetRender = *inValueInt;
 		break;
