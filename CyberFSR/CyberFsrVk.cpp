@@ -83,7 +83,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevi
  	const auto inParams = dynamic_cast<const NvParameter*>(InParameters);
 
 	auto instance = CyberFsrContext::instance();
-	auto config = instance->MyConfig;
+	auto& config = instance->MyConfig;
 	auto deviceContext = instance->CreateContext();
 	deviceContext->ViewMatrix = ViewMatrixHook::Create(*config);
 
@@ -151,7 +151,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_ReleaseFeature(NVSDK_
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCommandBuffer InCmdList, const NVSDK_NGX_Handle* InFeatureHandle, const NVSDK_NGX_Parameter* InParameters, PFN_NVSDK_NGX_ProgressCallback InCallback)
 {
 	auto instance = CyberFsrContext::instance();
-	auto config = instance->MyConfig;
+	auto& config = instance->MyConfig;
 	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id].get();
 	const auto inParams = dynamic_cast<const NvParameter*>(InParameters);
 
@@ -192,7 +192,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCom
 	dispatchParameters.enableSharpening = config->EnableSharpening.value_or(inParams->EnableSharpening);
 	dispatchParameters.sharpness = config->Sharpness.value_or(sharpness);
 
-	static double lastFrameTime;
+	static double lastFrameTime = 0.0;
 	double currentTime = Util::MillisecondsNow();
 	double deltaTime = (currentTime - lastFrameTime);
 	lastFrameTime = currentTime;
