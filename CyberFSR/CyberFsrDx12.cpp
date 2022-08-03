@@ -134,7 +134,8 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 
 	deviceContext->FsrContext = std::make_unique<FfxFsr2Context>();
 
-	ffxFsr2ContextCreate(deviceContext->FsrContext.get(), initParams);
+	errorCode = ffxFsr2ContextCreate(deviceContext->FsrContext.get(), initParams);
+	FFX_ASSERT(errorCode == FFX_OK);
 
 	HookSetComputeRootSignature(InCmdList);
 
