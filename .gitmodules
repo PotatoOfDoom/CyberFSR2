@@ -7,3 +7,5 @@
 [submodule "external/simpleini"]
 	path = external/simpleini
 	url = https://github.com/brofield/simpleini
+[submodule "external\\FidelityFX-FSR2"]
+	url = https://github.com/PotatoOfDoom/FidelityFX-FSR2.git
