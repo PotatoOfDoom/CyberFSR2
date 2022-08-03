@@ -14,25 +14,25 @@ struct NvParameter : NVSDK_NGX_Parameter
 {
 	unsigned int Width{}, Height{}, OutWidth{}, OutHeight{};
 	NVSDK_NGX_PerfQuality_Value PerfQualityValue = NVSDK_NGX_PerfQuality_Value_Balanced;
-	bool RTXValue, FreeMemOnReleaseFeature;
-	int CreationNodeMask, VisibilityNodeMask, OptLevel, IsDevSnippetBranch;
+	bool RTXValue{}, FreeMemOnReleaseFeature{};
+	int CreationNodeMask{}, VisibilityNodeMask{}, OptLevel{}, IsDevSnippetBranch{};
 	float Sharpness = 1.0f;
 	bool ResetRender{};
 	float MVScaleX = 1.0, MVScaleY = 1.0;
 	float JitterOffsetX{}, JitterOffsetY{};
 
-	long long SizeInBytes;
+	long long SizeInBytes{};
 
-	bool DepthInverted, AutoExposure, Hdr, EnableSharpening, JitterMotion, LowRes;
+	bool DepthInverted{}, AutoExposure{}, Hdr{}, EnableSharpening{}, JitterMotion{}, LowRes{};
 
 	//external Resources
-	void* InputBiasCurrentColorMask;
-	void* Color;
-	void* Depth;
-	void* MotionVectors;
-	void* Output;
-	void* TransparencyMask;
-	void* ExposureTexture;
+	void* InputBiasCurrentColorMask{};
+	void* Color{};
+	void* Depth{};
+	void* MotionVectors{};
+	void* Output{};
+	void* TransparencyMask{};
+	void* ExposureTexture{};
 
 	virtual void Set(const char* InName, unsigned long long InValue) override;
 	virtual void Set(const char* InName, float InValue) override;
