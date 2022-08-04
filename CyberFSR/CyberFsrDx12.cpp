@@ -87,6 +87,9 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	auto config = instance->MyConfig;
 	auto deviceContext = CyberFsrContext::instance()->CreateContext();
 	deviceContext->ViewMatrix = ViewMatrixHook::Create(*config);
+#ifdef _DEBUG
+	deviceContext->DebugLayer = std::make_unique<DebugOverlay>(device, InCmdList);
+#endif
 
 	*OutHandle = &deviceContext->Handle;
 
@@ -223,6 +226,9 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 
 		InCmdList->SetComputeRootSignature(orgRootSig);
 	}
+#ifdef _DEBUG
+	deviceContext->DebugLayer->Render(InCmdList);
+#endif
 
 	myCommandList = InCmdList;
 

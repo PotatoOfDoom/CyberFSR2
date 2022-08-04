@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "ViewMatrixHook.h"
 #include "NvParameter.h"
+#include "DebugOverlay.h"
 
 class FeatureContext;
 
@@ -39,6 +40,7 @@ public:
 	ID3D12Device* DxDevice;
 	std::unique_ptr<FfxFsr2Context> FsrContext;
 	std::unique_ptr<FfxFsr2ContextDescription> FsrContextDescription;
+	std::unique_ptr<DebugOverlay> DebugLayer;
 	std::vector<unsigned char> ScratchBuffer;
 
 	unsigned int Width{}, Height{}, RenderWidth{}, RenderHeight{};

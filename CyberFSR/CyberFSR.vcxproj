@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="Config.h" />
     <ClInclude Include="CyberFsr.h" />
+    <ClInclude Include="DebugOverlay.h" />
     <ClInclude Include="DirectXHooks.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="NvParameter.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="CyberFsr.cpp" />
     <ClCompile Include="CyberFsrDx12.cpp" />
     <ClCompile Include="CyberFsrVk.cpp" />
+    <ClCompile Include="DebugOverlay.cpp" />
     <ClCompile Include="DirectXHooks.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="NvParameter.cpp" />
