@@ -1,6 +1,10 @@
 # DLSS2FSR (formerly FidelityFx Super Resolution 2.0 for Cyberpunk 2077)
 Drop-in DLSS replacement with FSR 2.0 for various games such as Cyberpunk 2077.
 
+[CyberFSR2's Nexus Mods Page](https://www.nexusmods.com/cyberpunk2077/mods/3001/)
+
+[AkiraJkr's Compatibility List](https://docs.google.com/spreadsheets/d/1XyIoSqo6JQxrpdS9l5l_nZUPvFo1kUaU_Uc2DzsFlQw/edit?usp=sharing)
+
 ## Installation
 *Following instructions were written for Cyberpunk 2077 and may differ for other games.*
 ### Windows 
