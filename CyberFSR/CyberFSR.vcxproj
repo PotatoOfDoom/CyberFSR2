@@ -51,6 +51,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -172,12 +173,14 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="NvParameter.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="ViewMatrixHook.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="CyberFsr.cpp" />
+    <ClCompile Include="CyberFsrDx11.cpp" />
     <ClCompile Include="CyberFsrDx12.cpp" />
     <ClCompile Include="CyberFsrVk.cpp" />
     <ClCompile Include="DebugOverlay.cpp" />
@@ -192,6 +195,11 @@
     </ClCompile>
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="ViewMatrixHook.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CyberFSR.rc">
+      <Culture Condition="'$(Configuration)|$(Platform)'=='Release|x64'">0x0809</Culture>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
