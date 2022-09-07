@@ -48,6 +48,14 @@ jobs:
       working-directory: ${{ github.workspace }}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
+    - name: VirusTotal Scan
+      uses: crazy-max/ghaction-virustotal@v3
+      with:
+        vt_api_key: ${{ secrets.VT_API_KEY }}
+        files: |
+          ${{ github.workspace }}\x64\Release\*.dll
+
+
     - uses: actions/upload-artifact@v2
       with:
         name: CyberFSR2
