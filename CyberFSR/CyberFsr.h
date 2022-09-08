@@ -38,8 +38,8 @@ public:
 	std::unique_ptr<ViewMatrixHook> ViewMatrix;
 	NVSDK_NGX_Handle Handle;
 	ID3D12Device* DxDevice;
-	std::unique_ptr<FfxFsr2Context> FsrContext;
-	std::unique_ptr<FfxFsr2ContextDescription> FsrContextDescription;
+	FfxFsr2Context FsrContext;
+	FfxFsr2ContextDescription FsrContextDescription;
 	std::unique_ptr<DebugOverlay> DebugLayer;
 	std::vector<unsigned char> ScratchBuffer;
 
