@@ -46,6 +46,9 @@ public:
 	std::optional<float> FarPlane;
 	std::optional<bool> InfiniteFarPlane;
 
+	//Hotfix for Steam Deck
+	std::optional<bool> DisableReactiveMask;
+
 	void Reload();
 
 private:

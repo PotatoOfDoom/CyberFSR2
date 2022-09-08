@@ -39,6 +39,8 @@ void Config::Reload()
 		NearPlane = readFloat("View", "NearPlane");
 		FarPlane = readFloat("View", "FarPlane");
 		InfiniteFarPlane = readBool("View", "InfiniteFarPlane");
+
+		DisableReactiveMask = readBool("Hotfix", "DisableReactiveMask");
 	}
 
 	auto exeName = Util::ExePath().filename();
