@@ -1,4 +1,6 @@
 #pragma once
+#include "pch.h"
+
 enum NvParameterType {
 	NvInt,
 	NvFloat,
