@@ -3,6 +3,24 @@ Drop-in DLSS replacement with FSR 2.0 for various games such as Cyberpunk 2077, 
 
 It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce GPU checking, so AMD Radeon GPU users can enjoy the mod.
 
+## List of Supported Games
+* Marvel's Spider-Man Remastered (https://www.nexusmods.com/marvelsspidermanremastered/mods/683)
+* Horizon Zero Dawn (https://www.nexusmods.com/horizonzerodawn/mods/133)
+* No Man's Sky (https://www.nexusmods.com/nomanssky/mods/2485)
+* Rise of the Tomb Raider (https://www.nexusmods.com/riseofthetombraider/mods/82)
+* Red Dead Redemption 2 v1436.28 (https://www.nexusmods.com/reddeadredemption2/mods/1640)
+* DOOM Eternal (https://www.nexusmods.com/doometernal/mods/1170)
+* Deep Rock Galactic
+* Chernobylite
+* Ghostrunner
+* Amid Evil
+* Hot Wheels Unleashed
+* The Ascent (https://www.nexusmods.com/theascent/mods/11)
+* Ghostwire Tokyo
+* Aron's Adventure
+* Minecraft Bedrock Edition
+* Destroy All Humans! 2 - Reprobed
+
 ## Installation
 ### Windows 
 * Download the latest relase from [Release Page](https://github.com/MOVZX/CyberFSR2/releases)
