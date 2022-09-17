@@ -84,7 +84,7 @@ float ViewMatrixHook::Cyberpunk2077::GetNearPlane()
 ViewMatrixHook::RDR2::RDR2()
 {
 	auto mod = (uint64_t)GetModuleHandleW(L"RDR2.exe");
-	camParams = (CameraParams*)(mod + 0x3E806E0);
+	camParams = (CameraParams*)(mod + 0x3EA2900);
 }
 
 float ViewMatrixHook::RDR2::GetFov()
