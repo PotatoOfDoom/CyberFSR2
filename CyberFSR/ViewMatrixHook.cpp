@@ -11,6 +11,9 @@ std::unique_ptr<ViewMatrixHook> ViewMatrixHook::Create(const Config& config)
 		case ViewMethod::RDR2:
 			return std::make_unique<ViewMatrixHook::RDR2>();
 
+		case ViewMethod::HZD:
+			return std::make_unique<ViewMatrixHook::HZD>();
+
 		case ViewMethod::Config:
 		default:
 			return std::make_unique<ViewMatrixHook::Configured>(
@@ -98,6 +101,32 @@ float ViewMatrixHook::RDR2::GetFarPlane()
 }
 
 float ViewMatrixHook::RDR2::GetNearPlane()
+{
+	return camParams->NearPlane;
+}
+
+#pragma endregion
+
+#pragma region HZD
+
+ViewMatrixHook::HZD::HZD()
+{
+	auto mod = (uint64_t)GetModuleHandleW(L"HorizonZeroDawn.exe");
+	auto ptr1 = *((uintptr_t*)(mod + 0x7152580));
+	camParams = ((CameraParams*)(ptr1 + 0x154));
+}
+
+float ViewMatrixHook::HZD::GetFov()
+{
+	return camParams->Fov;
+}
+
+float ViewMatrixHook::HZD::GetFarPlane()
+{
+	return camParams->FarPlane;
+}
+
+float ViewMatrixHook::HZD::GetNearPlane()
 {
 	return camParams->NearPlane;
 }

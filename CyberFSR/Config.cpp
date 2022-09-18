@@ -57,6 +57,10 @@ void Config::Reload()
 	{
 		Method = Method.value_or(ViewMethod::RDR2);
 	}
+	else if (exeName == "HorizonZeroDawn.exe")
+	{
+		Method = Method.value_or(ViewMethod::HZD);
+	}
 }
 
 std::optional<std::string> Config::readString(std::string section, std::string key, bool lowercase)
@@ -145,6 +149,10 @@ std::optional<ViewMethod> Config::readViewMethod(std::string section, std::strin
 	else if (value == "rdr2")
 	{
 		return ViewMethod::RDR2;
+	}
+	else if (value == "hzd")
+	{
+		return ViewMethod::HZD;
 	}
 
 	return std::nullopt;
