@@ -12,14 +12,18 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce GPU che
 * DOOM Eternal (https://www.nexusmods.com/doometernal/mods/1170)
 * Deep Rock Galactic
 * Chernobylite
-* Ghostrunner
-* Amid Evil
+* Ghostrunner (https://www.nexusmods.com/ghostrunner/mods/17)
+* Amid Evil (https://steamcommunity.com/app/673130/discussions/0/4960174866676781850)
 * Hot Wheels Unleashed
 * The Ascent (https://www.nexusmods.com/theascent/mods/11)
 * Ghostwire Tokyo
 * Aron's Adventure
 * Minecraft Bedrock Edition
 * Destroy All Humans! 2 - Reprobed
+* Diablo II - Resurrected (https://www.nexusmods.com/diablo2resurrected/mods/269)
+* Kena: Bridge of Spirits (https://www.nexusmods.com/kenabridgeofspirits/mods/18)
+* Soulstice (https://www.nexusmods.com/soulstice/mods/3)
+* Succubus
 
 ## Installation
 ### Windows 
