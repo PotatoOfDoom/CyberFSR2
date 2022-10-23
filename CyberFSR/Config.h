@@ -51,11 +51,11 @@ public:
 	
 	// Quality Overrides
 	std::optional<bool> QualityRatioOverrideEnabled;
-	std::optional<float> QualityRatioUltraQuality;
-	std::optional<float> QualityRatioQuality;
-	std::optional<float> QualityRatioBalanced;
-	std::optional<float> QualityRatioPerformance;
-	std::optional<float> QualityRatioUltraPerformance;
+	std::optional<float> QualityRatio_UltraQuality;
+	std::optional<float> QualityRatio_Quality;
+	std::optional<float> QualityRatio_Balanced;
+	std::optional<float> QualityRatio_Performance;
+	std::optional<float> QualityRatio_UltraPerformance;
 
 	// View
 	std::optional<ViewMethod> Method;
