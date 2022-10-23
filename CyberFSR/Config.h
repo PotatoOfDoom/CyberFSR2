@@ -39,6 +39,24 @@ public:
 	std::optional<bool> UpscaleRatioOverrideEnabled;
 	std::optional<float> UpscaleRatioOverrideValue;
 
+	std::optional<float> UpscaleRatioOffset;
+
+	// Dynamic Scaler
+	std::optional<bool> DynamicScalerEnabled;
+	std::optional<float> FPSTarget;
+	std::optional<float> FPSTargetMin;
+	std::optional<float> FPSTargetMax;
+	std::optional<float> FPSTargetResolutionMin;
+	std::optional<float> FPSTargetResolutionMax;
+	
+	// Quality Overrides
+	std::optional<bool> QualityRatioOverrideEnabled;
+	std::optional<float> QualityRatioUltraQuality;
+	std::optional<float> QualityRatioQuality;
+	std::optional<float> QualityRatioBalanced;
+	std::optional<float> QualityRatioPerformance;
+	std::optional<float> QualityRatioUltraPerformance;
+
 	// View
 	std::optional<ViewMethod> Method;
 	std::optional<float> VerticalFOV;

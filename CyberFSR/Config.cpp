@@ -33,6 +33,26 @@ void Config::Reload()
 		UpscaleRatioOverrideEnabled = readBool("UpscaleRatio", "UpscaleRatioOverrideEnabled");
 		UpscaleRatioOverrideValue = readFloat("UpscaleRatio", "UpscaleRatioOverrideValue");
 
+		//Upscale Offset 
+		UpscaleRatioOffset = readFloat("UpscaleRatio", "UpscaleRatioOffset");
+
+		// Dynamic Scaler
+		DynamicScalerEnabled = readBool("DynamicResolution", "DynamicScalerEnabled");
+		FPSTarget = readFloat("DynamicResolution", "FPSTarget");
+		FPSTargetMin = readFloat("DynamicResolution", "FPSTargetMin");
+		FPSTargetMax = readFloat("DynamicResolution", "FPSTargetMax");
+		FPSTargetResolutionMin = readFloat("DynamicResolution", "FPSTargetResolutionMin");
+		FPSTargetResolutionMax = readFloat("DynamicResolution", "FPSTargetResolutionMax");
+
+		// Quality Overrides
+		QualityRatioOverrideEnabled = readBool("QualityOverrides", "QualityRatioOverrideEnabled ");
+		QualityRatioUltraQuality = readFloat("QualityOverrides", "QualityRatioUltraQuality ");
+		QualityRatioQuality = readFloat("QualityOverrides", "QualityRatioQuality ");
+		QualityRatioBalanced = readFloat("QualityOverrides", "QualityRatioBalanced ");
+		QualityRatioPerformance = readFloat("QualityOverrides", "QualityRatioPerformance ");
+		QualityRatioUltraPerformance = readFloat("QualityOverrides", "QualityRatioUltraPerformance ");
+
+
 		// View
 		Method = readViewMethod("View", "Method");
 		VerticalFOV = readFloat("View", "VerticalFOV");

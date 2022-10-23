@@ -273,6 +273,9 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 	case Util::NvParameter::IsDevSnippetBranch:
 		*outValueInt = 0; //Dummy value
 		break;
+	case Util::NvParameter::InFrameTimeDeltaInMsec:
+		*outValueFloat = InFrameTimeDeltaInMsec;
+		break;
 	default:
 		return NVSDK_NGX_Result_Fail;
 	}
@@ -284,39 +287,92 @@ void NvParameter::EvaluateRenderScale()
 {
 	FfxFsr2QualityMode fsrQualityMode;
 
-	auto config = CyberFsrContext::instance()->MyConfig;
+	const std::shared_ptr config = CyberFsrContext::instance()->MyConfig;
 
 	if (config->UpscaleRatioOverrideEnabled.has_value() && config->UpscaleRatioOverrideEnabled && config->UpscaleRatioOverrideValue.has_value())
 	{
-		auto ratio = config->UpscaleRatioOverrideValue.value();
+		// total over-ride
+		const float ratio = config->UpscaleRatioOverrideValue.value();
 		OutHeight = (uint32_t)((float)Height / ratio);
 		OutWidth = (uint32_t)((float)Width / ratio);
-
-		return;
 	}
+	else if (config->DynamicScalerEnabled.has_value() && config->DynamicScalerEnabled && false) {
+		//Dynamic Scaler
 
-	switch (PerfQualityValue)
-	{
-	case NVSDK_NGX_PerfQuality_Value_MaxPerf:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_PERFORMANCE;
-		break;
-	case NVSDK_NGX_PerfQuality_Value_Balanced:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_BALANCED;
-		break;
-	case NVSDK_NGX_PerfQuality_Value_MaxQuality:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
-		break;
-	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
-		break;
-	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
-		//Not defined by AMD
-		OutHeight = Height;
-		OutWidth = Width;
-		return;
+	} else if (config->QualityRatioOverrideEnabled.has_value() && config->QualityRatioOverrideEnabled) {
+		// Quality settings over-ride
+		switch (PerfQualityValue)
+		{
+			case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
+				if (config->QualityRatioUltraPerformance.has_value()) {
+					OutHeight = (uint32_t) (Height / (float)config->QualityRatioUltraPerformance.value());
+					OutWidth = (uint32_t) (Width / (float)config->QualityRatioUltraPerformance.value());
+					break;
+				return;
+				} else
+					fsrQualityMode = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_MaxPerf:
+				if (config->QualityRatioPerformance.has_value()) {
+					OutHeight = (uint32_t) (Height / (float)config->QualityRatioPerformance.value());
+					OutWidth = (uint32_t) (Width / (float)config->QualityRatioPerformance.value());
+					break;
+				} else
+					fsrQualityMode = FFX_FSR2_QUALITY_MODE_PERFORMANCE;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_Balanced:
+				if (config->QualityRatioBalanced.has_value()) {
+					OutHeight = (uint32_t) (Height / (float)config->QualityRatioBalanced.value());
+					OutWidth = (uint32_t) (Width / (float)config->QualityRatioBalanced.value());
+					break;
+				} else
+					fsrQualityMode = FFX_FSR2_QUALITY_MODE_BALANCED;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_MaxQuality:
+				if (config->QualityRatioQuality.has_value()) {
+					OutHeight = (uint32_t) (Height / (float)config->QualityRatioQuality.value());
+					OutWidth = (uint32_t) (Width / (float)config->QualityRatioQuality.value());
+					break;
+				} else
+					fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_UltraQuality:
+			if (config->QualityRatioUltraQuality.has_value()) {
+					OutHeight = (uint32_t) (Height / (float)config->QualityRatioUltraQuality.value());
+					OutWidth = (uint32_t) (Width / (float)config->QualityRatioUltraQuality.value());
+			} else {
+				//Not defined by AMD
+				OutHeight = Height;
+				OutWidth = Width;
+			}
+		}
+		ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode);
 	}
+	else {
+		// original quality
+		switch (PerfQualityValue)
+		{
+			case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
+				fsrQualityMode = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_MaxPerf:
+				fsrQualityMode = FFX_FSR2_QUALITY_MODE_PERFORMANCE;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_Balanced:
+				fsrQualityMode = FFX_FSR2_QUALITY_MODE_BALANCED;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_MaxQuality:
+				fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
+				break;
+			case NVSDK_NGX_PerfQuality_Value_UltraQuality:
+				//Not defined by AMD
+				OutHeight = Height;
+				OutWidth = Width;
+				return;
+		}
 
-	ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode);
+		ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode);
+	}
 }
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_DLSS_GetOptimalSettingsCallback(NVSDK_NGX_Parameter* InParams)
