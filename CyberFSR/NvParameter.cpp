@@ -280,7 +280,7 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 	return NVSDK_NGX_Result_Success;
 }
 
-inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(NVSDK_NGX_PerfQuality_Value input) 
+inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(const NVSDK_NGX_PerfQuality_Value& input) 
 {
 	switch (input)
 	{
