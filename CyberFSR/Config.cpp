@@ -33,9 +33,6 @@ void Config::Reload()
 		UpscaleRatioOverrideEnabled = readBool("UpscaleRatio", "UpscaleRatioOverrideEnabled");
 		UpscaleRatioOverrideValue = readFloat("UpscaleRatio", "UpscaleRatioOverrideValue");
 
-		//Upscale Offset 
-		UpscaleRatioOffset = readFloat("UpscaleRatio", "UpscaleRatioOffset");
-
 		// Dynamic Scaler
 		DynamicScalerEnabled = readBool("DynamicResolution", "DynamicScalerEnabled");
 		FPSTarget = readFloat("DynamicResolution", "FPSTarget");
