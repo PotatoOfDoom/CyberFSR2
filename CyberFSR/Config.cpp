@@ -33,21 +33,16 @@ void Config::Reload()
 		UpscaleRatioOverrideEnabled = readBool("UpscaleRatio", "UpscaleRatioOverrideEnabled");
 		UpscaleRatioOverrideValue = readFloat("UpscaleRatio", "UpscaleRatioOverrideValue");
 
-		// Dynamic Scaler
-		DynamicScalerEnabled = readBool("DynamicResolution", "DynamicScalerEnabled");
-		FPSTarget = readFloat("DynamicResolution", "FPSTarget");
-		FPSTargetMin = readFloat("DynamicResolution", "FPSTargetMin");
-		FPSTargetMax = readFloat("DynamicResolution", "FPSTargetMax");
-		FPSTargetResolutionMin = readFloat("DynamicResolution", "FPSTargetResolutionMin");
-		FPSTargetResolutionMax = readFloat("DynamicResolution", "FPSTargetResolutionMax");
 
 		// Quality Overrides
 		QualityRatioOverrideEnabled = readBool("QualityOverrides", "QualityRatioOverrideEnabled");
-		QualityRatio_UltraQuality = readFloat("QualityOverrides", "QualityRatioUltraQuality");
-		QualityRatio_Quality = readFloat("QualityOverrides", "QualityRatioQuality");
-		QualityRatio_Balanced = readFloat("QualityOverrides", "QualityRatioBalanced");
-		QualityRatio_Performance = readFloat("QualityOverrides", "QualityRatioPerformance");
-		QualityRatio_UltraPerformance = readFloat("QualityOverrides", "QualityRatioUltraPerformance");
+		if (QualityRatioOverrideEnabled) {
+			QualityRatio_UltraQuality = readFloat("QualityOverrides", "QualityRatioUltraQuality");
+			QualityRatio_Quality = readFloat("QualityOverrides", "QualityRatioQuality");
+			QualityRatio_Balanced = readFloat("QualityOverrides", "QualityRatioBalanced");
+			QualityRatio_Performance = readFloat("QualityOverrides", "QualityRatioPerformance");
+			QualityRatio_UltraPerformance = readFloat("QualityOverrides", "QualityRatioUltraPerformance");
+		}
 
 
 		// View

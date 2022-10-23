@@ -280,77 +280,79 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 	return NVSDK_NGX_Result_Success;
 }
 
-void NvParameter::EvaluateRenderScale()
+inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(NVSDK_NGX_PerfQuality_Value input) 
 {
-	FfxFsr2QualityMode fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
+	switch (input)
+	{
+	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
+		return FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
 
-	const std::shared_ptr config = CyberFsrContext::instance()->MyConfig;
+	case NVSDK_NGX_PerfQuality_Value_MaxPerf:
+		return FFX_FSR2_QUALITY_MODE_PERFORMANCE;
 
-	bool fetchFSRRenderResolution = true;
+	case NVSDK_NGX_PerfQuality_Value_Balanced:
+		return FFX_FSR2_QUALITY_MODE_BALANCED;
 
-	const bool doQualityOverride = config->QualityRatioOverrideEnabled.has_value() && config->QualityRatioOverrideEnabled;
+	case NVSDK_NGX_PerfQuality_Value_MaxQuality:
+		return FFX_FSR2_QUALITY_MODE_QUALITY;
 
-	float QualityRatio = 0.0f;
+	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
+	default:
+		// no correlated value
+		return;
+	}
+}
 
-	switch (PerfQualityValue)
+inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_Value& input, const std::shared_ptr<const Config>& config)
+{
+	if (!config->QualityRatioOverrideEnabled.has_value() || !config->QualityRatioOverrideEnabled)
+		return;
+
+	switch (input)
 	{
 		case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
-			if (doQualityOverride && config->QualityRatio_UltraPerformance.has_value()) {
-				QualityRatio = config->QualityRatio_UltraPerformance.value();
-				fetchFSRRenderResolution = false;
+			if (config->QualityRatio_UltraPerformance.has_value()) {
+				return config->QualityRatio_UltraPerformance.value();
 			}
-			fsrQualityMode = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
-			break;
 		case NVSDK_NGX_PerfQuality_Value_MaxPerf:
-			if (doQualityOverride && config->QualityRatio_Performance.has_value()) {
-				QualityRatio = config->QualityRatio_Performance.value();
-				fetchFSRRenderResolution = false;
+			if (config->QualityRatio_Performance.has_value()) {
+				return config->QualityRatio_Performance.value();
 			}
-			fsrQualityMode = FFX_FSR2_QUALITY_MODE_PERFORMANCE;
-			break;
 		case NVSDK_NGX_PerfQuality_Value_Balanced:
-			if (doQualityOverride && config->QualityRatio_Balanced.has_value()) {
-				QualityRatio = config->QualityRatio_Balanced.value();
-				fetchFSRRenderResolution = false;
-			} 
-			fsrQualityMode = FFX_FSR2_QUALITY_MODE_BALANCED;
-			break;
+			if (config->QualityRatio_Balanced.has_value()) {
+				return config->QualityRatio_Balanced.value();
+			}
 		case NVSDK_NGX_PerfQuality_Value_MaxQuality:
-			if (doQualityOverride && config->QualityRatio_Quality.has_value()) {
-				QualityRatio = config->QualityRatio_Quality.value();
-				fetchFSRRenderResolution = false;
+			if (config->QualityRatio_Quality.has_value()) {
+				return config->QualityRatio_Quality.value();
 			}
-			fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
-			break;
 		case NVSDK_NGX_PerfQuality_Value_UltraQuality:
-			if (doQualityOverride && config->QualityRatio_UltraQuality.has_value()) {
-				QualityRatio = config->QualityRatio_UltraQuality.value();
-				fetchFSRRenderResolution = false;
+			if (config->QualityRatio_UltraQuality.has_value()) {
+				return config->QualityRatio_UltraQuality.value();
 			}
-			else {
-				QualityRatio = 1.0;
-				fetchFSRRenderResolution = false;
-			}
-			break;
 	}
+}
 
-	if (config->UpscaleRatioOverrideEnabled.has_value() && config->UpscaleRatioOverrideEnabled && config->UpscaleRatioOverrideValue.has_value())
-	{
-		QualityRatio = config->UpscaleRatioOverrideValue.value();
-	} else if (config->DynamicScalerEnabled.has_value() && config->DynamicScalerEnabled && false) {
-		//Dynamic Scaler
+void NvParameter::EvaluateRenderScale()
+{
+	const std::shared_ptr<Config> config = CyberFsrContext::instance()->MyConfig;
 
-	} 
-	// Quality settings over-ride
+	const std::optional<float> QualityRatio = GetQualityOverrideRatio(PerfQualityValue, config);
 
-	if (fetchFSRRenderResolution) 
-		ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode);
-	else if (QualityRatio != 0.0f) {
-			OutHeight = Height / QualityRatio;
-			OutWidth = Width / QualityRatio;
-	} else {
-		OutHeight = Height / 2;
-		OutWidth = Width / 2;
+	if (QualityRatio.has_value()) {
+		OutHeight = Height / QualityRatio.value();
+		OutWidth = Width / QualityRatio.value();
+	}
+	else {
+		auto fsrQualityMode = DLSS2FSR2QualityTable(PerfQualityValue);
+		if (fsrQualityMode.has_value()) {
+			ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode.value());
+		}
+		else {
+			// have to have some sort of default unless we want to crash?
+			OutHeight = Height / 2;
+			OutWidth = Width / 2;
+		}
 	}
 }
 
