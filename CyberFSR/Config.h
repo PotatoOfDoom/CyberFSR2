@@ -39,8 +39,6 @@ public:
 	std::optional<bool> UpscaleRatioOverrideEnabled;
 	std::optional<float> UpscaleRatioOverrideValue;
 
-	std::optional<float> UpscaleRatioOffset;
-
 	// Dynamic Scaler
 	std::optional<bool> DynamicScalerEnabled;
 	std::optional<float> FPSTarget;
