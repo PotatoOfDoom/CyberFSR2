@@ -273,9 +273,6 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 	case Util::NvParameter::IsDevSnippetBranch:
 		*outValueInt = 0; //Dummy value
 		break;
-	case Util::NvParameter::InFrameTimeDeltaInMsec:
-		*outValueFloat = InFrameTimeDeltaInMsec;
-		break;
 	default:
 		return NVSDK_NGX_Result_Fail;
 	}
