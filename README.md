@@ -5,6 +5,8 @@ Drop-in DLSS replacement with FSR 2.0 for various games such as Cyberpunk 2077.
 
 [AkiraJkr's Compatibility List](https://docs.google.com/spreadsheets/d/1XyIoSqo6JQxrpdS9l5l_nZUPvFo1kUaU_Uc2DzsFlQw/edit?usp=sharing)
 
+## Official Discord Channel: https://discord.gg/2JDHx6kcXB
+
 ## Installation
 *Following instructions were written for Cyberpunk 2077 and may differ for other games.*
 ### Windows 
