@@ -299,14 +299,14 @@ inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(NVSDK_NGX_PerfQua
 	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
 	default:
 		// no correlated value
-		return;
+		return  std::nullopt;
 	}
 }
 
 inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_Value& input, const std::shared_ptr<const Config>& config)
 {
 	if (!config->QualityRatioOverrideEnabled.has_value() || !config->QualityRatioOverrideEnabled)
-		return;
+		return std::nullopt;
 
 	switch (input)
 	{
@@ -330,6 +330,8 @@ inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_
 			if (config->QualityRatio_UltraQuality.has_value()) {
 				return config->QualityRatio_UltraQuality.value();
 			}
+		default:
+			return std::nullopt;
 	}
 }
 
@@ -340,8 +342,8 @@ void NvParameter::EvaluateRenderScale()
 	const std::optional<float> QualityRatio = GetQualityOverrideRatio(PerfQualityValue, config);
 
 	if (QualityRatio.has_value()) {
-		OutHeight = Height / QualityRatio.value();
-		OutWidth = Width / QualityRatio.value();
+		OutHeight = (unsigned int) ( (float) Height / QualityRatio.value());
+		OutWidth = (unsigned int) ( (float) Width / QualityRatio.value());
 	}
 	else {
 		auto fsrQualityMode = DLSS2FSR2QualityTable(PerfQualityValue);
