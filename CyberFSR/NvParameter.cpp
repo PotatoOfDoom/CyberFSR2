@@ -311,26 +311,27 @@ inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_
 	switch (input)
 	{
 		case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
-			if (config->QualityRatio_UltraPerformance.has_value()) {
+			if (config->QualityRatio_UltraPerformance.has_value())
 				return config->QualityRatio_UltraPerformance.value();
-			}
+			break;
 		case NVSDK_NGX_PerfQuality_Value_MaxPerf:
-			if (config->QualityRatio_Performance.has_value()) {
+			if (config->QualityRatio_Performance.has_value())
 				return config->QualityRatio_Performance.value();
-			}
+			break;
 		case NVSDK_NGX_PerfQuality_Value_Balanced:
-			if (config->QualityRatio_Balanced.has_value()) {
+			if (config->QualityRatio_Balanced.has_value())
 				return config->QualityRatio_Balanced.value();
-			}
+			break;
 		case NVSDK_NGX_PerfQuality_Value_MaxQuality:
-			if (config->QualityRatio_Quality.has_value()) {
+			if (config->QualityRatio_Quality.has_value()) 
 				return config->QualityRatio_Quality.value();
-			}
+			break;
 		case NVSDK_NGX_PerfQuality_Value_UltraQuality:
-			if (config->QualityRatio_UltraQuality.has_value()) {
+			if (config->QualityRatio_UltraQuality.has_value()) 
 				return config->QualityRatio_UltraQuality.value();
-			}
+			break;
 		default:
+			// no correlated value
 			return std::nullopt;
 	}
 }
