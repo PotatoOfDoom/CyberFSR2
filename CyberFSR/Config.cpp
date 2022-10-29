@@ -33,6 +33,17 @@ void Config::Reload()
 		UpscaleRatioOverrideEnabled = readBool("UpscaleRatio", "UpscaleRatioOverrideEnabled");
 		UpscaleRatioOverrideValue = readFloat("UpscaleRatio", "UpscaleRatioOverrideValue");
 
+		// Quality Overrides
+		QualityRatioOverrideEnabled = readBool("QualityOverrides", "QualityRatioOverrideEnabled");
+		if (QualityRatioOverrideEnabled) {
+			QualityRatio_UltraQuality = readFloat("QualityOverrides", "QualityRatioUltraQuality");
+			QualityRatio_Quality = readFloat("QualityOverrides", "QualityRatioQuality");
+			QualityRatio_Balanced = readFloat("QualityOverrides", "QualityRatioBalanced");
+			QualityRatio_Performance = readFloat("QualityOverrides", "QualityRatioPerformance");
+			QualityRatio_UltraPerformance = readFloat("QualityOverrides", "QualityRatioUltraPerformance");
+		}
+
+
 		// View
 		Method = readViewMethod("View", "Method");
 		VerticalFOV = readFloat("View", "VerticalFOV");

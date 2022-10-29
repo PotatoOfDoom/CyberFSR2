@@ -280,43 +280,88 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 	return NVSDK_NGX_Result_Success;
 }
 
-void NvParameter::EvaluateRenderScale()
+// EvaluateRenderScale helper
+inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(const NVSDK_NGX_PerfQuality_Value& input)
 {
-	FfxFsr2QualityMode fsrQualityMode;
+	std::optional<FfxFsr2QualityMode> output;
 
-	auto config = CyberFsrContext::instance()->MyConfig;
-
-	if (config->UpscaleRatioOverrideEnabled.has_value() && config->UpscaleRatioOverrideEnabled && config->UpscaleRatioOverrideValue.has_value())
+	switch (input)
 	{
-		auto ratio = config->UpscaleRatioOverrideValue.value();
-		OutHeight = (uint32_t)((float)Height / ratio);
-		OutWidth = (uint32_t)((float)Width / ratio);
-
-		return;
-	}
-
-	switch (PerfQualityValue)
-	{
+	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
+		output = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
+		break;
 	case NVSDK_NGX_PerfQuality_Value_MaxPerf:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_PERFORMANCE;
+		output = FFX_FSR2_QUALITY_MODE_PERFORMANCE;
 		break;
 	case NVSDK_NGX_PerfQuality_Value_Balanced:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_BALANCED;
+		output = FFX_FSR2_QUALITY_MODE_BALANCED;
 		break;
 	case NVSDK_NGX_PerfQuality_Value_MaxQuality:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_QUALITY;
-		break;
-	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
-		fsrQualityMode = FFX_FSR2_QUALITY_MODE_ULTRA_PERFORMANCE;
+		output = FFX_FSR2_QUALITY_MODE_QUALITY;
 		break;
 	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
-		//Not defined by AMD
-		OutHeight = Height;
-		OutWidth = Width;
-		return;
+	default:
+		// no correlated value, add some logging?
+		break;
 	}
 
-	ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode);
+	return output;
+}
+
+// EvaluateRenderScale helper
+inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_Value& input, const std::shared_ptr<const Config>& config)
+{
+	std::optional<float> output;
+
+	if (! (config->QualityRatioOverrideEnabled.has_value() && config->QualityRatioOverrideEnabled ))
+		return output; // override not enabled
+
+	switch (input)
+	{
+	case NVSDK_NGX_PerfQuality_Value_UltraPerformance:
+		output = config->QualityRatio_UltraPerformance;
+		break;
+	case NVSDK_NGX_PerfQuality_Value_MaxPerf:
+		output = config->QualityRatio_Performance;
+		break;
+	case NVSDK_NGX_PerfQuality_Value_Balanced:
+		output = config->QualityRatio_Balanced;
+		break;
+	case NVSDK_NGX_PerfQuality_Value_MaxQuality:
+		output = config->QualityRatio_Quality;
+		break;
+	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
+		output = config->QualityRatio_UltraQuality;
+		break;
+	default:
+		// no correlated value, add some logging?
+		break;
+	}
+	return output;
+}
+
+void NvParameter::EvaluateRenderScale()
+{
+	const std::shared_ptr<Config>& config = CyberFsrContext::instance()->MyConfig;
+
+	const std::optional<float>& QualityRatio = GetQualityOverrideRatio(PerfQualityValue, config);
+
+	if (QualityRatio.has_value()) {
+		OutHeight = (unsigned int)((float)Height / QualityRatio.value());
+		OutWidth = (unsigned int)((float)Width / QualityRatio.value());
+	}
+	else {
+		const std::optional<FfxFsr2QualityMode>& fsrQualityMode = DLSS2FSR2QualityTable(PerfQualityValue);
+
+		if (fsrQualityMode.has_value()) {
+			ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode.value());
+		}
+		else {
+			// have to have some sort of default unless we want to crash?
+			OutHeight = Height / 2;
+			OutWidth = Width / 2;
+		}
+	}
 }
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_DLSS_GetOptimalSettingsCallback(NVSDK_NGX_Parameter* InParams)
