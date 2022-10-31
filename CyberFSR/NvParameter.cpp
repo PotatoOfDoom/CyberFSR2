@@ -281,7 +281,7 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 }
 
 // EvaluateRenderScale helper
-inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(const NVSDK_NGX_PerfQuality_Value& input)
+inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(const NVSDK_NGX_PerfQuality_Value input)
 {
 	std::optional<FfxFsr2QualityMode> output;
 
@@ -309,11 +309,11 @@ inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(const NVSDK_NGX_P
 }
 
 // EvaluateRenderScale helper
-inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_Value& input, const std::shared_ptr<const Config>& config)
+inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_Value input, const std::shared_ptr<const Config> config)
 {
 	std::optional<float> output;
 
-	if (! (config->QualityRatioOverrideEnabled.has_value() && config->QualityRatioOverrideEnabled ))
+	if (!(config->QualityRatioOverrideEnabled.has_value() && config->QualityRatioOverrideEnabled))
 		return output; // override not enabled
 
 	switch (input)
@@ -342,16 +342,16 @@ inline std::optional<float> GetQualityOverrideRatio(const NVSDK_NGX_PerfQuality_
 
 void NvParameter::EvaluateRenderScale()
 {
-	const std::shared_ptr<Config>& config = CyberFsrContext::instance()->MyConfig;
+	const std::shared_ptr<Config> config = CyberFsrContext::instance()->MyConfig;
 
-	const std::optional<float>& QualityRatio = GetQualityOverrideRatio(PerfQualityValue, config);
+	const std::optional<float> QualityRatio = GetQualityOverrideRatio(PerfQualityValue, config);
 
 	if (QualityRatio.has_value()) {
 		OutHeight = (unsigned int)((float)Height / QualityRatio.value());
 		OutWidth = (unsigned int)((float)Width / QualityRatio.value());
 	}
 	else {
-		const std::optional<FfxFsr2QualityMode>& fsrQualityMode = DLSS2FSR2QualityTable(PerfQualityValue);
+		const std::optional<FfxFsr2QualityMode> fsrQualityMode = DLSS2FSR2QualityTable(PerfQualityValue);
 
 		if (fsrQualityMode.has_value()) {
 			ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode.value());
