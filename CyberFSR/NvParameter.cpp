@@ -281,9 +281,9 @@ NVSDK_NGX_Result NvParameter::Get_Internal(const char* InName, unsigned long lon
 }
 
 // EvaluateRenderScale helper
-inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(const NVSDK_NGX_PerfQuality_Value input)
+inline FfxFsr2QualityMode DLSS2FSR2QualityTable(const NVSDK_NGX_PerfQuality_Value input)
 {
-	std::optional<FfxFsr2QualityMode> output;
+	FfxFsr2QualityMode output;
 
 	switch (input)
 	{
@@ -301,7 +301,7 @@ inline std::optional<FfxFsr2QualityMode> DLSS2FSR2QualityTable(const NVSDK_NGX_P
 		break;
 	case NVSDK_NGX_PerfQuality_Value_UltraQuality:
 	default:
-		// no correlated value, add some logging?
+		output = (FfxFsr2QualityMode)5; //Set out-of-range value for non-existing fsr ultra quality mode
 		break;
 	}
 
@@ -351,15 +351,15 @@ void NvParameter::EvaluateRenderScale()
 		OutWidth = (unsigned int)((float)Width / QualityRatio.value());
 	}
 	else {
-		const std::optional<FfxFsr2QualityMode> fsrQualityMode = DLSS2FSR2QualityTable(PerfQualityValue);
+		const FfxFsr2QualityMode fsrQualityMode = DLSS2FSR2QualityTable(PerfQualityValue);
 
-		if (fsrQualityMode.has_value()) {
-			ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode.value());
+		if (fsrQualityMode < 5) {
+			ffxFsr2GetRenderResolutionFromQualityMode(&OutWidth, &OutHeight, Width, Height, fsrQualityMode);
 		}
 		else {
-			// have to have some sort of default unless we want to crash?
-			OutHeight = Height / 2;
-			OutWidth = Width / 2;
+			//Ultra Quality Mode
+			OutHeight = Height;
+			OutWidth = Width;
 		}
 	}
 }
