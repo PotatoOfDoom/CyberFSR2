@@ -52,7 +52,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 ![Steam setting](https://i.imgur.com/a8Sybru.png)
 * That's it. Now DLSS option should appear in settigs
 
-### Linux
+### GNU/Linux
 * Download the latest relase from [Release Page](https://github.com/MOVZX/CyberFSR2/releases)
 * Extract the contents of the archive next to the game EXE file in your games folder
 * Run the ```linuxinstall.sh``` script or manually import `EnableSignatureOverride.reg` into the Registry
@@ -89,4 +89,4 @@ r.SceneColorFormat=5
 ## Uninstallation
 * Just run `DisableSignatureOverride.reg`
 * Delete nvngx.dll, nvngx.ini, and winmm.dll
-* Linux users should refer to prior command
+* GNU/Linux users should refer to prior command
