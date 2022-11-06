@@ -33,6 +33,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Minecraft Bedrock 1.19.40.2
 * Myst
 * No Man's Sky (https://www.nexusmods.com/nomanssky/mods/2485)
+* Ready or Not (https://www.nexusmods.com/readyornot/mods/1953)
 * Red Dead Redemption 2 v1436.28 (https://www.nexusmods.com/reddeadredemption2/mods/1640)
 * Rise of The Tomb Raider (https://www.nexusmods.com/riseofthetombraider/mods/82)
 * Soulstice (https://www.nexusmods.com/soulstice/mods/3)
