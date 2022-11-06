@@ -31,7 +31,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Kena: Bridge of Spirits (https://www.nexusmods.com/kenabridgeofspirits/mods/18)
 * Marvel's Spider-Man Remastered (https://www.nexusmods.com/marvelsspidermanremastered/mods/683)
 * Minecraft Bedrock 1.19.40.2
-* Myst
+* Myst (https://www.nexusmods.com/myst/mods/3)
 * No Man's Sky (https://www.nexusmods.com/nomanssky/mods/2485)
 * Ready or Not (https://www.nexusmods.com/readyornot/mods/1953)
 * Red Dead Redemption 2 v1436.28 (https://www.nexusmods.com/reddeadredemption2/mods/1640)
