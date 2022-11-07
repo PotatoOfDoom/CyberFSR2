@@ -9,6 +9,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 ## List of Supported Games
 * A Plague Tale Requiem (https://www.nexusmods.com/aplaguetalerequiem/mods/9)
 * Amid Evil (https://steamcommunity.com/app/673130/discussions/0/4960174866676781850)
+* Amok Runner
 * Aron's Adventure
 * Assetto Corsa Competizione
 * Batora - Lost Haven
