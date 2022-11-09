@@ -58,7 +58,7 @@ ViewMatrixHook::Cyberpunk2077::Cyberpunk2077()
 	*/
 
 	auto mod = (uint64_t)GetModuleHandleW(L"Cyberpunk2077.exe");
-	auto ptr1 = *((uintptr_t*)(mod + 0x4C390C0)); // F3 0F 7F 0D ? ? ? ? E8, +0x3
+	auto ptr1 = *((uintptr_t*)(mod + 0x4C3FF00)); // F3 0F 7F 0D ? ? ? ? E8, +0x4 
 	camParams = ((CameraParams*)(ptr1 + 0x60));
 }
 
