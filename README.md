@@ -49,7 +49,6 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 ### Windows 
 * Download the latest relase from [Release Page](https://github.com/MOVZX/CyberFSR2/releases)
 * Extract the contents of the archive next to the game EXE file in your games folder
-* Run/double-click `EnableSignatureOverride.reg` and confirm merge
 * Make sure the game is running in DX12 mode:  
 ![Steam setting](https://i.imgur.com/a8Sybru.png)
 * That's it. Now DLSS option should appear in settigs
@@ -57,7 +56,6 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 ### GNU/Linux
 * Download the latest relase from [Release Page](https://github.com/MOVZX/CyberFSR2/releases)
 * Extract the contents of the archive next to the game EXE file in your games folder
-* Run the ```linuxinstall.sh``` script or manually import `EnableSignatureOverride.reg` into the Registry
 * Set game launch options (Steam) to: `WINEDLLOVERRIDES="winmm=n,b" %command%`
 * Or if you're using Lutris/Heroic/etc you can set it like this:  
 ![WINE setting](https://i.imgur.com/v7JLSUY.png)
@@ -78,17 +76,30 @@ r.SceneColorFormat=5
 #### Location for each games is different, but here are some locations for the games supported by this Mod:
 
 - **Amid Evil**: ```%LOCALAPPDATA%\AmidEvil\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Amok Runner**: ```%LOCALAPPDATA%\Amok\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Assetto Corsa Competizione**: ```%LOCALAPPDATA%\AC2\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Aron's Adventure**: ```%LOCALAPPDATA%\AronsAdventure\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Batora - Lost Haven**: ```%LOCALAPPDATA%\Batora\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Bright Memory: Infinite**: ```%LOCALAPPDATA%\BrightMemoryInfinite\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Chernobylite**: ```%LOCALAPPDATA%\ChernobylGame\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Deep Rock Galactic**: ```GAME_INSTALL_LOCATION\Deep Rock Galactic\FSD\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Destroy All Humans! 2 - Reprobed**: ```%LOCALAPPDATA%\DH2\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ghostrunner**: ```%LOCALAPPDATA%\Ghostrunner\Saved\Config\WindowsNoEditor\Engine.ini```
 - **GhostWire Tokyo**: ```%USERPROFILE%\TangoGameworks\GhostWire Tokyo (STEAM)\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Gotham Knights**: ```%LOCALAPPDATA%\Mercury\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Hell Pie**: ```%LOCALAPPDATA%\HellPie\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hot Wheels Unleashed**: ```%LOCALAPPDATA%\hotwheels\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Into the Radius VR**: ```%LOCALAPPDATA%\IntoTheRadius\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Kena: Bridge of Spirits**: ```%LOCALAPPDATA%\Kena\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Myst**: ```%LOCALAPPDATA%\Myst\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ready or Not**: ```%LOCALAPPDATA%\ReadyOrNot\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Soulstice**: ```GAME_INSTALL_LOCATION\Soulstice\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Succubus**: ```%LOCALAPPDATA%\Succubus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Ascent**: ```%LOCALAPPDATA%\TheAscent\Saved\Config\WindowsNoEditor\Engine.ini```
+- **The Last Oricru**: ```%LOCALAPPDATA%\LostHero\Saved\Config\WindowsNoEditor\Engine.ini```
+- **The Orville - Interactive Fan Experience**: ```GAME_INSTALL_LOCATION\OrvilleFanGame\Saved\Config\WindowsNoEditor\Engine.ini```
 
 
 ## Uninstallation
-* Just run `DisableSignatureOverride.reg`
 * Delete nvngx.dll, nvngx.ini, and winmm.dll
 * GNU/Linux users should refer to prior command
