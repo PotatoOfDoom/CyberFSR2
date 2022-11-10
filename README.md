@@ -3,7 +3,7 @@ Drop-in DLSS replacement with FSR 2.1.2 for various games such as Cyberpunk 2077
 
 It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU checking, so AMD Radeon / Nvidia GTX users can enjoy the mod.
 
-## Official Discord Channel: https://discord.gg/2JDHx6kcXB
+## Join out Cult here: https://discord.gg/2JDHx6kcXB
 
 
 ## List of Supported Games
