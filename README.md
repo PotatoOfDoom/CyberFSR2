@@ -19,6 +19,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Deep Rock Galactic
 * Destroy All Humans! 2 - Reprobed
 * Diablo II - Resurrected (https://www.nexusmods.com/diablo2resurrected/mods/269)
+* F.I.S.T. - Forged In Shadow Torch (https://www.nexusmods.com/fistforgedinshadowtorch/mods/2)
 * GTA Liberty City Definitive Edition
 * GTA San Andreas Definitive Edition
 * GTA Vice City Definitive Edition
