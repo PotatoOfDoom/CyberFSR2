@@ -14,21 +14,19 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Assetto Corsa Competizione
 * Batora - Lost Haven
 * Bright Memory: Infinite (https://www.nexusmods.com/brightmemoryinfinite/mods/4)
-* Chernobylite 
 * DOOM Eternal (https://www.nexusmods.com/doometernal/mods/1170)
 * Deep Rock Galactic
-* Destroy All Humans! 2 - Reprobed
 * Diablo II - Resurrected (https://www.nexusmods.com/diablo2resurrected/mods/269)
 * F.I.S.T. - Forged In Shadow Torch (https://www.nexusmods.com/fistforgedinshadowtorch/mods/2)
 * GTA Liberty City Definitive Edition
 * GTA San Andreas Definitive Edition
 * GTA Vice City Definitive Edition
 * Ghostrunner (https://www.nexusmods.com/ghostrunner/mods/17)
-* Ghostwire Tokyo
 * Gotham Knights
 * Hell Pie
 * Horizon Zero Dawn (https://www.nexusmods.com/horizonzerodawn/mods/133)
 * Hot Wheels Unleashed
+* ICARUS
 * Into the Radius VR
 * Kena: Bridge of Spirits (https://www.nexusmods.com/kenabridgeofspirits/mods/18)
 * Land of the Vikings
@@ -38,7 +36,8 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * No Man's Sky (https://www.nexusmods.com/nomanssky/mods/2485)
 * Ready or Not (https://www.nexusmods.com/readyornot/mods/1953)
 * Red Dead Redemption 2 v1436.28 (https://www.nexusmods.com/reddeadredemption2/mods/1640)
-* Rise of The Tomb Raider (https://www.nexusmods.com/riseofthetombraider/mods/82)
+* Rise of the Tomb Raider (https://www.nexusmods.com/riseofthetombraider/mods/82)
+* Severed Steel
 * Soulstice (https://www.nexusmods.com/soulstice/mods/3)
 * Succubus
 * The Ascent (https://www.nexusmods.com/theascent/mods/11)
