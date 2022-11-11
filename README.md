@@ -41,6 +41,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Soulstice (https://www.nexusmods.com/soulstice/mods/3)
 * Succubus
 * The Ascent (https://www.nexusmods.com/theascent/mods/11)
+* The Chant
 * The Last Oricru
 * The Orville - Interactive Fan Experience
 * WRC Generations – The FIA WRC Official Game
