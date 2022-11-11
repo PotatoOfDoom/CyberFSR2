@@ -98,6 +98,7 @@ r.SceneColorFormat=5
 - **Soulstice**: ```GAME_INSTALL_LOCATION\Soulstice\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Succubus**: ```%LOCALAPPDATA%\Succubus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Ascent**: ```%LOCALAPPDATA%\TheAscent\Saved\Config\WindowsNoEditor\Engine.ini```
+- **The Chant**: ```%LOCALAPPDATA%\Chant\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Last Oricru**: ```%LOCALAPPDATA%\LostHero\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Orville - Interactive Fan Experience**: ```GAME_INSTALL_LOCATION\OrvilleFanGame\Saved\Config\WindowsNoEditor\Engine.ini```
 
