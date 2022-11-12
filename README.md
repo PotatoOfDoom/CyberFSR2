@@ -1,9 +1,9 @@
 # DLSS2FSR (CyberFSR/PotatoFSR)
-Drop-in DLSS replacement with FSR 2.1.2 for various games such as Cyberpunk 2077, Red Dead Redemption 2, etc.
+Replacing DLSS 2.x with FSR 2.1.2 for various games such as Cyberpunk 2077, Red Dead Redemption 2, etc.
 
 It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU checking, so AMD Radeon / Nvidia GTX users can enjoy the mod.
 
-## Join out Cult here: https://discord.gg/2JDHx6kcXB
+## Join our Cult here: https://discord.gg/2JDHx6kcXB
 
 
 ## List of Supported Games
@@ -31,7 +31,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Kena: Bridge of Spirits (https://www.nexusmods.com/kenabridgeofspirits/mods/18)
 * Land of the Vikings
 * Marvel's Spider-Man Remastered (https://www.nexusmods.com/marvelsspidermanremastered/mods/683)
-* Minecraft Bedrock 1.19.40.2
+* Minecraft Bedrock 1.19.40.2 (and up)
 * Myst (https://www.nexusmods.com/myst/mods/3)
 * No Man's Sky (https://www.nexusmods.com/nomanssky/mods/2485)
 * Ready or Not (https://www.nexusmods.com/readyornot/mods/1953)
