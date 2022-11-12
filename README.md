@@ -83,19 +83,19 @@ r.SceneColorFormat=5
 - **Aron's Adventure**: ```%LOCALAPPDATA%\AronsAdventure\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Batora - Lost Haven**: ```%LOCALAPPDATA%\Batora\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Bright Memory: Infinite**: ```%LOCALAPPDATA%\BrightMemoryInfinite\Saved\Config\WindowsNoEditor\Engine.ini```
-- **Chernobylite**: ```%LOCALAPPDATA%\ChernobylGame\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Deep Rock Galactic**: ```GAME_INSTALL_LOCATION\Deep Rock Galactic\FSD\Saved\Config\WindowsNoEditor\Engine.ini```
-- **Destroy All Humans! 2 - Reprobed**: ```%LOCALAPPDATA%\DH2\Saved\Config\WindowsNoEditor\Engine.ini```
+- **F.I.S.T. - Forged In Shadow Torch**: ```%LOCALAPPDATA%\ZingangGame\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ghostrunner**: ```%LOCALAPPDATA%\Ghostrunner\Saved\Config\WindowsNoEditor\Engine.ini```
-- **GhostWire Tokyo**: ```%USERPROFILE%\TangoGameworks\GhostWire Tokyo (STEAM)\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Gotham Knights**: ```%LOCALAPPDATA%\Mercury\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hell Pie**: ```%LOCALAPPDATA%\HellPie\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hot Wheels Unleashed**: ```%LOCALAPPDATA%\hotwheels\Saved\Config\WindowsNoEditor\Engine.ini```
+- **ICARUS**: ```%LOCALAPPDATA%\Icarus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Into the Radius VR**: ```%LOCALAPPDATA%\IntoTheRadius\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Kena: Bridge of Spirits**: ```%LOCALAPPDATA%\Kena\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Land of the Vikings**: ```%LOCALAPPDATA%\VikingOyunu\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Myst**: ```%LOCALAPPDATA%\Myst\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ready or Not**: ```%LOCALAPPDATA%\ReadyOrNot\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Severed Steel**: ```%LOCALAPPDATA%\ThankYouVeryCool\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Soulstice**: ```GAME_INSTALL_LOCATION\Soulstice\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Succubus**: ```%LOCALAPPDATA%\Succubus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Ascent**: ```%LOCALAPPDATA%\TheAscent\Saved\Config\WindowsNoEditor\Engine.ini```
