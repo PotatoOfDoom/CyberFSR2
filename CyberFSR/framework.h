@@ -14,6 +14,7 @@
 #include <cctype>
 #include <algorithm>
 #include <filesystem>
+#include <stdexcept>
 
 #include <vulkan/vulkan.hpp>
 

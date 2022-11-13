@@ -43,6 +43,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+    <ClInclude Include="scanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -88,5 +89,8 @@
     <ResourceCompile Include="CyberFSR.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+    <ClCompile Include="scanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

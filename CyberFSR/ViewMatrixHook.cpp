@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "ViewMatrixHook.h"
-
+#include "scanner.h"
 std::unique_ptr<ViewMatrixHook> ViewMatrixHook::Create(const Config& config)
 {
 	switch (config.Method.value_or(ViewMethod::Config))
@@ -57,9 +57,8 @@ ViewMatrixHook::Cyberpunk2077::Cyberpunk2077()
 	Protip for future self to get the offsets, search for the vertical FOV to get the structure, then look for references to that structure and afterwards look for static references
 	*/
 
-	auto mod = (uint64_t)GetModuleHandleW(L"Cyberpunk2077.exe");
-	auto ptr1 = *((uintptr_t*)(mod + 0x4C3FF00)); // F3 0F 7F 0D ? ? ? ? E8, +0x4 
-	camParams = ((CameraParams*)(ptr1 + 0x60));
+	auto loc = *(uintptr_t*)scanner::GetOffsetFromInstruction(L"Cyberpunk2077.exe", "F3 0F 7F 0D ? ? ? ? E8", 4);
+	camParams = ((CameraParams*)(loc + 0x60));
 }
 
 float ViewMatrixHook::Cyberpunk2077::GetFov()
@@ -83,8 +82,8 @@ float ViewMatrixHook::Cyberpunk2077::GetNearPlane()
 
 ViewMatrixHook::RDR2::RDR2()
 {
-	auto mod = (uint64_t)GetModuleHandleW(L"RDR2.exe");
-	camParams = (CameraParams*)(mod + 0x3F110D0); // for 1436.28 it's 0x3F110D0
+	auto loc = scanner::GetOffsetFromInstruction(L"RDR2.exe", "4C 8D 2D ? ? ? ? 48 85 DB", 3);
+	camParams = (CameraParams*)loc;
 }
 
 float ViewMatrixHook::RDR2::GetFov()
