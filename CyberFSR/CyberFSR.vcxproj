@@ -170,6 +170,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="NvParameter.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="scanner.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="ViewMatrixHook.h" />
   </ItemGroup>
@@ -188,6 +189,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="scanner.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="ViewMatrixHook.cpp" />
   </ItemGroup>
