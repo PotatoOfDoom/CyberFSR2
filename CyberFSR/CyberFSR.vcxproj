@@ -177,6 +177,7 @@
   <ItemGroup>
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="CyberFsr.cpp" />
+    <ClCompile Include="CyberFsrDx11.cpp" />
     <ClCompile Include="CyberFsrDx12.cpp" />
     <ClCompile Include="CyberFsrVk.cpp" />
     <ClCompile Include="DebugOverlay.cpp" />
