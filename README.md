@@ -15,11 +15,13 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Batora - Lost Haven
 * Blind Fate: Edo no Yami
 * Bright Memory: Infinite (https://www.nexusmods.com/brightmemoryinfinite/mods/4)
+* Dakar Desert Rally
 * DOOM Eternal (https://www.nexusmods.com/doometernal/mods/1170)
 * Deep Rock Galactic
 * Diablo II - Resurrected (https://www.nexusmods.com/diablo2resurrected/mods/269)
 * Dream Cycle
 * F.I.S.T. - Forged In Shadow Torch (https://www.nexusmods.com/fistforgedinshadowtorch/mods/2)
+* Fobia - St.Dinfna Hotel
 * GTA Liberty City Definitive Edition
 * GTA San Andreas Definitive Edition
 * GTA Vice City Definitive Edition
@@ -87,9 +89,11 @@ r.SceneColorFormat=5
 - **Batora - Lost Haven**: ```%LOCALAPPDATA%\Batora\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Blind Fate: Edo no Yami**: ```%LOCALAPPDATA%\Yami\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Bright Memory: Infinite**: ```%LOCALAPPDATA%\BrightMemoryInfinite\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Dakar Desert Rally**: ```%LOCALAPPDATA%\Dakar2Game\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Deep Rock Galactic**: ```GAME_INSTALL_LOCATION\Deep Rock Galactic\FSD\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Dream Cycle**: ```%LOCALAPPDATA%\DreamCycle\Saved\Config\WindowsNoEditor\Engine.ini```
 - **F.I.S.T. - Forged In Shadow Torch**: ```%LOCALAPPDATA%\ZingangGame\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Fobia - St.Dinfna Hotel**: ```%LOCALAPPDATA%\Fobia\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ghostrunner**: ```%LOCALAPPDATA%\Ghostrunner\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Gotham Knights**: ```%LOCALAPPDATA%\Mercury\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hell Pie**: ```%LOCALAPPDATA%\HellPie\Saved\Config\WindowsNoEditor\Engine.ini```
