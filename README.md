@@ -35,6 +35,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Kena: Bridge of Spirits (https://www.nexusmods.com/kenabridgeofspirits/mods/18)
 * Land of the Vikings
 * Marvel's Spider-Man Remastered (https://www.nexusmods.com/marvelsspidermanremastered/mods/683)
+* Marvel's Spider-Man Miles Morales (https://www.nexusmods.com/spidermanmilesmorales/mods/33)
 * Minecraft Bedrock 1.19.40.2 (and up)
 * Myst (https://www.nexusmods.com/myst/mods/3)
 * Necromunda: Hired Gun (https://www.nexusmods.com/necromundahiredgun/mods/8)
