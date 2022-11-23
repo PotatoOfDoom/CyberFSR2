@@ -23,6 +23,9 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Evil West
 * F.I.S.T. - Forged In Shadow Torch (https://www.nexusmods.com/fistforgedinshadowtorch/mods/2)
 * Fobia - St.Dinfna Hotel
+* GTA Liberty City Definitive Edition
+* GTA San Andreas Definitive Edition
+* GTA Vice City Definitive Edition
 * Ghostrunner (https://www.nexusmods.com/ghostrunner/mods/17)
 * Gotham Knights
 * Hell Pie
