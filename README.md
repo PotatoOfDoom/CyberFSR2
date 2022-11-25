@@ -28,6 +28,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * GTA Vice City Definitive Edition
 * Ghostrunner (https://www.nexusmods.com/ghostrunner/mods/17)
 * Gotham Knights
+* Gungrave G.O.R.E
 * Hell Pie
 * Horizon Zero Dawn (https://www.nexusmods.com/horizonzerodawn/mods/133)
 * Hot Wheels Unleashed
