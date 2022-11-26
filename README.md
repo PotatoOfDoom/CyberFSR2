@@ -98,8 +98,10 @@ r.SceneColorFormat=5
 - **Dream Cycle**: ```%LOCALAPPDATA%\DreamCycle\Saved\Config\WindowsNoEditor\Engine.ini```
 - **F.I.S.T. - Forged In Shadow Torch**: ```%LOCALAPPDATA%\ZingangGame\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Fobia - St.Dinfna Hotel**: ```%LOCALAPPDATA%\Fobia\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Frozen Flame**: ```%LOCALAPPDATA%\FrozenFlame\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ghostrunner**: ```%LOCALAPPDATA%\Ghostrunner\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Gotham Knights**: ```%LOCALAPPDATA%\Mercury\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Gungrave G.O.R.E**: ```%LOCALAPPDATA%\GunGraveGore\Saved\WindowsNoEditor\Engine.ini```
 - **Hell Pie**: ```%LOCALAPPDATA%\HellPie\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hot Wheels Unleashed**: ```%LOCALAPPDATA%\hotwheels\Saved\Config\WindowsNoEditor\Engine.ini```
 - **ICARUS**: ```%LOCALAPPDATA%\Icarus\Saved\Config\WindowsNoEditor\Engine.ini```
