@@ -83,7 +83,7 @@ float ViewMatrixHook::Cyberpunk2077::GetNearPlane()
 ViewMatrixHook::RDR2::RDR2()
 {
 	auto loc = scanner::GetOffsetFromInstruction(L"RDR2.exe", "4C 8D 2D ? ? ? ? 48 85 DB", 3);
-	camParams = (CameraParams*)loc;
+	camParams = ((CameraParams*)(loc + 0x60));
 }
 
 float ViewMatrixHook::RDR2::GetFov()

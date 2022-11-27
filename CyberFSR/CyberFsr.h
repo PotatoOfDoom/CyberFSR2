@@ -17,9 +17,7 @@ public:
 	VkInstance VulkanInstance;
 	VkPhysicalDevice VulkanPhysicalDevice;
 
-	std::vector<std::unique_ptr<NvParameter>> Parameters;
-	NvParameter* AllocateParameter();
-	void DeleteParameter(NvParameter* parameter);
+	std::shared_ptr<NvParameter> NvParameterInstance = NvParameter::instance();
 
 	std::unordered_map <unsigned int, std::unique_ptr<FeatureContext>> Contexts;
 	FeatureContext* CreateContext();
@@ -27,7 +25,7 @@ public:
 
 	static std::shared_ptr<CyberFsrContext> instance()
 	{
-		static std::shared_ptr<CyberFsrContext> INSTANCE{new CyberFsrContext()};
+		static std::shared_ptr<CyberFsrContext> INSTANCE{std::make_shared<CyberFsrContext>(CyberFsrContext())};
 		return INSTANCE;
 	}
 };
