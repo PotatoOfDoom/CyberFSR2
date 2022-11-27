@@ -58,5 +58,25 @@ struct NvParameter : NVSDK_NGX_Parameter
 	NVSDK_NGX_Result Get_Internal(const char* InName, unsigned long long* OutValue, NvParameterType ParameterType) const;
 
 	void EvaluateRenderScale();
-};
 
+	std::vector<std::unique_ptr<NvParameter>> Params;
+
+	__declspec(noinline) constexpr NvParameter* AllocateParameters()
+	{
+		Params.push_back(std::make_unique<NvParameter>());
+		return Params.back().get();
+	}
+
+	__declspec(noinline) constexpr void DeleteParameters(NvParameter* param)
+	{
+		auto it = std::find_if(Params.begin(), Params.end(),
+			[param](const auto& p) { return p.get() == param; });
+		Params.erase(it);
+	}
+
+	static std::shared_ptr<NvParameter> instance()
+	{
+		static std::shared_ptr<NvParameter> INSTANCE{ new NvParameter() };
+		return INSTANCE;
+	}
+};

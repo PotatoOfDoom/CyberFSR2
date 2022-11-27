@@ -4,19 +4,6 @@
 #include "DirectXHooks.h"
 #include "Util.h"
 
-NvParameter* CyberFsrContext::AllocateParameter()
-{
-	Parameters.push_back(std::make_unique<NvParameter>());
-	return Parameters.back().get();
-}
-
-void CyberFsrContext::DeleteParameter(NvParameter* parameter)
-{
-	auto it = std::find_if(Parameters.begin(), Parameters.end(),
-		[parameter](const auto& p) { return p.get() == parameter; });
-	Parameters.erase(it);
-}
-
 FeatureContext* CyberFsrContext::CreateContext()
 {
 	auto handleId = rand();

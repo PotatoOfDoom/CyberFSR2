@@ -28,43 +28,40 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_Init_with_ProjectID(const char* InProjectId, NV
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_D3D12_Shutdown(void)
 {
-	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->NvParameterInstance->Params.clear();
 	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_D3D12_Shutdown1(ID3D12Device* InDevice)
 {
-	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->NvParameterInstance->Params.clear();
 	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
-
 //Deprecated Parameter Function - Internal Memory Tracking
 NVSDK_NGX_Result NVSDK_NGX_D3D12_GetParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = CyberFsrContext::instance()->AllocateParameter();
+	*OutParameters = CyberFsrContext::instance()->NvParameterInstance->AllocateParameters();
 	return NVSDK_NGX_Result_Success;
 }
 
-//TODO External Memory Tracking
+////currently it's kind of hack but better than what it was previously -- External Memory Tracking
 NVSDK_NGX_Result NVSDK_NGX_D3D12_GetCapabilityParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = new NvParameter();
+	*OutParameters = NvParameter::instance()->AllocateParameters();
 	return NVSDK_NGX_Result_Success;
 }
-
-//TODO
+//currently it's kind of hack but better than what it was previously
 NVSDK_NGX_Result NVSDK_NGX_D3D12_AllocateParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = new NvParameter();
+	*OutParameters = NvParameter::instance()->AllocateParameters();
 	return NVSDK_NGX_Result_Success;
 }
-
-//TODO
+//currently it's kind of hack but better than what it was previously
 NVSDK_NGX_Result NVSDK_NGX_D3D12_DestroyParameters(NVSDK_NGX_Parameter* InParameters)
 {
-	delete InParameters;
+	NvParameter::instance()->DeleteParameters((NvParameter*)InParameters);
 	return NVSDK_NGX_Result_Success;
 }
 

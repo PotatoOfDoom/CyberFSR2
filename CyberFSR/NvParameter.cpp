@@ -367,7 +367,7 @@ void NvParameter::EvaluateRenderScale()
 
 NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_DLSS_GetOptimalSettingsCallback(NVSDK_NGX_Parameter* InParams)
 {
-	auto* params = (NvParameter*)InParams;
+	auto params = dynamic_cast<NvParameter*>(InParams);
 	params->EvaluateRenderScale();
 	return NVSDK_NGX_Result_Success;
 }
