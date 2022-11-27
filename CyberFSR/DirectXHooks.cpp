@@ -174,6 +174,7 @@ void HookSetComputeRootSignature(ID3D12GraphicsCommandList* InCmdList)
 		VirtualProtect(computeRootSigFuncVTable, sizeof(void*), PAGE_READWRITE, &oldProtect);
 		*computeRootSigFuncVTable = &hSetComputeRootSignature;
 		VirtualProtect(computeRootSigFuncVTable, sizeof(void*), oldProtect, nullptr);
+		FlushInstructionCache(GetCurrentProcess(), computeRootSigFuncVTable, sizeof(void*));
 		Unfreeze(&threads);
 	}
 }
