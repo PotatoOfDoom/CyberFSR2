@@ -59,6 +59,11 @@ struct NvParameter : NVSDK_NGX_Parameter
 
 	void EvaluateRenderScale();
 
+	inline NvParameter* Cast(NVSDK_NGX_Parameter* Parameter)
+	{
+		return dynamic_cast<NvParameter*>(Parameter); // will compile into __RTDynamicCast 
+	}
+
 	std::vector<std::shared_ptr<NvParameter>> Params;
 
 	__declspec(noinline) NvParameter* AllocateParameters()
