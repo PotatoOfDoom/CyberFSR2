@@ -51,8 +51,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,8
- PRODUCTVERSION 1,0,0,8
+ FILEVERSION 2,0,0,0
+ PRODUCTVERSION 2,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -68,13 +68,13 @@ BEGIN
         BLOCK "080904b0"
         BEGIN
             VALUE "CompanyName", "CyberFSR"
-            VALUE "FileDescription", "Unofficial CyberFSR 2.1.1 by MOVZX"
-            VALUE "FileVersion", "1.0.0.8"
+            VALUE "FileDescription", "Unofficial CyberFSR 2.1.2 by MOVZX"
+            VALUE "FileVersion", "2.0.0.0"
             VALUE "InternalName", "DLSS2FSR.dll"
             VALUE "LegalCopyright", "Copyright (C) 2022 PotatoOfDoom"
             VALUE "OriginalFilename", "DLSS2FSR.dll"
             VALUE "ProductName", "DLSS2FSR"
-            VALUE "ProductVersion", "1.0.0.8"
+            VALUE "ProductVersion", "2.0.0.0"
         END
     END
     BLOCK "VarFileInfo"
