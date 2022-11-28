@@ -1,9 +1,9 @@
 # DLSS2FSR (CyberFSR/PotatoFSR)
-Drop-in DLSS replacement with FSR 2.1.2 for various games such as Cyberpunk 2077, Red Dead Redemption 2, etc.
+Replacing DLSS 2.x with FSR 2.1.2 for various games such as Cyberpunk 2077, Red Dead Redemption 2, etc.
 
 It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU checking, so AMD Radeon / Nvidia GTX users can enjoy the mod.
 
-## Join out Cult here: https://discord.gg/2JDHx6kcXB
+## Join our Cult here: https://discord.gg/2JDHx6kcXB
 
 
 ## List of Supported Games
@@ -13,16 +13,23 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Aron's Adventure
 * Assetto Corsa Competizione
 * Batora - Lost Haven
+* Blind Fate: Edo no Yami
 * Bright Memory: Infinite (https://www.nexusmods.com/brightmemoryinfinite/mods/4)
+* Dakar Desert Rally
 * DOOM Eternal (https://www.nexusmods.com/doometernal/mods/1170)
 * Deep Rock Galactic
 * Diablo II - Resurrected (https://www.nexusmods.com/diablo2resurrected/mods/269)
+* Dream Cycle
+* Evil West
 * F.I.S.T. - Forged In Shadow Torch (https://www.nexusmods.com/fistforgedinshadowtorch/mods/2)
+* Fobia - St.Dinfna Hotel
+* Frozen Flame
 * GTA Liberty City Definitive Edition
 * GTA San Andreas Definitive Edition
 * GTA Vice City Definitive Edition
 * Ghostrunner (https://www.nexusmods.com/ghostrunner/mods/17)
 * Gotham Knights
+* Gungrave G.O.R.E
 * Hell Pie
 * Horizon Zero Dawn (https://www.nexusmods.com/horizonzerodawn/mods/133)
 * Hot Wheels Unleashed
@@ -31,8 +38,10 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Kena: Bridge of Spirits (https://www.nexusmods.com/kenabridgeofspirits/mods/18)
 * Land of the Vikings
 * Marvel's Spider-Man Remastered (https://www.nexusmods.com/marvelsspidermanremastered/mods/683)
-* Minecraft Bedrock 1.19.40.2
+* Marvel's Spider-Man Miles Morales (https://www.nexusmods.com/spidermanmilesmorales/mods/33)
+* Minecraft Bedrock 1.19.40.2 (and up)
 * Myst (https://www.nexusmods.com/myst/mods/3)
+* Necromunda: Hired Gun (https://www.nexusmods.com/necromundahiredgun/mods/8)
 * No Man's Sky (https://www.nexusmods.com/nomanssky/mods/2485)
 * Ready or Not (https://www.nexusmods.com/readyornot/mods/1953)
 * Red Dead Redemption 2 v1436.28 (https://www.nexusmods.com/reddeadredemption2/mods/1640)
@@ -82,20 +91,27 @@ r.SceneColorFormat=5
 - **Assetto Corsa Competizione**: ```%LOCALAPPDATA%\AC2\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Aron's Adventure**: ```%LOCALAPPDATA%\AronsAdventure\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Batora - Lost Haven**: ```%LOCALAPPDATA%\Batora\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Blind Fate: Edo no Yami**: ```%LOCALAPPDATA%\Yami\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Bright Memory: Infinite**: ```%LOCALAPPDATA%\BrightMemoryInfinite\Saved\Config\WindowsNoEditor\Engine.ini```
-- **Chernobylite**: ```%LOCALAPPDATA%\ChernobylGame\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Dakar Desert Rally**: ```%LOCALAPPDATA%\Dakar2Game\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Deep Rock Galactic**: ```GAME_INSTALL_LOCATION\Deep Rock Galactic\FSD\Saved\Config\WindowsNoEditor\Engine.ini```
-- **Destroy All Humans! 2 - Reprobed**: ```%LOCALAPPDATA%\DH2\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Dream Cycle**: ```%LOCALAPPDATA%\DreamCycle\Saved\Config\WindowsNoEditor\Engine.ini```
+- **F.I.S.T. - Forged In Shadow Torch**: ```%LOCALAPPDATA%\ZingangGame\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Fobia - St.Dinfna Hotel**: ```%LOCALAPPDATA%\Fobia\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Frozen Flame**: ```%LOCALAPPDATA%\FrozenFlame\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ghostrunner**: ```%LOCALAPPDATA%\Ghostrunner\Saved\Config\WindowsNoEditor\Engine.ini```
-- **GhostWire Tokyo**: ```%USERPROFILE%\TangoGameworks\GhostWire Tokyo (STEAM)\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Gotham Knights**: ```%LOCALAPPDATA%\Mercury\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Gungrave G.O.R.E**: ```%LOCALAPPDATA%\GunGraveGore\Saved\WindowsNoEditor\Engine.ini```
 - **Hell Pie**: ```%LOCALAPPDATA%\HellPie\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hot Wheels Unleashed**: ```%LOCALAPPDATA%\hotwheels\Saved\Config\WindowsNoEditor\Engine.ini```
+- **ICARUS**: ```%LOCALAPPDATA%\Icarus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Into the Radius VR**: ```%LOCALAPPDATA%\IntoTheRadius\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Kena: Bridge of Spirits**: ```%LOCALAPPDATA%\Kena\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Land of the Vikings**: ```%LOCALAPPDATA%\VikingOyunu\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Myst**: ```%LOCALAPPDATA%\Myst\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Necromunda: Hired Gun**: ```%LOCALAPPDATA%\Streumon\Necromunda\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Ready or Not**: ```%LOCALAPPDATA%\ReadyOrNot\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Severed Steel**: ```%LOCALAPPDATA%\ThankYouVeryCool\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Soulstice**: ```GAME_INSTALL_LOCATION\Soulstice\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Succubus**: ```%LOCALAPPDATA%\Succubus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Ascent**: ```%LOCALAPPDATA%\TheAscent\Saved\Config\WindowsNoEditor\Engine.ini```
