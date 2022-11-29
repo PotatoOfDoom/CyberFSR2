@@ -76,7 +76,7 @@ struct NvParameter : NVSDK_NGX_Parameter
 
 	static std::shared_ptr<NvParameter> instance()
 	{
-		static std::shared_ptr<NvParameter> INSTANCE{ std::make_shared<NvParameter>() };
+		static std::shared_ptr<NvParameter> INSTANCE{ new NvParameter() };
 		return INSTANCE;
 	}
 };
