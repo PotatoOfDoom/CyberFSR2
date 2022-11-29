@@ -21,7 +21,7 @@ public:
 	NvParameter* AllocateParameter();
 	void DeleteParameter(NvParameter* parameter);
 
-	std::unordered_map <unsigned int, std::unique_ptr<FeatureContext>> Contexts;
+	ankerl::unordered_dense::map <unsigned int, std::unique_ptr<FeatureContext>> Contexts;
 	FeatureContext* CreateContext();
 	void DeleteContext(NVSDK_NGX_Handle* handle);
 
