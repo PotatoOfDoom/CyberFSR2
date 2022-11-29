@@ -15,7 +15,7 @@ SETCOMPUTEROOTSIGNATURE oSetComputeRootSignature = nullptr;
 
 ID3D12CommandList* myCommandList = nullptr;
 
-std::unordered_map<ID3D12GraphicsCommandList*, ID3D12RootSignature*> commandListVector;
+ankerl::unordered_dense::map<ID3D12GraphicsCommandList*, ID3D12RootSignature*> commandListVector;
 
 std::mutex rootSigMutex;
 

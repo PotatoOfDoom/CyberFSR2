@@ -77,7 +77,7 @@ float Util::ConvertSharpness(float sharpness, std::optional<SharpnessRangeModifi
 
 Util::NvParameter Util::NvParameterToEnum(const char* name)
 {
-	static std::unordered_map<std::string, NvParameter> NvParamTranslation = {
+	static ankerl::unordered_dense::map<std::string, NvParameter> NvParamTranslation = {
 		{"SuperSampling.ScaleFactor", NvParameter::SuperSampling_ScaleFactor},
 		{"SuperSampling.Available", NvParameter::SuperSampling_Available},
 		{"SuperSampling.MinDriverVersionMajor", NvParameter::SuperSampling_MinDriverVersionMajor},

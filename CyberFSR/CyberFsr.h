@@ -19,7 +19,7 @@ public:
 
 	std::shared_ptr<NvParameter> NvParameterInstance = NvParameter::instance();
 
-	std::unordered_map <unsigned int, std::unique_ptr<FeatureContext>> Contexts;
+	ankerl::unordered_dense::map <unsigned int, std::unique_ptr<FeatureContext>> Contexts;
 	FeatureContext* CreateContext();
 	void DeleteContext(NVSDK_NGX_Handle* handle);
 

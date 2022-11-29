@@ -1,12 +1,12 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <windows.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <memory>
-#include <unordered_map>
 #include <vector>
 #include <mutex>
 #include <limits>
@@ -28,4 +28,5 @@
 #include <nvsdk_ngx.h>
 #include <nvsdk_ngx_vk.h>
 
+#include "..\external\unordered_dense\include\ankerl\unordered_dense.h"
 #include "SimpleIni.h"
