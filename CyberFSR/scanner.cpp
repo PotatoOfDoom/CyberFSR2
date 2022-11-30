@@ -49,27 +49,29 @@ uintptr_t FindPattern(uintptr_t startAddress, uintptr_t maxSize, const char* mas
 
 uintptr_t scanner::GetAddress(const std::wstring_view moduleName, const std::string_view pattern, ptrdiff_t offset)
 {
-	if (GetModuleHandleW(moduleName.data()) != nullptr)
+	uintptr_t address = FindPattern(GetModule(moduleName.data()).first, GetModule(moduleName.data()).second - GetModule(moduleName.data()).first, pattern.data());
+
+	if ((GetModuleHandleW(moduleName.data()) != nullptr) && (address != NULL))
 	{
-		uintptr_t address = FindPattern(GetModule(moduleName.data()).first, GetModule(moduleName.data()).second - GetModule(moduleName.data()).first, pattern.data());
-
-		if (address == NULL)
-			throw std::runtime_error("Failed to find pattern");
-
 		return (address + offset);
+	}
+	else
+	{
+		throw std::runtime_error("Pattern not found!");
 	}
 }
 
 uintptr_t scanner::GetOffsetFromInstruction(const std::wstring_view moduleName, const std::string_view pattern, ptrdiff_t offset)
 {
-	if (GetModuleHandleW(moduleName.data()) != nullptr)
+	uintptr_t address = FindPattern(GetModule(moduleName.data()).first, GetModule(moduleName.data()).second - GetModule(moduleName.data()).first, pattern.data());
+
+	if ((GetModuleHandleW(moduleName.data()) != nullptr) && (address != NULL))
 	{
-		uintptr_t address = FindPattern(GetModule(moduleName.data()).first, GetModule(moduleName.data()).second - GetModule(moduleName.data()).first, pattern.data());
-
-		if (address == NULL)
-			throw std::runtime_error("Failed to find pattern");
-
 		auto reloffset = *reinterpret_cast<int32_t*>(address + offset) + sizeof(int32_t);
 		return (address + offset + reloffset);
+	}
+	else
+	{
+		throw std::runtime_error("Pattern not found!");
 	}
 }

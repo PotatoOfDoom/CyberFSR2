@@ -43,6 +43,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="scanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
