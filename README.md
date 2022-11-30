@@ -44,7 +44,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Necromunda: Hired Gun (https://www.nexusmods.com/necromundahiredgun/mods/8)
 * No Man's Sky (https://www.nexusmods.com/nomanssky/mods/2485)
 * Ready or Not (https://www.nexusmods.com/readyornot/mods/1953)
-* Red Dead Redemption 2 v1436.28 (https://www.nexusmods.com/reddeadredemption2/mods/1640)
+* Red Dead Redemption 2 (https://www.nexusmods.com/reddeadredemption2/mods/1640)
 * Rise of the Tomb Raider (https://www.nexusmods.com/riseofthetombraider/mods/82)
 * Severed Steel
 * Soulstice (https://www.nexusmods.com/soulstice/mods/3)
