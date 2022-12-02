@@ -31,6 +31,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Gotham Knights
 * Gungrave G.O.R.E
 * Hell Pie
+* Hello Neighbor 2
 * Horizon Zero Dawn (https://www.nexusmods.com/horizonzerodawn/mods/133)
 * Hot Wheels Unleashed
 * ICARUS
@@ -103,6 +104,7 @@ r.SceneColorFormat=5
 - **Gotham Knights**: ```%LOCALAPPDATA%\Mercury\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Gungrave G.O.R.E**: ```%LOCALAPPDATA%\GunGraveGore\Saved\WindowsNoEditor\Engine.ini```
 - **Hell Pie**: ```%LOCALAPPDATA%\HellPie\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Hello Neighbor 2**: ```%LOCALAPPDATA%\HelloNeighbor2\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hot Wheels Unleashed**: ```%LOCALAPPDATA%\hotwheels\Saved\Config\WindowsNoEditor\Engine.ini```
 - **ICARUS**: ```%LOCALAPPDATA%\Icarus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Into the Radius VR**: ```%LOCALAPPDATA%\IntoTheRadius\Saved\Config\WindowsNoEditor\Engine.ini```
