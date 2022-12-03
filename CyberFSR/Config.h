@@ -12,6 +12,7 @@ enum class ViewMethod
 	Config,
 	Cyberpunk2077,
 	RDR2,
+	DL2,
 };
 
 class Config
