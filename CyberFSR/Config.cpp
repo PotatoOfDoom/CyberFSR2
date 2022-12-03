@@ -62,7 +62,7 @@ void Config::Reload()
 	}
 	else if (exeName == L"DyingLightGame_x64_rwdi.exe")
 	{
-		SharpnessRange = SharpnessRange.value_or(SharpnessRangeModifier::Extended);
+		Method = Method.value_or(ViewMethod::DL2);
 	}
 	else if (exeName == L"RDR2.exe")
 	{
@@ -156,6 +156,10 @@ std::optional<ViewMethod> Config::readViewMethod(std::string section, std::strin
 	else if (value == "rdr2")
 	{
 		return ViewMethod::RDR2;
+	}
+	else if (value == "dl2")
+	{
+		return ViewMethod::DL2;
 	}
 
 	return std::nullopt;

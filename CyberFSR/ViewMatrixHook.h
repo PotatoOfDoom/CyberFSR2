@@ -11,6 +11,7 @@ public:
 	class Configured;
 	class Cyberpunk2077;
 	class RDR2;
+	class DL2;
 
 	static std::unique_ptr<ViewMatrixHook> Create(const Config& config);
 };
@@ -62,6 +63,33 @@ public:
 	float GetNearPlane();
 
 private:
+	struct CameraParams
+	{
+		float Fov;
+		float NearPlane;
+		float FarPlane;
+	};
+
+	CameraParams* camParams = nullptr;
+};
+
+class ViewMatrixHook::DL2 : public ViewMatrixHook
+{
+public:
+	DL2();
+
+	float GetFov();
+	float GetFarPlane();
+	float GetNearPlane();
+
+private:
+	struct ExtraCameraParams
+	{
+		float Fov;
+	};
+
+	ExtraCameraParams* extracamParams = nullptr;
+
 	struct CameraParams
 	{
 		float Fov;
