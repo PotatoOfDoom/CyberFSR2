@@ -18,7 +18,7 @@ enum class ViewMethod
 class Config
 {
 public:
-	Config(std::string fileName);
+	Config(std::wstring fileName);
 
 	// Depth
 	std::optional<bool> DepthInverted;
