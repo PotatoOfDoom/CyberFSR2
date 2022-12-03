@@ -10,6 +10,8 @@ std::unique_ptr<ViewMatrixHook> ViewMatrixHook::Create(const Config& config)
 			
 		case ViewMethod::RDR2:
 			return std::make_unique<ViewMatrixHook::RDR2>();
+		case ViewMethod::DL2:
+			return std::make_unique<ViewMatrixHook::DL2>();
 
 		case ViewMethod::Config:
 		default:
@@ -97,6 +99,44 @@ float ViewMatrixHook::RDR2::GetFarPlane()
 }
 
 float ViewMatrixHook::RDR2::GetNearPlane()
+{
+	return camParams->NearPlane;
+}
+
+#pragma endregion
+
+#pragma region DL2
+
+ViewMatrixHook::DL2::DL2()
+{
+	// the real fov value is found in "gamedll_ph_x64_rwdi.dll" but a some pointers from "engine_x64_rwdi.dll" has access to it 
+	// in DL2 the CameraDefaultFOV is 57
+	// the game keeps 57 fov as default and there is another fov value called extraFOV which users can change as part of game settings
+	// the real fov is CameraDefaultFOV + extraFOV
+	// the address below is the real FOV address but it is not accessible until the load into the game world so we find the CameraDefaultFOV and extraFOV address and calculate our fov from these
+	// auto loc = (*(uintptr_t*)(*(uintptr_t*)(*(uintptr_t*)(*(uintptr_t*)(*(uintptr_t*)(scanner::GetOffsetFromInstruction(L"engine_x64_rwdi.dll", "48 8D 2D ? ? ? ? 8B 0D", 3) + 0x18) + 0x28) + 0x20) + 0x18) + 0x150) + 0x98);
+	uintptr_t ptr = (scanner::GetOffsetFromInstruction(L"gamedll_ph_x64_rwdi.dll","EB ? E8 ? ? ? ? 48 8D 78 ? E8", 3) + 0xDF);
+	ptr += (*(int32_t*)ptr + sizeof(int32_t)) + 0xCC8;  // ptr + 0xCC8 this is pointer to whatever is saved in CameraDefaultFOV from player_variables.scr
+	camParams = (CameraParams*)ptr;
+
+	auto ptr2 = (*(uintptr_t*)(*(uintptr_t*)scanner::GetOffsetFromInstruction(L"engine_x64_rwdi.dll", "48 8B 05 ? ? ? ? 8B DA", 3)+0xE0)+0x15C); 
+	extracamParams = (ExtraCameraParams*)ptr2; //extraFOV
+}    
+
+float ViewMatrixHook::DL2::GetFov()
+{
+	auto param1 = camParams->Fov;
+	auto param2 = extracamParams->Fov;
+
+	return (param1 + param2);
+}
+
+float ViewMatrixHook::DL2::GetFarPlane()
+{
+	return camParams->FarPlane;
+}
+
+float ViewMatrixHook::DL2::GetNearPlane()
 {
 	return camParams->NearPlane;
 }
