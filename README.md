@@ -35,6 +35,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Horizon Zero Dawn (https://www.nexusmods.com/horizonzerodawn/mods/133)
 * Hot Wheels Unleashed
 * ICARUS
+* INDUSTRIA
 * Into the Radius VR
 * Kena: Bridge of Spirits (https://www.nexusmods.com/kenabridgeofspirits/mods/18)
 * Land of the Vikings
@@ -107,6 +108,7 @@ r.SceneColorFormat=5
 - **Hello Neighbor 2**: ```%LOCALAPPDATA%\HelloNeighbor2\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hot Wheels Unleashed**: ```%LOCALAPPDATA%\hotwheels\Saved\Config\WindowsNoEditor\Engine.ini```
 - **ICARUS**: ```%LOCALAPPDATA%\Icarus\Saved\Config\WindowsNoEditor\Engine.ini```
+- **INDUSTRIA**: ```%LOCALAPPDATA%\Industria\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Into the Radius VR**: ```%LOCALAPPDATA%\IntoTheRadius\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Kena: Bridge of Spirits**: ```%LOCALAPPDATA%\Kena\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Land of the Vikings**: ```%LOCALAPPDATA%\VikingOyunu\Saved\Config\WindowsNoEditor\Engine.ini```
