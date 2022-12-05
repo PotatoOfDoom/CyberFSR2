@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Util.h"
 #include "DirectXHooks.h"
-#include <tlhelp32.h>
 
 /*
 Cyberpunk doesn't reset the ComputeRootSignature after running DLSS.
@@ -19,129 +18,73 @@ std::unordered_map<ID3D12GraphicsCommandList*, ID3D12RootSignature*> commandList
 
 std::mutex rootSigMutex;
 
-#define INITIAL_THREAD_CAPACITY 128
+static ankerl::unordered_dense::set<HANDLE> *pSuspendedThreads = nullptr;
 
-HANDLE g_hHeap = NULL;
-
-#define THREAD_ACCESS \
-    (THREAD_SUSPEND_RESUME | THREAD_GET_CONTEXT | THREAD_QUERY_INFORMATION | THREAD_SET_CONTEXT)
-
-typedef struct _FROZEN_THREADS
+void FreezeAllThreadsExceptCurrent()
 {
-	LPDWORD pItems;         // Data heap
-	UINT    capacity;       // Size of allocated data heap, items
-	UINT    size;           // Actual number of data items
-} FROZEN_THREADS, * PFROZEN_THREADS;
+	if (pSuspendedThreads != nullptr)
+		return;
 
-static BOOL EnumerateThreads(PFROZEN_THREADS pThreads)
-{
-	BOOL succeeded = FALSE;
+	pSuspendedThreads = new std::unordered_set<HANDLE>();
 
-	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
-	if (hSnapshot != INVALID_HANDLE_VALUE)
+	HANDLE hSnapshot  = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+
+	if (hSnapshot  == INVALID_HANDLE_VALUE)
+		return;
+
+	auto dCurrentThread = GetCurrentThreadId();
+
+	THREADENTRY32 threadEntry{};
+	threadEntry.dwSize = sizeof(threadEntry);
+
+	if (Thread32First(hSnapshot , &threadEntry))
 	{
-		THREADENTRY32 te;
-		te.dwSize = sizeof(THREADENTRY32);
-		if (Thread32First(hSnapshot, &te))
+		do
 		{
-			succeeded = TRUE;
-			do
+			if (threadEntry.dwSize >= FIELD_OFFSET(THREADENTRY32, th32OwnerProcessID) + sizeof(threadEntry.th32OwnerProcessID) && 
+				threadEntry.th32ThreadID != dCurrentThread && threadEntry.th32OwnerProcessID == GetCurrentProcessId())
 			{
-				if (te.dwSize >= (FIELD_OFFSET(THREADENTRY32, th32OwnerProcessID) + sizeof(DWORD))
-					&& te.th32OwnerProcessID == GetCurrentProcessId()
-					&& te.th32ThreadID != GetCurrentThreadId())
+				HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, false, threadEntry.th32ThreadID);
+
+				if (hThread != nullptr)
 				{
-					if (pThreads->pItems == NULL)
-					{
-						pThreads->capacity = INITIAL_THREAD_CAPACITY;
-						pThreads->pItems
-							= (LPDWORD)HeapAlloc(g_hHeap, 0, pThreads->capacity * sizeof(DWORD));
-						if (pThreads->pItems == NULL)
-						{
-							succeeded = FALSE;
-							break;
-						}
-					}
-					else if (pThreads->size >= pThreads->capacity)
-					{
-						pThreads->capacity *= 2;
-						LPDWORD p = (LPDWORD)HeapReAlloc(
-							g_hHeap, 0, pThreads->pItems, pThreads->capacity * sizeof(DWORD));
-						if (p == NULL)
-						{
-							succeeded = FALSE;
-							break;
-						}
-
-						pThreads->pItems = p;
-					}
-					pThreads->pItems[pThreads->size++] = te.th32ThreadID;
+					pSuspendedThreads->insert(hThread);
 				}
-
-				te.dwSize = sizeof(THREADENTRY32);
-			} while (Thread32Next(hSnapshot, &te));
-
-			if (succeeded && GetLastError() != ERROR_NO_MORE_FILES)
-				succeeded = FALSE;
-
-			if (!succeeded && pThreads->pItems != NULL)
-			{
-				HeapFree(g_hHeap, 0, pThreads->pItems);
-				pThreads->pItems = NULL;
 			}
-		}
-		CloseHandle(hSnapshot);
+
+			threadEntry.dwSize = sizeof(threadEntry);
+		} while (Thread32Next(hSnapshot , &threadEntry));
 	}
 
-	return succeeded;
+	CloseHandle(hSnapshot);
+
+	for (auto* hThread : *pSuspendedThreads)
+	{
+		SuspendThread(hThread);
+	}
 }
 
-static bool Freeze(PFROZEN_THREADS pThreads)
+void UnFreezeThreads()
 {
-
-	pThreads->pItems = NULL;
-	pThreads->capacity = 0;
-	pThreads->size = 0;
-	if (!EnumerateThreads(pThreads))
+	if (pSuspendedThreads == nullptr)
+		return;
+	for (auto* hThread : *pSuspendedThreads)
 	{
-		return false;
-	}
-	else if (pThreads->pItems != NULL)
-	{
-		UINT i;
-		for (i = 0; i < pThreads->size; ++i)
-		{
-			HANDLE hThread = OpenThread(THREAD_ACCESS, FALSE, pThreads->pItems[i]);
-			if (hThread != NULL)
-			{
-				SuspendThread(hThread);
-				CloseHandle(hThread);
-			}
-		}
+		ResumeThread(hThread);
+		CloseHandle(hThread);
 	}
 
-	return true;
+	delete pSuspendedThreads;
+	pSuspendedThreads = nullptr;
 }
-
-static VOID Unfreeze(PFROZEN_THREADS pThreads)
+void hSetComputeRootSignature(ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* pRootSignature)
 {
-	if (pThreads->pItems != NULL)
-	{
-		UINT i;
-		for (i = 0; i < pThreads->size; ++i)
-		{
-			HANDLE hThread = OpenThread(THREAD_ACCESS, FALSE, pThreads->pItems[i]);
-			if (hThread != NULL)
-			{
-				ResumeThread(hThread);
-				CloseHandle(hThread);
-			}
-		}
+	rootSigMutex.lock();
+	commandListVector[commandList] = pRootSignature;
+	rootSigMutex.unlock();
 
-		HeapFree(g_hHeap, 0, pThreads->pItems);
-	}
+	return oSetComputeRootSignature(commandList, pRootSignature);
 }
-
 
 void hSetComputeRootSignature(ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* pRootSignature)
 {
@@ -169,11 +112,11 @@ void HookSetComputeRootSignature(ID3D12GraphicsCommandList* InCmdList)
 		}
 
 		DWORD oldProtect;
-		FROZEN_THREADS threads;
-		Freeze(&threads);
+		FreezeAllThreadsExceptCurrent();
 		VirtualProtect(computeRootSigFuncVTable, sizeof(void*), PAGE_READWRITE, &oldProtect);
 		*computeRootSigFuncVTable = &hSetComputeRootSignature;
 		VirtualProtect(computeRootSigFuncVTable, sizeof(void*), oldProtect, nullptr);
-		Unfreeze(&threads);
+		FlushInstructionCache(GetCurrentProcess(), computeRootSigFuncVTable, sizeof(void*));
+		UnFreezeThreads();
 	}
 }

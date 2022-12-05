@@ -15,6 +15,8 @@
 #include <algorithm>
 #include <filesystem>
 #include <stdexcept>
+#include <tlhelp32.h>
+#include <unordered_set>
 
 #include <vulkan/vulkan.hpp>
 
