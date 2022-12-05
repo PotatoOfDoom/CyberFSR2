@@ -34,6 +34,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Hello Neighbor 2
 * Horizon Zero Dawn (https://www.nexusmods.com/horizonzerodawn/mods/133)
 * Hot Wheels Unleashed
+* Hydroneer
 * ICARUS
 * INDUSTRIA
 * Into the Radius VR
@@ -107,6 +108,7 @@ r.SceneColorFormat=5
 - **Hell Pie**: ```%LOCALAPPDATA%\HellPie\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hello Neighbor 2**: ```%LOCALAPPDATA%\HelloNeighbor2\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Hot Wheels Unleashed**: ```%LOCALAPPDATA%\hotwheels\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Hydroneer**: ```%LOCALAPPDATA%\Mining\Saved\Config\WindowsNoEditor\Engine.ini```
 - **ICARUS**: ```%LOCALAPPDATA%\Icarus\Saved\Config\WindowsNoEditor\Engine.ini```
 - **INDUSTRIA**: ```%LOCALAPPDATA%\Industria\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Into the Radius VR**: ```%LOCALAPPDATA%\IntoTheRadius\Saved\Config\WindowsNoEditor\Engine.ini```
