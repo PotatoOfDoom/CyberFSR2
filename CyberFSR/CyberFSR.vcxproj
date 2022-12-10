@@ -77,11 +77,11 @@
     <IncludePath>$(SolutionDir)external\simpleini;$(SolutionDir)external\nvngx_dlss_sdk\include;$(SolutionDir)external\FidelityFX-FSR2\src;$(VULKAN_SDK)\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)external\simpleini;$(SolutionDir)external\nvngx_dlss_sdk\include;$(SolutionDir)external\FidelityFX-FSR2\src;$(VULKAN_SDK)\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\simpleini;$(SolutionDir)external\nvngx_dlss_sdk\include;$(SolutionDir)external\unordered_dense\include;$(SolutionDir)external\FidelityFX-FSR2\src;$(VULKAN_SDK)\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\FidelityFX-FSR2\bin\ffx_fsr2_api;$(VULKAN_SDK)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)external\simpleini;$(SolutionDir)external\nvngx_dlss_sdk\include;$(SolutionDir)external\FidelityFX-FSR2\src;$(VULKAN_SDK)\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\simpleini;$(SolutionDir)external\nvngx_dlss_sdk\include;$(SolutionDir)external\unordered_dense\include;$(SolutionDir)external\FidelityFX-FSR2\src;$(VULKAN_SDK)\Include;$(IncludePath)</IncludePath>
     <TargetName>nvngx</TargetName>
     <LibraryPath>$(SolutionDir)external\FidelityFX-FSR2\bin\ffx_fsr2_api;$(VULKAN_SDK)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
