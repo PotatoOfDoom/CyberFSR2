@@ -52,6 +52,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Severed Steel
 * Soulstice (https://www.nexusmods.com/soulstice/mods/3)
 * Succubus
+* Sword and Fairy 7
 * The Ascent (https://www.nexusmods.com/theascent/mods/11)
 * The Chant
 * The Last Oricru
@@ -120,6 +121,7 @@ r.SceneColorFormat=5
 - **Severed Steel**: ```%LOCALAPPDATA%\ThankYouVeryCool\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Soulstice**: ```GAME_INSTALL_LOCATION\Soulstice\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Succubus**: ```%LOCALAPPDATA%\Succubus\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Sword and Fairy 7**: ```%LOCALAPPDATA%\Pal7\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Ascent**: ```%LOCALAPPDATA%\TheAscent\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Chant**: ```%LOCALAPPDATA%\Chant\Saved\Config\WindowsNoEditor\Engine.ini```
 - **The Last Oricru**: ```%LOCALAPPDATA%\LostHero\Saved\Config\WindowsNoEditor\Engine.ini```
