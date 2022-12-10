@@ -72,4 +72,5 @@ uintptr_t scanner::GetOffsetFromInstruction(const std::wstring_view moduleName, 
 		auto reloffset = *reinterpret_cast<int32_t*>(address + offset) + sizeof(int32_t);
 		return (address + offset + reloffset);
 	}
+	throw std::runtime_error("Failed to find the module");
 }

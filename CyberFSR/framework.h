@@ -28,5 +28,5 @@
 #include <nvsdk_ngx.h>
 #include <nvsdk_ngx_vk.h>
 
-#include "..\external\unordered_dense\include\ankerl\unordered_dense.h"
-#include "SimpleIni.h"
+#include <ankerl/unordered_dense.h>
+#include <SimpleIni.h>
