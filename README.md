@@ -13,6 +13,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Aron's Adventure
 * Assetto Corsa Competizione
 * Batora - Lost Haven
+* BLACKTAIL
 * Blind Fate: Edo no Yami
 * Bright Memory: Infinite (https://www.nexusmods.com/brightmemoryinfinite/mods/4)
 * Dakar Desert Rally
@@ -95,6 +96,7 @@ r.SceneColorFormat=5
 - **Assetto Corsa Competizione**: ```%LOCALAPPDATA%\AC2\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Aron's Adventure**: ```%LOCALAPPDATA%\AronsAdventure\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Batora - Lost Haven**: ```%LOCALAPPDATA%\Batora\Saved\Config\WindowsNoEditor\Engine.ini```
+- **BLACKTAIL**: ```%LOCALAPPDATA%\BLACKTAIL\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Blind Fate: Edo no Yami**: ```%LOCALAPPDATA%\Yami\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Bright Memory: Infinite**: ```%LOCALAPPDATA%\BrightMemoryInfinite\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Dakar Desert Rally**: ```%LOCALAPPDATA%\Dakar2Game\Saved\Config\WindowsNoEditor\Engine.ini```
