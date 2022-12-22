@@ -19,6 +19,7 @@ It includes a DLL wrapper/injector (winmm.dll) to disable Nvidia GeForce RTX GPU
 * Dakar Desert Rally
 * DOOM Eternal (https://www.nexusmods.com/doometernal/mods/1170)
 * Deep Rock Galactic
+* Deliver Us the Moon
 * Diablo II - Resurrected (https://www.nexusmods.com/diablo2resurrected/mods/269)
 * Dream Cycle
 * Evil West
@@ -101,6 +102,7 @@ r.SceneColorFormat=5
 - **Bright Memory: Infinite**: ```%LOCALAPPDATA%\BrightMemoryInfinite\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Dakar Desert Rally**: ```%LOCALAPPDATA%\Dakar2Game\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Deep Rock Galactic**: ```GAME_INSTALL_LOCATION\Deep Rock Galactic\FSD\Saved\Config\WindowsNoEditor\Engine.ini```
+- **Deliver Us the Moon**: ```%LOCALAPPDATA%\MoonMan\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Dream Cycle**: ```%LOCALAPPDATA%\DreamCycle\Saved\Config\WindowsNoEditor\Engine.ini```
 - **F.I.S.T. - Forged In Shadow Torch**: ```%LOCALAPPDATA%\ZingangGame\Saved\Config\WindowsNoEditor\Engine.ini```
 - **Fobia - St.Dinfna Hotel**: ```%LOCALAPPDATA%\Fobia\Saved\Config\WindowsNoEditor\Engine.ini```
