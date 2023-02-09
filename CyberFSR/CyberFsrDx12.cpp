@@ -78,7 +78,7 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_GetScratchBufferSize(NVSDK_NGX_Feature InFeatur
 NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdList, NVSDK_NGX_Feature InFeatureID,
 	const NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
 {
-	const auto inParams = NvParameter::instance()->Cast<const NvParameter*>(dynamic_cast<const NvParameter*>(InParameters));
+	const auto inParams = static_cast<const NvParameter*>(InParameters);
 
 	ID3D12Device* device;
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
@@ -174,7 +174,7 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 
 	if (orgRootSig)
 	{
-		const auto inParams = NvParameter::instance()->Cast<const NvParameter*>(dynamic_cast<const NvParameter*>(InParameters)); 
+		const auto inParams = static_cast<const NvParameter*>(InParameters); 
 
 		auto* fsrContext = &deviceContext->FsrContext;
 

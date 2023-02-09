@@ -80,7 +80,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature(VkComma
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevice InDevice, VkCommandBuffer InCmdList, NVSDK_NGX_Feature InFeatureID, const NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
 {
-	const auto inParams = NvParameter::instance()->Cast<const NvParameter*>(dynamic_cast<const NvParameter*>(InParameters));
+	const auto inParams = static_cast<const NvParameter*>(InParameters);
 
 	auto instance = CyberFsrContext::instance();
 	auto& config = instance->MyConfig;
@@ -153,7 +153,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCom
 	auto instance = CyberFsrContext::instance();
 	auto& config = instance->MyConfig;
 	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id].get();
-	const auto inParams = NvParameter::instance()->Cast<const NvParameter*>(dynamic_cast<const NvParameter*>(InParameters));
+	const auto inParams = static_cast<const NvParameter*>(InParameters);
 
 	auto color = (NVSDK_NGX_Resource_VK*)inParams->Color;
 	auto depth = (NVSDK_NGX_Resource_VK*)inParams->Depth;

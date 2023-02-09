@@ -59,11 +59,13 @@ struct NvParameter : NVSDK_NGX_Parameter
 
 	void EvaluateRenderScale();
 
+	/**
 	template <typename T>
 	inline constexpr T& Cast(const auto& Parameter)
 	{
 		return *((T*)&Parameter);
 	}
+	**/
 
 	std::vector<std::shared_ptr<NvParameter>> Params;
 
