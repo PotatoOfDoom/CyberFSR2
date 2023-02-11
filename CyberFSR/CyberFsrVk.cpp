@@ -27,7 +27,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_Shutdown(void)
 	CyberFsrContext::instance()->VulkanDevice = nullptr;
 	CyberFsrContext::instance()->VulkanInstance = nullptr;
 	CyberFsrContext::instance()->VulkanPhysicalDevice = nullptr;
-	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->NvParameterInstance->Params.clear();
 	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
@@ -37,32 +37,32 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_Shutdown1(VkDevice In
 	CyberFsrContext::instance()->VulkanDevice = nullptr;
 	CyberFsrContext::instance()->VulkanInstance = nullptr;
 	CyberFsrContext::instance()->VulkanPhysicalDevice = nullptr;
-	CyberFsrContext::instance()->Parameters.clear();
+	CyberFsrContext::instance()->NvParameterInstance->Params.clear();
 	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_Result NVSDK_NGX_VULKAN_GetParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = CyberFsrContext::instance()->AllocateParameter();
+	*OutParameters = CyberFsrContext::instance()->NvParameterInstance->AllocateParameters();
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_AllocateParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = new NvParameter();
+	*OutParameters = NvParameter::instance()->AllocateParameters();
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_GetCapabilityParameters(NVSDK_NGX_Parameter** OutParameters)
 {
-	*OutParameters = new NvParameter();
+	*OutParameters = NvParameter::instance()->AllocateParameters();
 	return NVSDK_NGX_Result_Success;
 }
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_DestroyParameters(NVSDK_NGX_Parameter* InParameters)
 {
-	delete InParameters;
+	NvParameter::instance()->DeleteParameters((NvParameter*)InParameters);
 	return NVSDK_NGX_Result_Success;
 }
 
@@ -80,7 +80,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature(VkComma
 
 NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_CreateFeature1(VkDevice InDevice, VkCommandBuffer InCmdList, NVSDK_NGX_Feature InFeatureID, const NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
 {
- 	const auto inParams = dynamic_cast<const NvParameter*>(InParameters);
+	const auto inParams = static_cast<const NvParameter*>(InParameters);
 
 	auto instance = CyberFsrContext::instance();
 	auto& config = instance->MyConfig;
@@ -153,7 +153,7 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_VULKAN_EvaluateFeature(VkCom
 	auto instance = CyberFsrContext::instance();
 	auto& config = instance->MyConfig;
 	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id].get();
-	const auto inParams = dynamic_cast<const NvParameter*>(InParameters);
+	const auto inParams = static_cast<const NvParameter*>(InParameters);
 
 	auto color = (NVSDK_NGX_Resource_VK*)inParams->Color;
 	auto depth = (NVSDK_NGX_Resource_VK*)inParams->Depth;
