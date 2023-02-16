@@ -8,6 +8,15 @@ NVSDK_NGX_API NVSDK_NGX_Result NVSDK_NGX_D3D12_Init_Ext(unsigned long long InApp
 	ID3D12Device* InDevice, const NVSDK_NGX_FeatureCommonInfo* InFeatureInfo, NVSDK_NGX_Version InSDKVersion,
 	unsigned long long unknown0)
 {
+#ifdef _DEBUG
+	AllocConsole();
+	FILE* fDummy;
+	freopen_s(&fDummy, "CONIN$", "r", stdin);
+	freopen_s(&fDummy, "CONOUT$", "w", stderr);
+	freopen_s(&fDummy, "CONOUT$", "w", stdout);
+#endif // _DEBUG
+
+
 	return NVSDK_NGX_Result_Success;
 }
 
@@ -75,6 +84,19 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_GetScratchBufferSize(NVSDK_NGX_Feature InFeatur
 	return NVSDK_NGX_Result_Success;
 }
 
+void Fsr2MessageCallback(FfxFsr2MsgType type, const wchar_t* message)
+{
+	switch (type) {
+	case FFX_FSR2_MESSAGE_TYPE_ERROR:
+		printf("[ERROR] %ls\n", message);
+		break;
+	case FFX_FSR2_MESSAGE_TYPE_WARNING:
+		printf("[WARNING] %ls\n", message);
+		break;
+	}
+	
+}
+
 NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdList, NVSDK_NGX_Feature InFeatureID,
 	const NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
 {
@@ -84,7 +106,7 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
 
 	auto instance = CyberFsrContext::instance();
-	auto &config = instance->MyConfig;
+	auto& config = instance->MyConfig;
 	auto deviceContext = CyberFsrContext::instance()->CreateContext();
 	deviceContext->ViewMatrix = ViewMatrixHook::Create(*config);
 #ifdef DEBUG_FEATURES
@@ -134,6 +156,11 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdL
 		initParams.flags |= FFX_FSR2_ENABLE_DEPTH_INFINITE;
 	}
 
+#ifdef _DEBUG
+	initParams.flags |= FFX_FSR2_ENABLE_DEBUG_CHECKING;
+	initParams.fpMessage = Fsr2MessageCallback;
+#endif // DEBUG
+
 	errorCode = ffxFsr2ContextCreate(&deviceContext->FsrContext, &initParams);
 	FFX_ASSERT(errorCode == FFX_OK);
 
@@ -169,12 +196,12 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 	ID3D12Device* device;
 	InCmdList->GetDevice(IID_PPV_ARGS(&device));
 	auto instance = CyberFsrContext::instance();
-	auto &config = instance->MyConfig;
+	auto& config = instance->MyConfig;
 	auto deviceContext = CyberFsrContext::instance()->Contexts[InFeatureHandle->Id].get();
 
 	if (orgRootSig)
 	{
-		const auto inParams = static_cast<const NvParameter*>(InParameters); 
+		const auto inParams = static_cast<const NvParameter*>(InParameters);
 
 		auto* fsrContext = &deviceContext->FsrContext;
 
@@ -183,7 +210,8 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 		dispatchParameters.color = ffxGetResourceDX12(fsrContext, (ID3D12Resource*)inParams->Color, (wchar_t*)L"FSR2_InputColor");
 		dispatchParameters.depth = ffxGetResourceDX12(fsrContext, (ID3D12Resource*)inParams->Depth, (wchar_t*)L"FSR2_InputDepth");
 		dispatchParameters.motionVectors = ffxGetResourceDX12(fsrContext, (ID3D12Resource*)inParams->MotionVectors, (wchar_t*)L"FSR2_InputMotionVectors");
-		dispatchParameters.exposure = ffxGetResourceDX12(fsrContext, (ID3D12Resource*)inParams->ExposureTexture, (wchar_t*)L"FSR2_InputExposure");
+		if (!config->AutoExposure)
+			dispatchParameters.exposure = ffxGetResourceDX12(fsrContext, (ID3D12Resource*)inParams->ExposureTexture, (wchar_t*)L"FSR2_InputExposure");
 
 		//Not sure if these two actually work
 		if (!config->DisableReactiveMask.value_or(false))
