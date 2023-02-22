@@ -1,0 +1,65 @@
+name: MSBuild
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  SOLUTION_FILE_PATH: CyberFSR.sln
+  BUILD_CONFIGURATION: Release
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1.3
+      with:
+        msbuild-architecture: x64
+
+    - name: Prepare Vulkan SDK
+      uses: humbletim/setup-vulkan-sdk@v1.2.0
+      with:
+        vulkan-query-version: latest
+        vulkan-components: Vulkan-Headers, Vulkan-Loader
+        vulkan-use-cache: true
+
+    - name: Generate FSR 2.0 Solution
+      working-directory: ${{ github.workspace }}\external\FidelityFX-FSR2\build
+      run: .\GenerateSolutions.bat
+
+    - name: Build FSR 2.0 for DirectX 12
+      working-directory: ${{ github.workspace }}\external\FidelityFX-FSR2\build\DX12
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} FSR2_Sample_DX12.sln
+
+    - name: Build FSR 2.0 for Vulkan
+      working-directory: ${{ github.workspace }}\external\FidelityFX-FSR2\build\VK
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} FSR2_Sample_VK.sln
+
+    - name: Build
+      working-directory: ${{ github.workspace }}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+
+    - name: VirusTotal Scan
+      uses: crazy-max/ghaction-virustotal@v3
+      with:
+        vt_api_key: ${{ secrets.VT_API_KEY }}
+        files: |
+          ${{ github.workspace }}\x64\Release\*.dll
+
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: CyberFSR2
+        path: ${{ github.workspace }}\x64\Release
+        if-no-files-found: error
