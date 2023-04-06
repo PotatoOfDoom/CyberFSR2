@@ -35,14 +35,14 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_Init_with_ProjectID(const char* InProjectId, NV
 	return NVSDK_NGX_D3D12_Init_Ext(0x1337, InApplicationDataPath, InDevice, InFeatureInfo, InSDKVersion, 0);
 }
 
-NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_D3D12_Shutdown(void)
+NVSDK_NGX_Result NVSDK_NGX_D3D12_Shutdown(void)
 {
 	CyberFsrContext::instance()->NvParameterInstance->Params.clear();
 	CyberFsrContext::instance()->Contexts.clear();
 	return NVSDK_NGX_Result_Success;
 }
 
-NVSDK_NGX_Result NVSDK_CONV NVSDK_NGX_D3D12_Shutdown1(ID3D12Device* InDevice)
+NVSDK_NGX_Result NVSDK_NGX_D3D12_Shutdown1(ID3D12Device* InDevice)
 {
 	CyberFsrContext::instance()->NvParameterInstance->Params.clear();
 	CyberFsrContext::instance()->Contexts.clear();
@@ -94,11 +94,11 @@ void Fsr2MessageCallback(FfxFsr2MsgType type, const wchar_t* message)
 		printf("[WARNING] %ls\n", message);
 		break;
 	}
-	
+
 }
 
 NVSDK_NGX_Result NVSDK_NGX_D3D12_CreateFeature(ID3D12GraphicsCommandList* InCmdList, NVSDK_NGX_Feature InFeatureID,
-	const NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
+	NVSDK_NGX_Parameter* InParameters, NVSDK_NGX_Handle** OutHandle)
 {
 	const auto inParams = static_cast<const NvParameter*>(InParameters);
 
@@ -175,6 +175,16 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_ReleaseFeature(NVSDK_NGX_Handle* InHandle)
 	FfxErrorCode errorCode = ffxFsr2ContextDestroy(&deviceContext->FsrContext);
 	FFX_ASSERT(errorCode == FFX_OK);
 	CyberFsrContext::instance()->DeleteContext(InHandle);
+	return NVSDK_NGX_Result_Success;
+}
+
+NVSDK_NGX_Result NVSDK_NGX_D3D12_GetFeatureRequirements(IDXGIAdapter *Adapter, const NVSDK_NGX_FeatureDiscoveryInfo *FeatureDiscoveryInfo, NVSDK_NGX_FeatureRequirement *OutSupported)
+{
+	*OutSupported = NVSDK_NGX_FeatureRequirement();
+	OutSupported->FeatureSupported = NVSDK_NGX_FeatureSupportResult_Supported;
+	OutSupported->MinHWArchitecture = 0;
+	//Some windows 10 os version
+	strcpy_s(OutSupported->MinOSVersion, "10.0.19045.2728");
 	return NVSDK_NGX_Result_Success;
 }
 
@@ -261,5 +271,10 @@ NVSDK_NGX_Result NVSDK_NGX_D3D12_EvaluateFeature(ID3D12GraphicsCommandList* InCm
 
 	myCommandList = InCmdList;
 
+	return NVSDK_NGX_Result_Success;
+}
+
+NVSDK_NGX_Result NVSDK_NGX_UpdateFeature(const NVSDK_NGX_Application_Identifier *ApplicationId, const NVSDK_NGX_Feature FeatureID)
+{
 	return NVSDK_NGX_Result_Success;
 }
