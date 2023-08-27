@@ -164,6 +164,7 @@ void NvParameter::Set_Internal(const char* InName, unsigned long long InValue, N
 		DepthInverted = *inValueInt & NVSDK_NGX_DLSS_Feature_Flags_DepthInverted;
 		JitterMotion = *inValueInt & NVSDK_NGX_DLSS_Feature_Flags_MVJittered;
 		LowRes = *inValueInt & NVSDK_NGX_DLSS_Feature_Flags_MVLowRes;
+		AutoExposure = *inValueInt & NVSDK_NGX_DLSS_Feature_Flags_AutoExposure;
 		break;
 	case Util::NvParameter::DLSS_Input_Bias_Current_Color_Mask:
 		InputBiasCurrentColorMask = inValuePtr;
