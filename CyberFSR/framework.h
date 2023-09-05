@@ -19,6 +19,7 @@
 #include <vulkan/vulkan.hpp>
 
 #include <ffx-fsr2-api/ffx_fsr2.h>
+#include <ffx-fsr2-api/dx11/ffx_fsr2_dx11.h>
 #include <ffx-fsr2-api/dx12/ffx_fsr2_dx12.h>
 #include <ffx-fsr2-api/vk/ffx_fsr2_vk.h>
 
