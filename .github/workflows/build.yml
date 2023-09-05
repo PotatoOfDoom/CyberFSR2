@@ -34,9 +34,17 @@ jobs:
         vulkan-components: Vulkan-Headers, Vulkan-Loader
         vulkan-use-cache: true
 
+    - name: Generate FSR 2.0 DX11 Solution
+      working-directory: ${{ github.workspace }}\external\FidelityFX-FSR2\build
+      run: .\GenerateSolutionDX11.bat
+
     - name: Generate FSR 2.0 Solution
       working-directory: ${{ github.workspace }}\external\FidelityFX-FSR2\build
       run: .\GenerateSolutions.bat
+
+    - name: Build FSR 2.0 for DirectX 11
+      working-directory: ${{ github.workspace }}\external\FidelityFX-FSR2\build\DX11
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} FSR2_Sample.sln
 
     - name: Build FSR 2.0 for DirectX 12
       working-directory: ${{ github.workspace }}\external\FidelityFX-FSR2\build\DX12
